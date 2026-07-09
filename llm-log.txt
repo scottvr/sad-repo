@@ -1,0 +1,122 @@
+
+
+/remote-control
+
+
+/remote-control
+
+
+/remote-control
+
+Continue
+
+Environment is bare: Python 3.13, pytest available, but no torch/transformers. I'll create a venv and install dependencies in the background while I write the code.
+
+
+Ran a command, created a file
+Background shell completed
+Create venv and install torch (CPU), transformers, numpy, pytest
+Confirmed install succeeded
+Dependencies installed (torch 2.13 CPU, transformers 5.13). Now writing the library — config, data, model, adapters, controllers, train, eval, metrics, experiments.
+
+
+Created 9 files
+Now the scripts, pyproject, and tests.
+
+
+Created 11 files, ran 2 commands
+Expected wrinkle: wrapping renames base params (...c_attn.base.weight) and adds adapter params. Fixing params_unchanged to normalize names and skip adapter params.
+
+
+Edited 2 files, ran 2 commands
+All 18 tests pass. Running the smoke test now.
+
+
+Ran 7 commands, edited 8 files, created 4 files
+All 19 tests pass and every script's --help works. Checking on the background full evaluation.
+
+
+Ran 3 commands, created a file
+Background shell completed
+Full sequence evaluation on distilgpt2 (all methods, both orders)
+
+Ran 4 commands, created a file
+Background shell completed
+Controller ablation with drift anchor (KL to base) enabled
+
+Edited 2 files, ran a command
+Done. The repo is complete, tested, and has real experimental results. Final report:
+
+Files created
+Library — src/sequential_adapt/: config.py, data.py (synthetic fact domains, nonce word → color), model.py (frozen base + freeze verification), adapters.py (LoRA baseline + frozen random low-rank bases with per-task coefficient vectors + AdapterBank), controllers.py (MLP Model B + lookup fallback), train.py (coefficient/LoRA fitting, cosine² interference penalty, KL drift anchor), eval.py, metrics.py, experiments.py
+Scripts (all with --help, verified): smoke_test, run_baselines, run_controller, evaluate_sequence
+Tests: 19 pass in ~3s — base frozen after fitting, adapter enable/disable/no-op, exact negation reversal, metric math, sequence-eval contract, JSON serialization
+Docs: README.md, CURRENT_STATUS.md, notes/problem_statement.md, notes/experiment_plan.md, notes/literature_map_stub.md
+Artifacts: smoke_results.json, sequence_eval.json (full suite), controller_anchored.json
+Key design decision
+A task update = ~96 coefficients over frozen random rank-4 bases (K=8 per site, 12 sites on distilgpt2). Composition is exact addition and reversal exact negation in parameter space, so all observed forgetting/irreversibility is behavioral interference through the frozen network — the thing the hypothesis is actually about. This also distinguishes the setup from plain LoRA/task-arithmetic (argued against LoRAHub/AdapterFusion/task vectors in the notes, per your novelty clause).
+
+Experiment results (distilgpt2, CPU, seed 0, A→B→C)
+method	final acc A/B/C	avg retention	reversal collateral	drift KL
+independent (upper bound)	1.0 / 1.0 / 1.0	–	–	3.9
+naive LoRA stack	.75 / .75 / 1.0	.75	.38	7.6
+coefficient addition	.25 / .00 / .00	.12	.00	6.1
+controller, composed sum	.00 / .50 / 1.0	.25	.62	5.3
+controller, routed	1.0 / 1.0 / .75	–	–	–
+Findings: single tasks fit perfectly in 96 dims; superposition in a shared basis fails hard (the cosine² penalty didn't save it); separate subspaces (LoRA stacking) compose better but reverse dirtily; context routing recovers ~90–100% of performance from held-out context phrasings. Bonus ablation: the KL drift anchor cuts neutral-probe drift 12× (5.31→0.45) and makes routing perfect, but doesn't fix superposition interference. Paraphrase consistency is 0.0 everywhere — these tiny updates memorize phrasings, not semantics.
+
+Incomplete / caveats
+Single seed, no error bars; ortho/gates/K ablations designed but not run; gradient-free fitting and replay-free retention losses are documented next steps; run_baselines.py is implemented and --help-verified but its exact artifact is subsumed by sequence_eval.json.
+
+Most promising next step: the routed-vs-composed gap is the story — run multi-seed ablations (--ortho sweep, K sweep 4→32) to test whether any cheap control makes superposition viable, or whether selective routing is fundamentally the only thing that works at this scale.
+
+This system has a 5070Ti GPU.
+
+A 5070 Ti (Blackwell, sm_120) needs a CUDA 12.8+ PyTorch build — I installed the CPU wheel. Let me confirm the driver, then swap in the CUDA build and plumb device support through the code.
+
+Checked GPU and driver version
+RTX 5070 Ti confirmed, driver supports CUDA 13.3. Installing the CUDA torch wheel in the background (multi-GB download) while I add device plumbing to the code.
+
+
+Ran a command, edited a file
+Background shell completed
+Install CUDA 12.8 torch build and verify GPU visibility
+Verified CUDA torch install result
+pip treated the CPU build as already satisfying the version. Forcing a reinstall from the cu128 index.
+
+Uninstalled CPU torch, install cu128 build, verify GPU
+Continuing the device plumbing while that downloads.
+
+
+Edited 5 files
+Adding --device flags to the scripts.
+
+Added --device flag to all four scripts
+Scripts patched. Checking on the CUDA torch install.
+
+Checked CUDA torch install progress
+Background shell completed
+Uninstall CPU torch, install cu128 build, verify GPU
+CUDA torch installed (2.11.0+cu128) and the 5070 Ti is visible. Running tests and the smoke test on GPU.
+
+
+Ran 3 commands, edited a file, created a file
+
+Saved 3 memories
+GPU support is done and everything now runs on the 5070 Ti.
+
+What changed:
+
+Replaced the CPU torch wheel with torch 2.11.0+cu128 (the 5070 Ti is Blackwell/sm_120, which needs the cu128 index; pip also refuses to "upgrade" +cpu → +cu128 without an uninstall first — handled).
+Plumbed device support through the code: device: "auto" in config.py (CUDA if available), AdapterBank/LoRA/controller tensors created on the model's device, CPU/GPU index-mixing fixed in model.py and eval.py. Random bases are still generated on CPU so they're identical across devices.
+Added --device auto|cpu|cuda to all four scripts.
+Verified: 19 tests pass on GPU; the CPU path still works (--device cpu smoke check); all artifacts regenerated on GPU.
+
+Speedup: smoke test 95s → 12.7s; full suite 498s → 60s (~8×).
+
+Results on GPU (same qualitative story, small per-probe shifts from different numerics — noted in the README): independent 1.0/1.0/1.0; naive LoRA stack retains 0.75 but reverses dirtily; coefficient addition still collapses; routed controller is now perfect 1.0/1.0/1.0; the anchored run (rerun with both task orders, --anchor 1.0) cuts drift 4.6 → 0.46 without hurting task fit.
+
+README.md and CURRENT_STATUS.md are updated with GPU install instructions, timings, and the refreshed results table. With runs at ~1 min each now, the highest-value next step is the multi-seed sweep with error bars, then the --ortho / n_components ablations.
+
+
+
