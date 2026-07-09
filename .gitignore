@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+artifacts/*.json
+!artifacts/.gitkeep
+.pytest_cache/
+*.egg-info/

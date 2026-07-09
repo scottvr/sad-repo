@@ -1,0 +1,69 @@
+"""Experiment configuration. One dataclass, no framework."""
+
+from dataclasses import dataclass, field, asdict
+
+
+@dataclass
+class Config:
+    # Model
+    model_name: str = "distilgpt2"
+    device: str = "auto"  # "auto" -> cuda if available, else cpu
+    seed: int = 0
+
+    # Adapter geometry
+    # Module-name suffixes (within transformer blocks) that receive adapters.
+    site_suffixes: tuple = ("attn.c_attn", "mlp.c_fc")
+    rank: int = 4              # rank of each basis component
+    n_components: int = 8      # frozen random low-rank components per site
+    lora_rank: int = 4         # rank for the independent trainable LoRA baseline
+    lora_alpha: float = 8.0
+
+    # Task family
+    n_tasks: int = 3
+    facts_per_task: int = 4
+    # Templates 0..1 are used for training. Task accuracy/retention is
+    # measured on template `eval_template` (a TRAINED phrasing: the question
+    # is whether learned behavior survives later adaptation). Template
+    # `heldout_template` is never trained on and feeds the paraphrase
+    # coherence probe (generalization).
+    train_templates: tuple = (0, 1)
+    eval_template: int = 0
+    heldout_template: int = 2
+
+    # Fitting
+    steps: int = 200
+    lr: float = 5e-2           # for coefficients over random bases
+    lora_lr: float = 5e-3      # for trainable LoRA matrices
+    l2: float = 1e-4           # L2 on coefficients
+    ortho_penalty: float = 0.1  # cosine^2 penalty vs earlier tasks' coefficients (controller method)
+    anchor_weight: float = 0.0  # KL(base||adapted) on neutral probes during fitting (0 = off)
+    train_gates: bool = True   # Model C: per-site gates for the controller method
+
+    # Controller (Model B)
+    controller_hidden: int = 64
+    controller_steps: int = 500
+    controller_lr: float = 1e-2
+
+    # Eval
+    label_space: tuple = (" red", " blue", " green", " yellow", " purple", " orange")
+
+    extras: dict = field(default_factory=dict)
+
+    def __post_init__(self):
+        if self.device == "auto":
+            import torch
+            self.device = "cuda" if torch.cuda.is_available() else "cpu"
+
+    def to_dict(self):
+        d = asdict(self)
+        d["site_suffixes"] = list(self.site_suffixes)
+        d["train_templates"] = list(self.train_templates)
+        d["label_space"] = list(self.label_space)
+        return d
+
+
+def smoke_config(**overrides) -> Config:
+    """Reduced-step settings for smoke test and unit tests."""
+    defaults = dict(steps=80, controller_steps=300)
+    defaults.update(overrides)
+    return Config(**defaults)
