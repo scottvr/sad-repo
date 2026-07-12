@@ -1,0 +1,1520 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 20793.68it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.2612
+  [task_A] step 100 loss 0.0546
+  [task_A] step 150 loss 0.0430
+  [task_A] step 199 loss 0.0354
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.4688
+  [task_B] step 100 loss 0.0851
+  [task_B] step 150 loss 0.0400
+  [task_B] step 199 loss 0.0295
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.4605
+  [task_C] step 100 loss 0.0873
+  [task_C] step 150 loss 0.0517
+  [task_C] step 199 loss 0.0386
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 6.8555
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 6.8874
+  [lora_task_C] step 50 loss 0.0001
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 9.6707
+  [lora_task_B] step 50 loss 0.0001
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 5.9283
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.2611
+  [task_A] step 100 loss 0.0553
+  [task_A] step 150 loss 0.0424
+  [task_A] step 199 loss 0.0351
+  [task_B] step 0 loss 4.3761
+  [task_B] step 50 loss 0.1228
+  [task_B] step 100 loss 0.0471
+  [task_B] step 150 loss 0.0293
+  [task_B] step 199 loss 0.0251
+  [task_C] step 0 loss 4.4480
+  [task_C] step 50 loss 0.3854
+  [task_C] step 100 loss 0.1404
+  [task_C] step 150 loss 0.0804
+  [task_C] step 199 loss 0.0494
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.4674
+  [task_C] step 100 loss 0.0841
+  [task_C] step 150 loss 0.0523
+  [task_C] step 199 loss 0.0416
+  [task_B] step 0 loss 2.0576
+  [task_B] step 50 loss 0.1344
+  [task_B] step 100 loss 0.0810
+  [task_B] step 150 loss 0.0561
+  [task_B] step 199 loss 0.0377
+  [task_A] step 0 loss 3.5913
+  [task_A] step 50 loss 0.1308
+  [task_A] step 100 loss 0.0675
+  [task_A] step 150 loss 0.0484
+  [task_A] step 199 loss 0.0315
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       3.913   -        -       -
+naive_stack   0.75 0.75 1.00            0.75     0.17    7.563   0.25     0.25    0.25
+coeff_add     0.25 0.00 0.00            0.12     0.33    6.156   0.00     0.00    0.00
+controller    0.25 0.50 1.00            0.38     0.42    4.560   0.25     0.62    0.58
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_0.json  (runtime 42.0s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 21604.01it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.2972
+  [task_A] step 100 loss 0.8772
+  [task_A] step 150 loss 0.7353
+  [task_A] step 199 loss 0.5700
+  [task_B] step 0 loss 3.1090
+  [task_B] step 50 loss 0.7213
+  [task_B] step 100 loss 0.6387
+  [task_B] step 150 loss 0.6103
+  [task_B] step 199 loss 0.6087
+  [task_C] step 0 loss 3.3298
+  [task_C] step 50 loss 0.7390
+  [task_C] step 100 loss 0.6310
+  [task_C] step 150 loss 0.6262
+  [task_C] step 199 loss 0.6241
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.2797
+  [task_A] step 100 loss 0.8601
+  [task_A] step 150 loss 0.5882
+  [task_A] step 199 loss 0.5383
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.5297
+  [task_B] step 100 loss 0.8179
+  [task_B] step 150 loss 0.6317
+  [task_B] step 199 loss 0.5817
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.4191
+  [task_C] step 100 loss 0.9576
+  [task_C] step 150 loss 0.9253
+  [task_C] step 199 loss 0.9089
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.4428
+  [task_C] step 100 loss 0.9622
+  [task_C] step 150 loss 0.9245
+  [task_C] step 199 loss 0.9095
+  [task_B] step 0 loss 2.7542
+  [task_B] step 50 loss 0.8263
+  [task_B] step 100 loss 0.7612
+  [task_B] step 150 loss 0.7276
+  [task_B] step 199 loss 0.6944
+  [task_A] step 0 loss 2.4840
+  [task_A] step 50 loss 0.7296
+  [task_A] step 100 loss 0.6204
+  [task_A] step 150 loss 0.5923
+  [task_A] step 199 loss 0.5892
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.25 0.25 1.00            0.25     0.50    0.457   0.00     0.62    0.58
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_0.json  (runtime 50.6s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 29395.71it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.3088
+  [task_A] step 100 loss 0.1033
+  [task_A] step 150 loss 0.0689
+  [task_A] step 199 loss 0.0586
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.5567
+  [task_B] step 100 loss 0.0914
+  [task_B] step 150 loss 0.0530
+  [task_B] step 199 loss 0.0449
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.8667
+  [task_C] step 100 loss 0.1725
+  [task_C] step 150 loss 0.0931
+  [task_C] step 199 loss 0.0736
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 7.8279
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 6.0898
+  [lora_task_C] step 50 loss 0.0001
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 12.3761
+  [lora_task_B] step 50 loss 0.0001
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 4.3637
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.3130
+  [task_A] step 100 loss 0.1032
+  [task_A] step 150 loss 0.0711
+  [task_A] step 199 loss 0.0604
+  [task_B] step 0 loss 3.0074
+  [task_B] step 50 loss 0.1355
+  [task_B] step 100 loss 0.0734
+  [task_B] step 150 loss 0.0622
+  [task_B] step 199 loss 0.0483
+  [task_C] step 0 loss 3.1679
+  [task_C] step 50 loss 0.2060
+  [task_C] step 100 loss 0.0958
+  [task_C] step 150 loss 0.0728
+  [task_C] step 199 loss 0.0622
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.8739
+  [task_C] step 100 loss 0.1772
+  [task_C] step 150 loss 0.0947
+  [task_C] step 199 loss 0.0687
+  [task_B] step 0 loss 2.8622
+  [task_B] step 50 loss 0.1513
+  [task_B] step 100 loss 0.0620
+  [task_B] step 150 loss 0.0492
+  [task_B] step 199 loss 0.0362
+  [task_A] step 0 loss 2.6101
+  [task_A] step 50 loss 0.0723
+  [task_A] step 100 loss 0.0433
+  [task_A] step 150 loss 0.0337
+  [task_A] step 199 loss 0.0287
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       6.123   -        -       -
+naive_stack   0.75 0.75 1.00            0.75     0.17    12.002  0.25     0.50    0.25
+coeff_add     0.25 0.25 0.25            0.25     0.25    6.599   0.00     0.12    0.00
+controller    0.25 0.25 1.00            0.25     0.50    6.090   0.00     0.50    0.58
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_1.json  (runtime 38.7s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 19894.35it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.5673
+  [task_A] step 100 loss 0.9637
+  [task_A] step 150 loss 0.8948
+  [task_A] step 199 loss 0.8597
+  [task_B] step 0 loss 3.4239
+  [task_B] step 50 loss 1.3451
+  [task_B] step 100 loss 1.0504
+  [task_B] step 150 loss 0.9094
+  [task_B] step 199 loss 0.8823
+  [task_C] step 0 loss 3.3473
+  [task_C] step 50 loss 1.4259
+  [task_C] step 100 loss 1.2385
+  [task_C] step 150 loss 1.1960
+  [task_C] step 199 loss 1.1746
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.5641
+  [task_A] step 100 loss 0.9586
+  [task_A] step 150 loss 0.8976
+  [task_A] step 199 loss 0.8559
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.3177
+  [task_B] step 100 loss 1.0008
+  [task_B] step 150 loss 0.9445
+  [task_B] step 199 loss 0.8144
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.8113
+  [task_C] step 100 loss 1.0555
+  [task_C] step 150 loss 0.8605
+  [task_C] step 199 loss 0.8250
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.8193
+  [task_C] step 100 loss 1.0552
+  [task_C] step 150 loss 0.8633
+  [task_C] step 199 loss 0.8303
+  [task_B] step 0 loss 3.9484
+  [task_B] step 50 loss 1.0007
+  [task_B] step 100 loss 0.8601
+  [task_B] step 150 loss 0.7900
+  [task_B] step 199 loss 0.6847
+  [task_A] step 0 loss 2.6773
+  [task_A] step 50 loss 0.9020
+  [task_A] step 100 loss 0.7903
+  [task_A] step 150 loss 0.7211
+  [task_A] step 199 loss 0.6983
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.00 0.25 1.00            0.12     0.58    0.848   0.00     0.62    0.67
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_1.json  (runtime 54.2s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 38888.26it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.3156
+  [task_A] step 100 loss 0.0514
+  [task_A] step 150 loss 0.0358
+  [task_A] step 199 loss 0.0288
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.4581
+  [task_B] step 100 loss 0.1006
+  [task_B] step 150 loss 0.0504
+  [task_B] step 199 loss 0.0317
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.3649
+  [task_C] step 100 loss 0.0900
+  [task_C] step 150 loss 0.0498
+  [task_C] step 199 loss 0.0355
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0001
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 4.8757
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 6.1712
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0001
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 8.4423
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 5.6660
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.3210
+  [task_A] step 100 loss 0.0516
+  [task_A] step 150 loss 0.0374
+  [task_A] step 199 loss 0.0310
+  [task_B] step 0 loss 4.7608
+  [task_B] step 50 loss 0.1290
+  [task_B] step 100 loss 0.0462
+  [task_B] step 150 loss 0.0286
+  [task_B] step 199 loss 0.0222
+  [task_C] step 0 loss 6.8027
+  [task_C] step 50 loss 0.2693
+  [task_C] step 100 loss 0.1477
+  [task_C] step 150 loss 0.0937
+  [task_C] step 199 loss 0.0605
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.3612
+  [task_C] step 100 loss 0.0923
+  [task_C] step 150 loss 0.0516
+  [task_C] step 199 loss 0.0365
+  [task_B] step 0 loss 4.2135
+  [task_B] step 50 loss 0.1243
+  [task_B] step 100 loss 0.0612
+  [task_B] step 150 loss 0.0400
+  [task_B] step 199 loss 0.0324
+  [task_A] step 0 loss 2.6802
+  [task_A] step 50 loss 0.0835
+  [task_A] step 100 loss 0.0521
+  [task_A] step 150 loss 0.0435
+  [task_A] step 199 loss 0.0349
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       3.672   -        -       -
+naive_stack   0.50 0.50 1.00            0.50     0.33    16.733  0.00     0.38    0.42
+coeff_add     0.00 0.25 0.25            0.12     0.25    4.888   0.25     0.12    0.00
+controller    0.25 0.75 1.00            0.50     0.33    4.616   0.25     0.62    0.67
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_2.json  (runtime 48.2s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 23221.91it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.3409
+  [task_A] step 100 loss 0.6466
+  [task_A] step 150 loss 0.5369
+  [task_A] step 199 loss 0.5043
+  [task_B] step 0 loss 3.3251
+  [task_B] step 50 loss 0.8284
+  [task_B] step 100 loss 0.7499
+  [task_B] step 150 loss 0.7386
+  [task_B] step 199 loss 0.7205
+  [task_C] step 0 loss 3.4789
+  [task_C] step 50 loss 0.9950
+  [task_C] step 100 loss 0.7378
+  [task_C] step 150 loss 0.7011
+  [task_C] step 199 loss 0.6973
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.2848
+  [task_A] step 100 loss 0.6383
+  [task_A] step 150 loss 0.5345
+  [task_A] step 199 loss 0.5025
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.1505
+  [task_B] step 100 loss 0.7168
+  [task_B] step 150 loss 0.6405
+  [task_B] step 199 loss 0.6373
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.5588
+  [task_C] step 100 loss 0.9072
+  [task_C] step 150 loss 0.8320
+  [task_C] step 199 loss 0.8308
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.5717
+  [task_C] step 100 loss 0.9125
+  [task_C] step 150 loss 0.8330
+  [task_C] step 199 loss 0.8313
+  [task_B] step 0 loss 3.4715
+  [task_B] step 50 loss 0.8466
+  [task_B] step 100 loss 0.7821
+  [task_B] step 150 loss 0.7587
+  [task_B] step 199 loss 0.7454
+  [task_A] step 0 loss 2.7850
+  [task_A] step 50 loss 0.6931
+  [task_A] step 100 loss 0.6055
+  [task_A] step 150 loss 0.5894
+  [task_A] step 199 loss 0.5743
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.25 0.00 1.00            0.12     0.58    0.537   0.25     0.50    0.75
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_2.json  (runtime 64.8s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 18591.34it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5051
+  [task_A] step 100 loss 0.1622
+  [task_A] step 150 loss 0.0559
+  [task_A] step 199 loss 0.0400
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.3600
+  [task_B] step 100 loss 0.0913
+  [task_B] step 150 loss 0.0596
+  [task_B] step 199 loss 0.0419
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.7235
+  [task_C] step 100 loss 0.1148
+  [task_C] step 150 loss 0.0487
+  [task_C] step 199 loss 0.0359
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 4.7713
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 5.7536
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 7.0145
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 3.2583
+  [lora_task_A] step 50 loss 0.0001
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5065
+  [task_A] step 100 loss 0.1133
+  [task_A] step 150 loss 0.0562
+  [task_A] step 199 loss 0.0472
+  [task_B] step 0 loss 4.5492
+  [task_B] step 50 loss 0.1692
+  [task_B] step 100 loss 0.0630
+  [task_B] step 150 loss 0.0462
+  [task_B] step 199 loss 0.0363
+  [task_C] step 0 loss 2.9787
+  [task_C] step 50 loss 0.1152
+  [task_C] step 100 loss 0.0702
+  [task_C] step 150 loss 0.0626
+  [task_C] step 199 loss 0.0570
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.7299
+  [task_C] step 100 loss 0.1140
+  [task_C] step 150 loss 0.0502
+  [task_C] step 199 loss 0.0339
+  [task_B] step 0 loss 4.1116
+  [task_B] step 50 loss 0.1582
+  [task_B] step 100 loss 0.0497
+  [task_B] step 150 loss 0.0326
+  [task_B] step 199 loss 0.0277
+  [task_A] step 0 loss 2.5760
+  [task_A] step 50 loss 0.1372
+  [task_A] step 100 loss 0.0636
+  [task_A] step 150 loss 0.0520
+  [task_A] step 199 loss 0.0464
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       6.393   -        -       -
+naive_stack   0.50 0.75 1.00            0.62     0.25    14.181  0.25     0.38    0.50
+coeff_add     0.25 0.25 0.00            0.25     0.17    5.908   0.25     0.12    0.00
+controller    0.00 0.00 1.00            0.00     0.67    3.910   0.00     0.62    0.58
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_3.json  (runtime 41.7s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 24582.95it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.5110
+  [task_A] step 100 loss 0.8902
+  [task_A] step 150 loss 0.7764
+  [task_A] step 199 loss 0.7697
+  [task_B] step 0 loss 4.0345
+  [task_B] step 50 loss 0.7744
+  [task_B] step 100 loss 0.6644
+  [task_B] step 150 loss 0.6497
+  [task_B] step 199 loss 0.6488
+  [task_C] step 0 loss 3.6604
+  [task_C] step 50 loss 0.9639
+  [task_C] step 100 loss 0.8400
+  [task_C] step 150 loss 0.8297
+  [task_C] step 199 loss 0.8268
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.5097
+  [task_A] step 100 loss 0.9090
+  [task_A] step 150 loss 0.7943
+  [task_A] step 199 loss 0.7699
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.3687
+  [task_B] step 100 loss 1.0590
+  [task_B] step 150 loss 0.8473
+  [task_B] step 199 loss 0.7560
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.9275
+  [task_C] step 100 loss 1.3512
+  [task_C] step 150 loss 0.9771
+  [task_C] step 199 loss 0.8979
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.9331
+  [task_C] step 100 loss 1.3621
+  [task_C] step 150 loss 1.0090
+  [task_C] step 199 loss 0.9357
+  [task_B] step 0 loss 3.3093
+  [task_B] step 50 loss 1.0125
+  [task_B] step 100 loss 0.8330
+  [task_B] step 150 loss 0.7518
+  [task_B] step 199 loss 0.7152
+  [task_A] step 0 loss 3.2384
+  [task_A] step 50 loss 0.9660
+  [task_A] step 100 loss 0.7826
+  [task_A] step 150 loss 0.7203
+  [task_A] step 199 loss 0.6765
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.25 0.25 1.00            0.25     0.50    0.589   0.00     0.62    0.67
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_3.json  (runtime 45.9s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 25391.68it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.7538
+  [task_A] step 100 loss 0.1055
+  [task_A] step 150 loss 0.0556
+  [task_A] step 199 loss 0.0444
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.7099
+  [task_B] step 100 loss 0.1937
+  [task_B] step 150 loss 0.0733
+  [task_B] step 199 loss 0.0500
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.8851
+  [task_C] step 100 loss 0.1853
+  [task_C] step 150 loss 0.0897
+  [task_C] step 199 loss 0.0690
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 6.7796
+  [lora_task_B] step 50 loss 0.0001
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 6.3764
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0001
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 8.9276
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 5.5845
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.7708
+  [task_A] step 100 loss 0.1054
+  [task_A] step 150 loss 0.0621
+  [task_A] step 199 loss 0.0466
+  [task_B] step 0 loss 4.5048
+  [task_B] step 50 loss 0.3529
+  [task_B] step 100 loss 0.2032
+  [task_B] step 150 loss 0.0946
+  [task_B] step 199 loss 0.0535
+  [task_C] step 0 loss 5.8639
+  [task_C] step 50 loss 0.3002
+  [task_C] step 100 loss 0.1903
+  [task_C] step 150 loss 0.1458
+  [task_C] step 199 loss 0.1154
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.8882
+  [task_C] step 100 loss 0.1856
+  [task_C] step 150 loss 0.0900
+  [task_C] step 199 loss 0.0688
+  [task_B] step 0 loss 5.8477
+  [task_B] step 50 loss 0.4206
+  [task_B] step 100 loss 0.1399
+  [task_B] step 150 loss 0.0767
+  [task_B] step 199 loss 0.0544
+  [task_A] step 0 loss 3.5745
+  [task_A] step 50 loss 0.2515
+  [task_A] step 100 loss 0.0958
+  [task_A] step 150 loss 0.0570
+  [task_A] step 199 loss 0.0467
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       4.550   -        -       -
+naive_stack   1.00 0.75 1.00            0.88     0.08    18.015  0.25     0.50    0.08
+coeff_add     0.50 0.00 0.00            0.25     0.17    6.751   0.00     0.25    0.00
+controller    0.50 0.25 1.00            0.38     0.42    4.636   0.00     0.62    0.50
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_4.json  (runtime 39.6s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 26612.72it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.6200
+  [task_A] step 100 loss 1.0538
+  [task_A] step 150 loss 0.8274
+  [task_A] step 199 loss 0.7158
+  [task_B] step 0 loss 3.2826
+  [task_B] step 50 loss 0.9524
+  [task_B] step 100 loss 0.8270
+  [task_B] step 150 loss 0.7847
+  [task_B] step 199 loss 0.7431
+  [task_C] step 0 loss 2.7148
+  [task_C] step 50 loss 0.9800
+  [task_C] step 100 loss 0.8228
+  [task_C] step 150 loss 0.7971
+  [task_C] step 199 loss 0.7843
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.5951
+  [task_A] step 100 loss 1.0475
+  [task_A] step 150 loss 0.7853
+  [task_A] step 199 loss 0.7183
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.5554
+  [task_B] step 100 loss 1.0176
+  [task_B] step 150 loss 0.8536
+  [task_B] step 199 loss 0.7854
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.7011
+  [task_C] step 100 loss 1.2439
+  [task_C] step 150 loss 1.1594
+  [task_C] step 199 loss 1.1085
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.7041
+  [task_C] step 100 loss 1.2458
+  [task_C] step 150 loss 1.1602
+  [task_C] step 199 loss 1.1095
+  [task_B] step 0 loss 2.9550
+  [task_B] step 50 loss 1.1247
+  [task_B] step 100 loss 0.8595
+  [task_B] step 150 loss 0.7979
+  [task_B] step 199 loss 0.7896
+  [task_A] step 0 loss 2.4250
+  [task_A] step 50 loss 0.8883
+  [task_A] step 100 loss 0.7897
+  [task_A] step 150 loss 0.7391
+  [task_A] step 199 loss 0.7000
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.00 0.25 1.00            0.12     0.58    0.568   0.00     0.38    0.67
+  (routed)    0.75 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_4.json  (runtime 47.4s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 37352.60it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5000
+  [task_A] step 100 loss 0.0777
+  [task_A] step 150 loss 0.0460
+  [task_A] step 199 loss 0.0325
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.4784
+  [task_B] step 100 loss 0.1287
+  [task_B] step 150 loss 0.0556
+  [task_B] step 199 loss 0.0395
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.5135
+  [task_C] step 100 loss 0.1073
+  [task_C] step 150 loss 0.0387
+  [task_C] step 199 loss 0.0278
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 4.7781
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 4.7151
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 8.9088
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 4.5714
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5066
+  [task_A] step 100 loss 0.0777
+  [task_A] step 150 loss 0.0454
+  [task_A] step 199 loss 0.0298
+  [task_B] step 0 loss 3.9245
+  [task_B] step 50 loss 0.1306
+  [task_B] step 100 loss 0.0470
+  [task_B] step 150 loss 0.0296
+  [task_B] step 199 loss 0.0232
+  [task_C] step 0 loss 4.2416
+  [task_C] step 50 loss 0.2532
+  [task_C] step 100 loss 0.1286
+  [task_C] step 150 loss 0.0756
+  [task_C] step 199 loss 0.0598
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.5180
+  [task_C] step 100 loss 0.1205
+  [task_C] step 150 loss 0.0450
+  [task_C] step 199 loss 0.0300
+  [task_B] step 0 loss 3.4018
+  [task_B] step 50 loss 0.1485
+  [task_B] step 100 loss 0.0628
+  [task_B] step 150 loss 0.0422
+  [task_B] step 199 loss 0.0338
+  [task_A] step 0 loss 3.7508
+  [task_A] step 50 loss 0.1052
+  [task_A] step 100 loss 0.0485
+  [task_A] step 150 loss 0.0311
+  [task_A] step 199 loss 0.0237
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       7.339   -        -       -
+naive_stack   0.50 0.75 1.00            0.62     0.25    19.913  0.25     0.50    0.33
+coeff_add     0.50 0.25 0.00            0.38     0.17    7.014   0.00     0.12    0.00
+controller    0.25 0.50 1.00            0.38     0.42    7.239   0.00     0.62    0.50
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_5.json  (runtime 39.9s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 38139.16it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.4424
+  [task_A] step 100 loss 0.8888
+  [task_A] step 150 loss 0.6521
+  [task_A] step 199 loss 0.5810
+  [task_B] step 0 loss 2.9973
+  [task_B] step 50 loss 0.9162
+  [task_B] step 100 loss 0.6554
+  [task_B] step 150 loss 0.6390
+  [task_B] step 199 loss 0.6350
+  [task_C] step 0 loss 4.2830
+  [task_C] step 50 loss 0.9257
+  [task_C] step 100 loss 0.7651
+  [task_C] step 150 loss 0.7137
+  [task_C] step 199 loss 0.6993
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.4365
+  [task_A] step 100 loss 0.8847
+  [task_A] step 150 loss 0.6394
+  [task_A] step 199 loss 0.5773
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.4152
+  [task_B] step 100 loss 0.8303
+  [task_B] step 150 loss 0.8104
+  [task_B] step 199 loss 0.7953
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.3477
+  [task_C] step 100 loss 0.8754
+  [task_C] step 150 loss 0.8142
+  [task_C] step 199 loss 0.8128
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.3593
+  [task_C] step 100 loss 0.8903
+  [task_C] step 150 loss 0.8157
+  [task_C] step 199 loss 0.8131
+  [task_B] step 0 loss 4.8135
+  [task_B] step 50 loss 1.0736
+  [task_B] step 100 loss 0.8454
+  [task_B] step 150 loss 0.7984
+  [task_B] step 199 loss 0.7350
+  [task_A] step 0 loss 3.5395
+  [task_A] step 50 loss 0.9697
+  [task_A] step 100 loss 0.8588
+  [task_A] step 150 loss 0.8297
+  [task_A] step 199 loss 0.7917
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.25 0.25 1.00            0.25     0.50    0.526   0.00     0.50    0.58
+  (routed)    0.50 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_5.json  (runtime 50.4s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 35102.64it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.1518
+  [task_A] step 100 loss 0.0317
+  [task_A] step 150 loss 0.0206
+  [task_A] step 199 loss 0.0173
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.2422
+  [task_B] step 100 loss 0.0671
+  [task_B] step 150 loss 0.0431
+  [task_B] step 199 loss 0.0307
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.4897
+  [task_C] step 100 loss 0.0981
+  [task_C] step 150 loss 0.0661
+  [task_C] step 199 loss 0.0517
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 5.9125
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 6.7139
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 9.1983
+  [lora_task_B] step 50 loss 0.0001
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 5.5308
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.1531
+  [task_A] step 100 loss 0.0320
+  [task_A] step 150 loss 0.0207
+  [task_A] step 199 loss 0.0173
+  [task_B] step 0 loss 2.3683
+  [task_B] step 50 loss 0.1039
+  [task_B] step 100 loss 0.0433
+  [task_B] step 150 loss 0.0299
+  [task_B] step 199 loss 0.0243
+  [task_C] step 0 loss 6.3501
+  [task_C] step 50 loss 0.3085
+  [task_C] step 100 loss 0.1139
+  [task_C] step 150 loss 0.0656
+  [task_C] step 199 loss 0.0454
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.4935
+  [task_C] step 100 loss 0.0978
+  [task_C] step 150 loss 0.0641
+  [task_C] step 199 loss 0.0467
+  [task_B] step 0 loss 2.9512
+  [task_B] step 50 loss 0.0786
+  [task_B] step 100 loss 0.0310
+  [task_B] step 150 loss 0.0274
+  [task_B] step 199 loss 0.0251
+  [task_A] step 0 loss 2.3477
+  [task_A] step 50 loss 0.0701
+  [task_A] step 100 loss 0.0375
+  [task_A] step 150 loss 0.0270
+  [task_A] step 199 loss 0.0218
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       5.916   -        -       -
+naive_stack   0.50 0.75 1.00            0.62     0.25    22.044  0.25     0.50    0.42
+coeff_add     0.25 0.00 0.25            0.12     0.25    9.572   0.00     0.25    0.00
+controller    0.25 0.25 1.00            0.25     0.50    4.885   0.00     0.62    0.67
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_6.json  (runtime 42.9s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 36753.96it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.1425
+  [task_A] step 100 loss 0.6974
+  [task_A] step 150 loss 0.6459
+  [task_A] step 199 loss 0.6410
+  [task_B] step 0 loss 3.3088
+  [task_B] step 50 loss 1.1477
+  [task_B] step 100 loss 0.9394
+  [task_B] step 150 loss 0.9245
+  [task_B] step 199 loss 0.8544
+  [task_C] step 0 loss 3.1561
+  [task_C] step 50 loss 1.0485
+  [task_C] step 100 loss 0.8054
+  [task_C] step 150 loss 0.7458
+  [task_C] step 199 loss 0.7386
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.1304
+  [task_A] step 100 loss 0.6898
+  [task_A] step 150 loss 0.6441
+  [task_A] step 199 loss 0.6391
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.4217
+  [task_B] step 100 loss 0.8641
+  [task_B] step 150 loss 0.7756
+  [task_B] step 199 loss 0.7459
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.3454
+  [task_C] step 100 loss 0.7429
+  [task_C] step 150 loss 0.7082
+  [task_C] step 199 loss 0.6972
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.3614
+  [task_C] step 100 loss 0.7457
+  [task_C] step 150 loss 0.7130
+  [task_C] step 199 loss 0.6991
+  [task_B] step 0 loss 3.0904
+  [task_B] step 50 loss 0.7210
+  [task_B] step 100 loss 0.6291
+  [task_B] step 150 loss 0.5854
+  [task_B] step 199 loss 0.5720
+  [task_A] step 0 loss 2.8228
+  [task_A] step 50 loss 0.7185
+  [task_A] step 100 loss 0.6710
+  [task_A] step 150 loss 0.6627
+  [task_A] step 199 loss 0.6340
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.00 0.25 1.00            0.12     0.58    0.541   0.00     0.50    0.75
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_6.json  (runtime 48.2s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 33674.95it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5057
+  [task_A] step 100 loss 0.0646
+  [task_A] step 150 loss 0.0400
+  [task_A] step 199 loss 0.0283
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.6185
+  [task_B] step 100 loss 0.1623
+  [task_B] step 150 loss 0.0700
+  [task_B] step 199 loss 0.0497
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.0997
+  [task_C] step 100 loss 0.1261
+  [task_C] step 150 loss 0.0558
+  [task_C] step 199 loss 0.0415
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 4.2930
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 7.8691
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 10.0330
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 4.7301
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5151
+  [task_A] step 100 loss 0.0637
+  [task_A] step 150 loss 0.0384
+  [task_A] step 199 loss 0.0278
+  [task_B] step 0 loss 3.8114
+  [task_B] step 50 loss 0.0884
+  [task_B] step 100 loss 0.0362
+  [task_B] step 150 loss 0.0234
+  [task_B] step 199 loss 0.0171
+  [task_C] step 0 loss 4.8604
+  [task_C] step 50 loss 0.1384
+  [task_C] step 100 loss 0.0595
+  [task_C] step 150 loss 0.0396
+  [task_C] step 199 loss 0.0342
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.1127
+  [task_C] step 100 loss 0.1277
+  [task_C] step 150 loss 0.0558
+  [task_C] step 199 loss 0.0436
+  [task_B] step 0 loss 3.0625
+  [task_B] step 50 loss 0.1040
+  [task_B] step 100 loss 0.0438
+  [task_B] step 150 loss 0.0297
+  [task_B] step 199 loss 0.0240
+  [task_A] step 0 loss 3.5218
+  [task_A] step 50 loss 0.2168
+  [task_A] step 100 loss 0.1059
+  [task_A] step 150 loss 0.0614
+  [task_A] step 199 loss 0.0371
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       4.641   -        -       -
+naive_stack   0.50 0.75 1.00            0.62     0.25    12.757  0.25     0.50    0.33
+coeff_add     0.25 0.25 0.25            0.25     0.17    6.249   0.00     0.00    0.00
+controller    0.50 0.50 1.00            0.50     0.33    4.224   0.00     0.50    0.33
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_7.json  (runtime 40.0s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 36703.18it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.6554
+  [task_A] step 100 loss 1.2467
+  [task_A] step 150 loss 1.0424
+  [task_A] step 199 loss 0.8443
+  [task_B] step 0 loss 3.2785
+  [task_B] step 50 loss 1.0223
+  [task_B] step 100 loss 0.8843
+  [task_B] step 150 loss 0.8576
+  [task_B] step 199 loss 0.8558
+  [task_C] step 0 loss 3.5073
+  [task_C] step 50 loss 1.6301
+  [task_C] step 100 loss 1.3481
+  [task_C] step 150 loss 1.2293
+  [task_C] step 199 loss 1.1817
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.6539
+  [task_A] step 100 loss 1.2454
+  [task_A] step 150 loss 1.0616
+  [task_A] step 199 loss 0.8558
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.5101
+  [task_B] step 100 loss 1.1178
+  [task_B] step 150 loss 0.9824
+  [task_B] step 199 loss 0.9393
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.8668
+  [task_C] step 100 loss 1.1901
+  [task_C] step 150 loss 0.9583
+  [task_C] step 199 loss 0.9096
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.8803
+  [task_C] step 100 loss 1.2072
+  [task_C] step 150 loss 0.9729
+  [task_C] step 199 loss 0.9180
+  [task_B] step 0 loss 2.6435
+  [task_B] step 50 loss 0.9353
+  [task_B] step 100 loss 0.8849
+  [task_B] step 150 loss 0.8513
+  [task_B] step 199 loss 0.8281
+  [task_A] step 0 loss 2.7566
+  [task_A] step 50 loss 0.8761
+  [task_A] step 100 loss 0.7322
+  [task_A] step 150 loss 0.7095
+  [task_A] step 199 loss 0.6955
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.50 0.25 1.00            0.38     0.42    0.787   0.00     0.50    0.58
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_7.json  (runtime 48.4s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 42908.48it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5912
+  [task_A] step 100 loss 0.1119
+  [task_A] step 150 loss 0.0495
+  [task_A] step 199 loss 0.0306
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.5694
+  [task_B] step 100 loss 0.0913
+  [task_B] step 150 loss 0.0580
+  [task_B] step 199 loss 0.0503
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.8334
+  [task_C] step 100 loss 0.1444
+  [task_C] step 150 loss 0.0591
+  [task_C] step 199 loss 0.0466
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 5.3443
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 6.6298
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 10.5193
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 4.2970
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5953
+  [task_A] step 100 loss 0.1128
+  [task_A] step 150 loss 0.0532
+  [task_A] step 199 loss 0.0332
+  [task_B] step 0 loss 4.8185
+  [task_B] step 50 loss 0.2938
+  [task_B] step 100 loss 0.1377
+  [task_B] step 150 loss 0.1127
+  [task_B] step 199 loss 0.0881
+  [task_C] step 0 loss 3.9150
+  [task_C] step 50 loss 0.3063
+  [task_C] step 100 loss 0.1639
+  [task_C] step 150 loss 0.1382
+  [task_C] step 199 loss 0.1136
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.8437
+  [task_C] step 100 loss 0.1400
+  [task_C] step 150 loss 0.0585
+  [task_C] step 199 loss 0.0462
+  [task_B] step 0 loss 3.5934
+  [task_B] step 50 loss 0.2221
+  [task_B] step 100 loss 0.1031
+  [task_B] step 150 loss 0.0653
+  [task_B] step 199 loss 0.0446
+  [task_A] step 0 loss 3.2274
+  [task_A] step 50 loss 0.2343
+  [task_A] step 100 loss 0.0979
+  [task_A] step 150 loss 0.0708
+  [task_A] step 199 loss 0.0607
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       4.054   -        -       -
+naive_stack   0.50 0.75 1.00            0.62     0.25    13.803  0.25     0.62    0.33
+coeff_add     0.25 0.25 0.25            0.25     0.25    5.520   0.00     0.00    0.00
+controller    0.00 0.00 1.00            0.00     0.67    5.729   0.00     0.50    0.83
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_8.json  (runtime 40.4s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 39021.56it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.6214
+  [task_A] step 100 loss 0.8089
+  [task_A] step 150 loss 0.7035
+  [task_A] step 199 loss 0.6069
+  [task_B] step 0 loss 3.1236
+  [task_B] step 50 loss 0.7095
+  [task_B] step 100 loss 0.6467
+  [task_B] step 150 loss 0.5987
+  [task_B] step 199 loss 0.5689
+  [task_C] step 0 loss 3.5602
+  [task_C] step 50 loss 1.1344
+  [task_C] step 100 loss 0.8256
+  [task_C] step 150 loss 0.7836
+  [task_C] step 199 loss 0.7568
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.6150
+  [task_A] step 100 loss 0.8061
+  [task_A] step 150 loss 0.6914
+  [task_A] step 199 loss 0.6088
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.5565
+  [task_B] step 100 loss 1.0892
+  [task_B] step 150 loss 0.9468
+  [task_B] step 199 loss 0.7950
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.7874
+  [task_C] step 100 loss 1.3148
+  [task_C] step 150 loss 1.1234
+  [task_C] step 199 loss 1.1113
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.7902
+  [task_C] step 100 loss 1.3304
+  [task_C] step 150 loss 1.1193
+  [task_C] step 199 loss 1.1076
+  [task_B] step 0 loss 4.1098
+  [task_B] step 50 loss 1.4226
+  [task_B] step 100 loss 1.0471
+  [task_B] step 150 loss 0.8876
+  [task_B] step 199 loss 0.8403
+  [task_A] step 0 loss 3.8304
+  [task_A] step 50 loss 1.1203
+  [task_A] step 100 loss 0.9015
+  [task_A] step 150 loss 0.8623
+  [task_A] step 199 loss 0.8462
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.25 0.25 1.00            0.25     0.50    0.567   0.00     0.50    0.58
+  (routed)    0.25 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_8.json  (runtime 48.8s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 48036.03it/s]
+== independent ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5102
+  [task_A] step 100 loss 0.1021
+  [task_A] step 150 loss 0.0609
+  [task_A] step 199 loss 0.0392
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 0.6382
+  [task_B] step 100 loss 0.1081
+  [task_B] step 150 loss 0.0674
+  [task_B] step 199 loss 0.0482
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.7794
+  [task_C] step 100 loss 0.1660
+  [task_C] step 150 loss 0.0984
+  [task_C] step 199 loss 0.0724
+== naive_stack ==
+  [lora_task_A] step 0 loss 6.4688
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 6.5062
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_C] step 0 loss 5.8274
+  [lora_task_C] step 50 loss 0.0000
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+== naive_stack (reversed order) ==
+  [lora_task_C] step 0 loss 6.8675
+  [lora_task_C] step 50 loss 0.0001
+  [lora_task_C] step 100 loss 0.0000
+  [lora_task_C] step 150 loss 0.0000
+  [lora_task_C] step 199 loss 0.0000
+  [lora_task_B] step 0 loss 9.1118
+  [lora_task_B] step 50 loss 0.0000
+  [lora_task_B] step 100 loss 0.0000
+  [lora_task_B] step 150 loss 0.0000
+  [lora_task_B] step 199 loss 0.0000
+  [lora_task_A] step 0 loss 4.2376
+  [lora_task_A] step 50 loss 0.0000
+  [lora_task_A] step 100 loss 0.0000
+  [lora_task_A] step 150 loss 0.0000
+  [lora_task_A] step 199 loss 0.0000
+== coeff_add ==
+== coeff_add (reversed order) ==
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 0.5171
+  [task_A] step 100 loss 0.1031
+  [task_A] step 150 loss 0.0602
+  [task_A] step 199 loss 0.0401
+  [task_B] step 0 loss 3.4202
+  [task_B] step 50 loss 0.0920
+  [task_B] step 100 loss 0.0546
+  [task_B] step 150 loss 0.0434
+  [task_B] step 199 loss 0.0368
+  [task_C] step 0 loss 4.2139
+  [task_C] step 50 loss 0.1156
+  [task_C] step 100 loss 0.0412
+  [task_C] step 150 loss 0.0301
+  [task_C] step 199 loss 0.0272
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 0.7903
+  [task_C] step 100 loss 0.1657
+  [task_C] step 150 loss 0.0975
+  [task_C] step 199 loss 0.0715
+  [task_B] step 0 loss 3.2768
+  [task_B] step 50 loss 0.1510
+  [task_B] step 100 loss 0.0808
+  [task_B] step 150 loss 0.0486
+  [task_B] step 199 loss 0.0393
+  [task_A] step 0 loss 4.1497
+  [task_A] step 50 loss 0.3127
+  [task_A] step 100 loss 0.1327
+  [task_A] step 150 loss 0.0940
+  [task_A] step 199 loss 0.0705
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+independent   1.00 1.00 1.00            -        -       5.114   -        -       -
+naive_stack   0.50 0.75 1.00            0.62     0.25    16.367  0.25     0.62    0.50
+coeff_add     0.25 0.25 0.25            0.25     0.25    5.215   0.25     0.25    0.00
+controller    0.25 0.50 1.00            0.38     0.42    5.008   0.00     0.75    0.50
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sequence_seed_9.json  (runtime 43.4s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████| 76/76 [00:00<00:00, 88941.71it/s]
+== controller ==
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.5587
+  [task_A] step 100 loss 0.6875
+  [task_A] step 150 loss 0.6386
+  [task_A] step 199 loss 0.5879
+  [task_B] step 0 loss 2.8728
+  [task_B] step 50 loss 0.7729
+  [task_B] step 100 loss 0.7185
+  [task_B] step 150 loss 0.6789
+  [task_B] step 199 loss 0.6643
+  [task_C] step 0 loss 2.8973
+  [task_C] step 50 loss 0.9944
+  [task_C] step 100 loss 0.9498
+  [task_C] step 150 loss 0.9095
+  [task_C] step 199 loss 0.8667
+  [task_A] step 0 loss 6.4688
+  [task_A] step 50 loss 1.5515
+  [task_A] step 100 loss 0.6808
+  [task_A] step 150 loss 0.6315
+  [task_A] step 199 loss 0.5987
+  [task_B] step 0 loss 6.2601
+  [task_B] step 50 loss 1.1928
+  [task_B] step 100 loss 0.8349
+  [task_B] step 150 loss 0.8266
+  [task_B] step 199 loss 0.8245
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.5704
+  [task_C] step 100 loss 1.0159
+  [task_C] step 150 loss 0.9818
+  [task_C] step 199 loss 0.9353
+== controller (reversed order) ==
+  [task_C] step 0 loss 6.8675
+  [task_C] step 50 loss 1.5811
+  [task_C] step 100 loss 1.0173
+  [task_C] step 150 loss 0.9681
+  [task_C] step 199 loss 0.9329
+  [task_B] step 0 loss 3.5503
+  [task_B] step 50 loss 1.0090
+  [task_B] step 100 loss 0.7698
+  [task_B] step 150 loss 0.7580
+  [task_B] step 199 loss 0.7558
+  [task_A] step 0 loss 3.1606
+  [task_A] step 50 loss 0.7898
+  [task_A] step 100 loss 0.7051
+  [task_A] step 150 loss 0.6947
+  [task_A] step 199 loss 0.6825
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -
+controller    0.25 0.25 1.00            0.25     0.50    0.639   0.25     0.62    0.50
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/controller_anchor_seed_9.json  (runtime 50.4s)
