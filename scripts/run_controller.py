@@ -2,14 +2,9 @@
 Saves artifacts/controller.json.
 
 Usage: python scripts/run_controller.py [--model distilgpt2] [--steps N]
-       [--no-gates] [--ortho 0.1]
+       [--no-gates] [--ortho 0.1] [--n-components 8]
 """
 import argparse
-
-import _bootstrap  # noqa: F401
-from sequential_adapt.config import Config
-from sequential_adapt.experiments import (format_table, run_full_suite,
-                                          save_results)
 
 
 def main():
@@ -17,6 +12,15 @@ def main():
     ap.add_argument("--model", default="distilgpt2", help="HF model name")
     ap.add_argument("--steps", type=int, default=200)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--n-components", "--k", dest="n_components", type=int,
+                    default=8,
+                    help="frozen random low-rank components per adapter site")
+    ap.add_argument("--rank", type=int, default=4,
+                    help="rank of each frozen basis component")
+    ap.add_argument("--n-tasks", type=int, default=3,
+                    help="number of synthetic task domains")
+    ap.add_argument("--facts-per-task", type=int, default=4,
+                    help="facts per synthetic task")
     ap.add_argument("--device", default="auto",
                     choices=["auto", "cpu", "cuda"],
                     help="compute device (default: auto)")
@@ -31,7 +35,15 @@ def main():
     ap.add_argument("--no-order-check", action="store_true")
     args = ap.parse_args()
 
-    cfg = Config(model_name=args.model, steps=args.steps, seed=args.seed, device=args.device,
+    import _bootstrap  # noqa: F401
+    from sequential_adapt.config import Config
+    from sequential_adapt.experiments import (format_table, run_full_suite,
+                                              save_results)
+
+    cfg = Config(model_name=args.model, steps=args.steps, seed=args.seed,
+                 device=args.device, n_components=args.n_components,
+                 rank=args.rank, n_tasks=args.n_tasks,
+                 facts_per_task=args.facts_per_task,
                  ortho_penalty=args.ortho, anchor_weight=args.anchor,
                  train_gates=not args.no_gates)
     results = run_full_suite(
