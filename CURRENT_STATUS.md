@@ -207,4 +207,7 @@ deflating/confirming the replay headline first.
   whether routing generalizes).
 - Scale model (gpt2 → TinyLlama) and task count — retention grid is done;
   scaling is now unblocked, with replay=1 (no hard-ortho) as the default
-  retention mechanism.
+  retention mechanism. gpt2 needs zero code changes; the Llama-family
+  blockers are cataloged in `notes/tinyllama_readiness.md` (the silent
+  BOS-as-gold-label bug is already fixed; site-suffix/layer-prefix
+  mapping and a tokenizer label audit remain).
