@@ -45,7 +45,7 @@ def _sweep_label(path, data):
     if parent == "seed":
         anchor = float(cfg.get("anchor_weight", 0.0))
         if anchor:
-            return f"seed|anchor={_fmt_float(anchor)}"
+            return f"seed;anchor={_fmt_float(anchor)}"
         return "seed"
     if parent == "k":
         return f"k={cfg.get('n_components')}"
@@ -56,14 +56,14 @@ def _sweep_label(path, data):
         anchor = float(cfg.get("anchor_weight", 0.0))
         if anchor:
             parts.append(f"anchor={_fmt_float(anchor)}")
-        return "|".join(parts)
+        return ";".join(parts)
     if parent == "task_count":
-        return f"tasks={cfg.get('n_tasks')}|facts={cfg.get('facts_per_task')}"
+        return f"tasks={cfg.get('n_tasks')};facts={cfg.get('facts_per_task')}"
     return parent
 
 
 def _prefix(sample, label):
-    sample.condition = f"{label}|{sample.condition}"
+    sample.condition = f"{label};{sample.condition}"
     return sample
 
 
@@ -96,7 +96,7 @@ def _condition_n(samples, condition):
 
 
 def _condition_sort_key(condition):
-    label, _, method = condition.rpartition("|")
+    label, _, method = condition.rpartition(";")
     return (label, method)
 
 
@@ -128,7 +128,7 @@ def render_markdown(samples, summary, ordered_metrics, paths):
         "Notes:",
         "",
         "- Conditions are inferred from JSON config fields. For example, "
-        "`k=16|controller` means controller metrics from runs with "
+        "`k=16;controller` means controller metrics from runs with "
         "`n_components=16`.",
         "- Routed controller rows report held-out context routing accuracy; "
         "sequence-only metrics are intentionally blank for those rows.",
