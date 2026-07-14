@@ -59,6 +59,14 @@ def _sweep_label(path, data):
         return ";".join(parts)
     if parent == "task_count":
         return f"tasks={cfg.get('n_tasks')};facts={cfg.get('facts_per_task')}"
+    if parent == "retention":
+        parts = []
+        replay = float(cfg.get("replay_weight", 0.0))
+        if replay:
+            parts.append(f"replay={_fmt_float(replay)}")
+        if cfg.get("hard_ortho"):
+            parts.append("hard_ortho")
+        return ";".join(parts) if parts else "retention_ctrl"
     return parent
 
 

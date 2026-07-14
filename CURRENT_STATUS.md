@@ -59,22 +59,44 @@ Interpretation (toy scale — do not over-read):
    trained phrasing and do not transfer to an unseen template. Low-dim
    updates at this scale are surface-level, not semantic.
 
-## What remains / next steps (in value order)
+## New, implemented but NOT yet run (2026-07-13, written on a no-GPU/no-torch
+## dev machine — syntax-checked only, needs verification on the CUDA box/Colab)
 
-1. **Multi-seed runs with error bars** — everything above is one seed.
-   Cheap now (~1 min/run on the GPU).
-2. **Ablations**: `--ortho` sweep (0 / 0.1 / 1.0), `--no-gates`, K
-   (n_components) sweep 4→32 — does a bigger shared basis reduce
-   interference? Scriptable today via existing flags except K (edit config).
-3. Replay-free retention losses beyond cosine² (e.g. penalize change in
-   earlier tasks' training logits — needs a small activation cache).
-4. Gradient-free coefficient fitting (CMA-ES over ~100 dims) to make
-   "Model B predicts updates without backprop" literal.
-5. Scale model (gpt2 → TinyLlama, now feasible on the 5070 Ti) and task
-   count (n_tasks up to 6 works with the current word/domain pools).
+Multi-seed runs and the k/ortho/gates/task-count sweeps are done; they showed
+k, gating, and ortho-penalty strength don't move the needle. Two retention
+mechanisms were added before scaling the model:
 
-## Suggested first command for a human
+1. **Composed-state replay** (`--replay W`, `cfg.replay_weight`): while
+   fitting task N with earlier updates active, add `W * CE` on earlier
+   tasks' training examples — directly penalizes the new coefficients for
+   breaking earlier behavior *in composition* (the known failure mode).
+2. **Hard orthogonal projection** (`--hard-ortho`, `cfg.hard_ortho`):
+   projected gradient descent — after every optimizer step the new task's
+   raw coefficients are projected onto the orthogonal complement of earlier
+   tasks' directions (QR basis, flat [n_sites*K] space; only 1 dim lost per
+   earlier task out of ~96). Supersedes the soft cosine² penalty. Exact with
+   `--no-gates`; approximate when the new task's own gates are trained.
+
+Touched: `config.py`, `train.py` (`fit_task_coefficients`), `experiments.py`
+(`run_controller` passes `replay_tasks`), `run_controller.py`,
+`evaluate_sequence.py`, `run_retention.sh/.ps1`, `summarize_sweeps.py`,
+`tests/test_retention.py`.
+
+## Suggested first commands on the GPU box / Colab
 
 ```
-python scripts/smoke_test.py
+python -m pytest tests -q                 # includes new test_retention.py
+python scripts/smoke_test.py              # regression check
+python scripts/run_controller.py --steps 200 --replay 1.0 --hard-ortho \
+    --out artifacts/controller_retention_probe.json   # single probe run
+bash scripts/run_retention.sh             # full 2x2 grid x 10 seeds
+python scripts/summarize_sweeps.py --stdout
 ```
+
+## Older next steps still open
+
+- Gradient-free coefficient fitting (CMA-ES over ~100 dims).
+- End-to-end controller training (current pipeline distills independently
+  fitted coefficients into the MLP; the distillation bottleneck may hide
+  whether routing generalizes).
+- Scale model (gpt2 → TinyLlama) and task count — AFTER the retention grid.

@@ -149,17 +149,19 @@ def run_controller(ctx, order):
     cfg = ctx.cfg
     ctx.reset_adapters()
     order_names = [t.name for t in order]
-    stages, applied, fitted = [], [], []
+    stages, applied, fitted, done_tasks = [], [], [], []
     for task in order:
         fit_task_coefficients(
             ctx.model, ctx.tokenizer, ctx.bank, task, cfg,
             prev_applied=list(applied), prev_task_names=list(fitted),
+            replay_tasks=list(done_tasks),
             train_gates=cfg.train_gates, log=ctx.log)
         cname = f"ctrl_{task.name}"
         ctx.bank.set_task(cname, ctx.bank.tasks[task.name]["coeffs"],
                           ctx.bank.tasks[task.name]["gate_logits"])
         applied.append((cname, 1.0))
         fitted.append(cname)
+        done_tasks.append(task)
         ctx.bank.apply(list(applied))
         stages.append(ctx.stage_snapshot(f"after_{task.name}"))
 

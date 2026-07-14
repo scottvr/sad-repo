@@ -26,9 +26,17 @@ def main():
                     help="compute device (default: auto)")
     ap.add_argument("--ortho", type=float, default=0.1,
                     help="interference (cosine^2) penalty weight")
+    ap.add_argument("--hard-ortho", action="store_true",
+                    help="hard-project each new task's coefficients onto the "
+                         "orthogonal complement of earlier tasks' directions "
+                         "(supersedes --ortho)")
     ap.add_argument("--anchor", type=float, default=0.0,
                     help="drift anchor weight: KL to base on neutral probes "
                          "during fitting (0 = off)")
+    ap.add_argument("--replay", type=float, default=0.0,
+                    help="replay weight: CE on earlier tasks' examples, "
+                         "evaluated in the composed state, during later "
+                         "fitting (0 = off)")
     ap.add_argument("--no-gates", action="store_true",
                     help="disable Model C per-site gating")
     ap.add_argument("--out", default="artifacts/controller.json")
@@ -44,7 +52,8 @@ def main():
                  device=args.device, n_components=args.n_components,
                  rank=args.rank, n_tasks=args.n_tasks,
                  facts_per_task=args.facts_per_task,
-                 ortho_penalty=args.ortho, anchor_weight=args.anchor,
+                 ortho_penalty=args.ortho, hard_ortho=args.hard_ortho,
+                 anchor_weight=args.anchor, replay_weight=args.replay,
                  train_gates=not args.no_gates)
     results = run_full_suite(
         cfg, methods=("controller",),

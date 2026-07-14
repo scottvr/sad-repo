@@ -22,8 +22,15 @@ def main():
                     help="facts per synthetic task")
     ap.add_argument("--ortho", type=float, default=0.1,
                     help="controller interference (cosine^2) penalty weight")
+    ap.add_argument("--hard-ortho", action="store_true",
+                    help="controller: hard-project each new task's "
+                         "coefficients orthogonal to earlier tasks' "
+                         "directions (supersedes --ortho)")
     ap.add_argument("--anchor", type=float, default=0.0,
                     help="controller drift anchor weight during fitting")
+    ap.add_argument("--replay", type=float, default=0.0,
+                    help="controller replay weight: CE on earlier tasks' "
+                         "examples in the composed state (0 = off)")
     ap.add_argument("--no-gates", action="store_true",
                     help="disable controller per-site gates")
     ap.add_argument("--device", default="auto",
@@ -42,7 +49,8 @@ def main():
                  device=args.device, n_components=args.n_components,
                  rank=args.rank, n_tasks=args.n_tasks,
                  facts_per_task=args.facts_per_task,
-                 ortho_penalty=args.ortho, anchor_weight=args.anchor,
+                 ortho_penalty=args.ortho, hard_ortho=args.hard_ortho,
+                 anchor_weight=args.anchor, replay_weight=args.replay,
                  train_gates=not args.no_gates)
     results = run_full_suite(
         cfg,

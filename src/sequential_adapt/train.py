@@ -33,12 +33,23 @@ def _training_pairs(task, cfg):
 
 def fit_task_coefficients(model, tokenizer, bank, task, cfg,
                           prev_applied=(), prev_task_names=(),
-                          train_gates=False, log=None):
+                          replay_tasks=(), train_gates=False, log=None):
     """Fit one task's shared-basis coefficients (and optionally gates).
 
     prev_applied: tasks kept active (frozen) during fitting — sequential mode.
     prev_task_names: tasks whose coefficient directions the new task is
-        penalized for overlapping with (cosine^2 * cfg.ortho_penalty).
+        penalized for overlapping with (cosine^2 * cfg.ortho_penalty), or —
+        when cfg.hard_ortho — hard-projected out of the new task's raw
+        coefficients after every optimizer step. Hard projection makes the
+        new raw coefficient vector exactly orthogonal to the earlier tasks'
+        (gated) directions in the flat [n_sites*K] space; with the new task's
+        own gates active the *effective* direction can drift slightly from
+        that subspace, so combine with train_gates=False for exact isolation.
+        hard_ortho supersedes ortho_penalty (the soft penalty is skipped).
+    replay_tasks: earlier Task objects whose training examples are replayed
+        (weight cfg.replay_weight) as CE loss WHILE the composed stack
+        (prev_applied + this task) is active — directly penalizing the new
+        coefficients for breaking earlier tasks' behavior in composition.
     cfg.anchor_weight > 0 adds a drift anchor: KL(pristine base || adapted)
         on neutral probes, discouraging off-task behavior change.
     """
@@ -60,12 +71,24 @@ def fit_task_coefficients(model, tokenizer, bank, task, cfg,
     opt = torch.optim.Adam(params, lr=cfg.lr)
     enc, gold = build_batch(tokenizer, _training_pairs(task, cfg), cfg.device)
 
+    replay = None
+    if cfg.replay_weight > 0 and replay_tasks:
+        pairs = []
+        for rt in replay_tasks:
+            pairs.extend(_training_pairs(rt, cfg))
+        replay = build_batch(tokenizer, pairs, cfg.device)
+
     prev_dirs = []
     for name in prev_task_names:
         d = bank.flat_coeffs(name)
         n = d.norm()
         if n > 1e-8:
             prev_dirs.append(d / n)
+
+    proj_Q = None
+    if prev_dirs and cfg.hard_ortho:
+        # Orthonormal basis (QR) spanning earlier tasks' directions.
+        proj_Q, _ = torch.linalg.qr(torch.stack(prev_dirs, dim=1))
 
     losses = []
     for step in range(cfg.steps):
@@ -74,7 +97,11 @@ def fit_task_coefficients(model, tokenizer, bank, task, cfg,
         loss = F.cross_entropy(logits, gold)
         coeffs = bank.tasks[task.name]["coeffs"]
         loss = loss + cfg.l2 * coeffs.pow(2).sum()
-        if prev_dirs and cfg.ortho_penalty > 0:
+        if replay is not None:
+            r_enc, r_gold = replay
+            loss = loss + cfg.replay_weight * F.cross_entropy(
+                final_logits(model, r_enc), r_gold)
+        if prev_dirs and cfg.ortho_penalty > 0 and proj_Q is None:
             flat = coeffs.reshape(-1)
             norm = flat.norm() + 1e-8
             for d in prev_dirs:
@@ -87,6 +114,12 @@ def fit_task_coefficients(model, tokenizer, bank, task, cfg,
             loss = loss + cfg.anchor_weight * kl
         loss.backward()
         opt.step()
+        if proj_Q is not None:
+            # Projected gradient descent: keep the iterate exactly in the
+            # orthogonal complement of earlier tasks' directions.
+            with torch.no_grad():
+                flat = coeffs.data.reshape(-1)
+                flat.sub_(proj_Q @ (proj_Q.T @ flat))
         losses.append(loss.item())
         if log and (step % 50 == 0 or step == cfg.steps - 1):
             log(f"  [{task.name}] step {step} loss {loss.item():.4f}")

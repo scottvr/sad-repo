@@ -36,7 +36,9 @@ class Config:
     lora_lr: float = 5e-3      # for trainable LoRA matrices
     l2: float = 1e-4           # L2 on coefficients
     ortho_penalty: float = 0.1  # cosine^2 penalty vs earlier tasks' coefficients (controller method)
+    hard_ortho: bool = False   # project new coeffs onto the orthogonal complement of earlier tasks' directions (supersedes ortho_penalty)
     anchor_weight: float = 0.0  # KL(base||adapted) on neutral probes during fitting (0 = off)
+    replay_weight: float = 0.0  # CE on earlier tasks' examples, evaluated in the composed state, during later fitting (0 = off)
     train_gates: bool = True   # Model C: per-site gates for the controller method
 
     # Controller (Model B)
