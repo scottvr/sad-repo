@@ -2,6 +2,43 @@
 
 from dataclasses import dataclass, field, asdict
 
+SITE_GROUPS = {
+    "both": ("attn.c_attn", "mlp.c_fc"),
+    "attn": ("attn.c_attn",),
+    "mlp": ("mlp.c_fc",),
+}
+
+
+def resolve_site_suffixes(sites: str = "both", layers=None) -> tuple:
+    """Map a --sites/--layers CLI spec to Config.site_suffixes.
+
+    Total coefficient dims = n_sites * n_components, so restricting sites
+    or layers varies dims independently of k. `layers` is None (all
+    layers, generic suffixes) or a spec like "0-2" / "0,3,5", producing
+    layer-qualified suffixes ("h.0.attn.c_attn", ...) that each match
+    exactly one module in GPT-2-family models.
+    """
+    if sites not in SITE_GROUPS:
+        raise ValueError(f"sites must be one of {sorted(SITE_GROUPS)}, "
+                         f"got {sites!r}")
+    base = SITE_GROUPS[sites]
+    if layers is None:
+        return base
+    idxs = set()
+    for part in str(layers).split(","):
+        part = part.strip()
+        if "-" in part:
+            lo, hi = part.split("-", 1)
+            lo, hi = int(lo), int(hi)
+            if hi < lo:
+                raise ValueError(f"bad layer range {part!r}")
+            idxs.update(range(lo, hi + 1))
+        elif part:
+            idxs.add(int(part))
+    if not idxs or min(idxs) < 0:
+        raise ValueError(f"bad layer spec {layers!r}")
+    return tuple(f"h.{i}.{suf}" for i in sorted(idxs) for suf in base)
+
 
 @dataclass
 class Config:

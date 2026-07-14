@@ -41,6 +41,14 @@ def main():
     ap.add_argument("--replay-fraction", type=float, default=1.0,
                     help="fraction of each earlier task's examples used for "
                          "replay (1.0 = full rehearsal)")
+    ap.add_argument("--sites", default="both",
+                    choices=["both", "attn", "mlp"],
+                    help="which projections get adapters; total coefficient "
+                         "dims = n_sites x k, so this varies dims "
+                         "independently of --k")
+    ap.add_argument("--layers", default=None,
+                    help="restrict adapters to these transformer layers, "
+                         "e.g. '0-2' or '0,3,5' (default: all layers)")
     ap.add_argument("--no-gates", action="store_true",
                     help="disable controller per-site gates")
     ap.add_argument("--device", default="auto",
@@ -51,7 +59,7 @@ def main():
     args = ap.parse_args()
 
     import _bootstrap  # noqa: F401
-    from sequential_adapt.config import Config
+    from sequential_adapt.config import Config, resolve_site_suffixes
     from sequential_adapt.data import WIDE_LABEL_SPACE
     from sequential_adapt.experiments import (format_table, run_full_suite,
                                               save_results)
@@ -65,6 +73,7 @@ def main():
                  ortho_penalty=args.ortho, hard_ortho=args.hard_ortho,
                  anchor_weight=args.anchor, replay_weight=args.replay,
                  replay_fraction=args.replay_fraction,
+                 site_suffixes=resolve_site_suffixes(args.sites, args.layers),
                  train_gates=not args.no_gates, **label_kw)
     results = run_full_suite(
         cfg,

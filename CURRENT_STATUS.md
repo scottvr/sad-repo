@@ -184,6 +184,21 @@ python scripts/summarize_sweeps.py --stdout
   story weak; retention degrading with k → capacity relationship exists
   (then find the scaling law before TinyLlama).
 
+## Dims grid: implemented, NOT yet run (same session, syntax-checked only)
+
+Is 96 a magic number, or just `n_sites * k`? New `--sites {both,attn,mlp}`
+and `--layers 0-2` flags on `run_controller.py` / `evaluate_sequence.py`
+vary total coefficient dims via site selection, independently of `--k`
+(`resolve_site_suffixes` in `config.py`; torch-free tests in
+`tests/test_sites.py`). `scripts/run_dims.sh/.ps1` (7 arms x 3 seeds,
+all replay=1 --no-gates): an attention-only dims curve (12/24/48/96) plus
+five different realizations of a 48-dim budget (attn k=8, mlp k=8, both
+k=4 via pressure `cap_k4`, layers 0-2, layers 3-5). If performance tracks
+total dims regardless of allocation, dims is the resource; if allocation
+matters, the size/complexity relationship is per-site-type. Artifacts:
+`artifacts/sweeps/dims/`. Run this after the pressure grid — priority is
+deflating/confirming the replay headline first.
+
 ## Older next steps still open
 
 - Gradient-free coefficient fitting (CMA-ES over ~100 dims).

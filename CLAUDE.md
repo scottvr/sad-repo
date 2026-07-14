@@ -22,12 +22,13 @@ bash scripts/run_multiseed.sh            # 10-seed suite (PowerShell: run_multis
 bash scripts/run_sweeps.sh               # k/ortho/gates/task-count sweeps (GPU machine)
 bash scripts/run_retention.sh            # replay x hard-ortho retention grid (GPU machine)
 bash scripts/run_pressure.sh             # replay stress tests: fraction/big-vocab/conflict/capacity (GPU machine)
+bash scripts/run_dims.sh                 # dims grid: total coefficient dims vs site/layer allocation (GPU machine)
 python scripts/summarize_multiseed.py --stdout
 python scripts/summarize_sweeps.py --stdout
 ```
 
 - Scripts import the package via `scripts/_bootstrap.py` (sys.path hack) — no install needed; run from repo root.
-- All Python runners take `--model --steps --seed --device --out`; ablation knobs: `--n-components/--k --rank --n-tasks --facts-per-task --overlap-words --wide-labels --ortho --hard-ortho --anchor --replay --replay-fraction --no-gates`. Every script answers `--help`.
+- All Python runners take `--model --steps --seed --device --out`; ablation knobs: `--n-components/--k --rank --n-tasks --facts-per-task --overlap-words --wide-labels --ortho --hard-ortho --anchor --replay --replay-fraction --sites --layers --no-gates`. Every script answers `--help`. Total coefficient dims = n_sites × k; `--sites {both,attn,mlp}` / `--layers 0-2` vary dims via site selection (`resolve_site_suffixes` in `config.py`), independently of `--k`.
 - All results are saved as JSON under `artifacts/` — new experiments must follow this convention.
 - Shell runners are parameterized by env vars (bash: `SEEDS="0 1" STEPS=100 bash scripts/run_sweeps.sh`) or params (PowerShell: `-Seeds @(0,1)`).
 - CPU and CUDA runs differ by ±1 probe item due to numerics; qualitative results are stable. Device auto-detects.

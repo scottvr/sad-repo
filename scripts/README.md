@@ -26,6 +26,8 @@ addition, and controller.
 | `run_multiseed.sh` / `run_multiseed.ps1` | 10-seed full-suite run plus anchored controller |
 | `run_sweeps.sh` / `run_sweeps.ps1` | seed, K, ortho, no-gates, and task-count sweeps |
 | `run_retention.sh` / `run_retention.ps1` | retention grid: {replay off/on} x {soft ortho / hard projection} |
+| `run_pressure.sh` / `run_pressure.ps1` | pressure grid: stress-test the replay result (frac/big/conflict/cap) |
+| `run_dims.sh` / `run_dims.ps1` | dims grid: total coefficient dims vs site/layer allocation |
 | `summarize_multiseed.py` | aggregate `artifacts/sequence_seed_*.json` and `controller_anchor_seed_*.json` |
 | `summarize_sweeps.py` | aggregate `artifacts/sweeps/**/*.json` |
 
@@ -51,8 +53,13 @@ knobs:
 --hard-ortho     # hard orthogonal projection vs earlier tasks (supersedes --ortho)
 --anchor 1.0
 --replay 1.0     # CE replay of earlier tasks' examples in the composed state
+--sites attn     # both | attn | mlp — which projections get adapters
+--layers 0-2     # restrict adapters to these transformer layers
 --no-gates
 ```
+
+Total coefficient dims = n_sites x k, so `--sites`/`--layers` vary dims
+independently of `--k` (distilgpt2 default: 12 sites x 8 = 96).
 
 ## Multi-Seed Run
 
@@ -222,6 +229,36 @@ SEEDS="0 1" bash scripts/run_pressure.sh
 Outputs land under `artifacts/sweeps/pressure/` with condition labels
 inferred from config fields (`replay=1;frac=0.25`, `replay=1;overlap=2`,
 `replay=1;tasks=3x8;labels=12`, `replay=1;k=2`, ...).
+
+## Dims Grid
+
+Is 96 a magic number, or just `n_sites x k`? The pressure grid's `cap`
+arms trace the both-sites dims curve (k=2/4/16 -> 24/48/192; 96 is the
+retention grid's replay arm). This grid varies the *other* axis — which
+sites get the budget — so the same dim count is realized by different
+allocations. On distilgpt2, 48 dims appears five ways: `attn k=8`,
+`mlp k=8`, `both k=4` (= pressure `cap_k4`), layers 0-2 `k=8`, layers 3-5
+`k=8`. All arms `replay=1 --no-gates`.
+
+- Retention/fit tracking total dims regardless of allocation → dims is the
+  resource; 96 is nothing special.
+- Allocation mattering (MLP vs attention, early vs late layers) → the
+  story is *where* capacity sits, and any size/complexity scaling law must
+  be sought per site type.
+
+```bash
+PYTHON=.venv/bin/python bash scripts/run_dims.sh
+python scripts/summarize_sweeps.py --stdout
+```
+
+```powershell
+$env:PYTHON = ".\.venv\Scripts\python.exe"
+.\scripts\run_dims.ps1
+python scripts\summarize_sweeps.py --stdout
+```
+
+Outputs land under `artifacts/sweeps/dims/` with labels like
+`replay=1;k=2;sites=attn`, `replay=1;sites=mlp`, `replay=1;layers=0,1,2`.
 
 ## Colab Quickstart
 
