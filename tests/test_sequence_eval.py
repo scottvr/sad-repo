@@ -36,6 +36,16 @@ def test_controller_sequence(ctx):
     assert "gates" in res
 
 
+def test_controller_solo_cramming_diagnostic(ctx):
+    res = run_controller(ctx, list(ctx.tasks))
+    solo = res["solo_evals"]
+    assert set(solo) == {t.name for t in ctx.tasks}
+    for evals in solo.values():
+        assert all(0.0 <= evals[t.name]["acc"] <= 1.0 for t in ctx.tasks)
+    cram = res["newest_alone_on_earlier"]
+    assert cram is not None and 0.0 <= cram <= 1.0
+
+
 def test_full_suite_serializable(cfg, tmp_path):
     res = run_full_suite(cfg, methods=("independent", "coeff_add"),
                          order_sensitivity_check=False, log=lambda *_: None)

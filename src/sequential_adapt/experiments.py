@@ -172,6 +172,21 @@ def run_controller(ctx, order):
                         order_names[0], order_names[1:])
     rev["after_reversal_evals"] = after
 
+    # --- Cramming diagnostic: each sequentially fitted vector applied ALONE.
+    # Under replay, "perfect composed retention" could mean the newest vector
+    # simply re-learned every earlier task (it has capacity for the whole
+    # corpus) rather than repairing the composition. If the newest vector
+    # alone solves earlier tasks' probes, it's cramming, not repair.
+    solo = {}
+    for cname, tname in zip(fitted, order_names):
+        ctx.bank.apply([(cname, 1.0)])
+        solo[tname] = eval_all_tasks(ctx.model, ctx.tokenizer, ctx.tasks,
+                                     ctx.cfg)
+    earlier = order_names[:-1]
+    newest_alone_on_earlier = (
+        sum(solo[order_names[-1]][t]["acc"] for t in earlier) / len(earlier)
+        if earlier else None)
+
     # --- Model B: controller mapping context embeddings -> coefficients ---
     # Targets are the INDEPENDENTLY fitted coefficients: sequentially fitted
     # ones are only valid with earlier tasks applied, so they are the wrong
@@ -213,6 +228,8 @@ def run_controller(ctx, order):
     ctx.check_frozen()
     extra = {
         "reversibility": rev,
+        "solo_evals": solo,
+        "newest_alone_on_earlier": newest_alone_on_earlier,
         "gates": {n: ctx.bank.gates(f"ctrl_{n}").tolist() for n in order_names},
         "controller": {
             "final_train_mse": losses[-1],

@@ -39,6 +39,7 @@ CONDITION_ORDER = [
 METRIC_ORDER = [
     "final_acc_avg",
     "average_retention",
+    "newest_alone_on_earlier",
     "return_to_base_gap",
     "collateral",
     "order_sensitivity",
@@ -49,6 +50,7 @@ METRIC_ORDER = [
 METRIC_LABELS = {
     "final_acc_avg": "final acc avg",
     "average_retention": "retention",
+    "newest_alone_on_earlier": "cram (newest alone)",
     "return_to_base_gap": "rev gap",
     "collateral": "collateral",
     "order_sensitivity": "order sens",
@@ -126,6 +128,9 @@ def _composed_method_sample(data, path, method_name, condition):
     rev = fwd.get("reversibility", {})
     metrics["return_to_base_gap"] = rev.get("return_to_base_gap")
     metrics["collateral"] = rev.get("collateral")
+    # Cramming diagnostic (controller runs only; absent in older artifacts):
+    # accuracy of the newest task's vector, applied alone, on earlier tasks.
+    metrics["newest_alone_on_earlier"] = fwd.get("newest_alone_on_earlier")
     order_sensitivity = entry.get("order_sensitivity", {})
     metrics["order_sensitivity"] = order_sensitivity.get("mean_abs_acc_diff")
     return Sample(condition, str(path), _seed(data), metrics)
