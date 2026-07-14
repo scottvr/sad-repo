@@ -40,6 +40,7 @@ class Config:
     hard_ortho: bool = False   # project new coeffs onto the orthogonal complement of earlier tasks' directions (supersedes ortho_penalty)
     anchor_weight: float = 0.0  # KL(base||adapted) on neutral probes during fitting (0 = off)
     replay_weight: float = 0.0  # CE on earlier tasks' examples, evaluated in the composed state, during later fitting (0 = off)
+    replay_fraction: float = 1.0  # fraction of each earlier task's examples used for replay (deterministic subsample; 1.0 = full rehearsal)
     train_gates: bool = True   # Model C: per-site gates for the controller method
 
     # Controller (Model B)

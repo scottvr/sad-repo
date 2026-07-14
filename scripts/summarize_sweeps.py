@@ -59,14 +59,30 @@ def _sweep_label(path, data):
         return ";".join(parts)
     if parent == "task_count":
         return f"tasks={cfg.get('n_tasks')};facts={cfg.get('facts_per_task')}"
-    if parent == "retention":
+    if parent in ("retention", "pressure"):
         parts = []
         replay = float(cfg.get("replay_weight", 0.0))
         if replay:
             parts.append(f"replay={_fmt_float(replay)}")
+            frac = float(cfg.get("replay_fraction", 1.0))
+            if frac < 1.0:
+                parts.append(f"frac={_fmt_float(frac)}")
         if cfg.get("hard_ortho"):
             parts.append("hard_ortho")
-        return ";".join(parts) if parts else "retention_ctrl"
+        overlap = int(cfg.get("overlap_words", 0) or 0)
+        if overlap:
+            parts.append(f"overlap={overlap}")
+        n_tasks = cfg.get("n_tasks")
+        facts = cfg.get("facts_per_task")
+        if (n_tasks, facts) != (3, 4):
+            parts.append(f"tasks={n_tasks}x{facts}")
+        n_labels = len(cfg.get("label_space", []) or [])
+        if n_labels and n_labels != 6:
+            parts.append(f"labels={n_labels}")
+        k = cfg.get("n_components")
+        if k not in (None, 8):
+            parts.append(f"k={k}")
+        return ";".join(parts) if parts else f"{parent}_ctrl"
     return parent
 
 

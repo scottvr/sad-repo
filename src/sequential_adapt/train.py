@@ -1,5 +1,6 @@
 """Fitting routines. Base weights stay frozen; only adapter tensors move."""
 
+import random
 import zlib
 
 import torch
@@ -28,6 +29,26 @@ def _training_pairs(task, cfg):
     pairs = []
     for t_idx in cfg.train_templates:
         pairs.extend(task_prompts(task, t_idx))
+    return pairs
+
+
+def _replay_pairs(replay_tasks, cfg, fitting_task_name):
+    """Replay examples from earlier tasks, optionally subsampled.
+
+    cfg.replay_fraction < 1 keeps a deterministic per-earlier-task sample
+    (always >= 1 example per task, so every earlier task stays represented).
+    This separates 'a sliver of rehearsal repairs composition' from 'replay
+    works because it is full joint training in disguise'."""
+    pairs = []
+    for rt in replay_tasks:
+        rt_pairs = _training_pairs(rt, cfg)
+        if cfg.replay_fraction < 1.0:
+            keep = max(1, round(len(rt_pairs) * cfg.replay_fraction))
+            rng = random.Random(cfg.seed * 100003
+                                + zlib.crc32(f"{fitting_task_name}:{rt.name}"
+                                             .encode()))
+            rt_pairs = rng.sample(rt_pairs, keep)
+        pairs.extend(rt_pairs)
     return pairs
 
 
@@ -73,9 +94,7 @@ def fit_task_coefficients(model, tokenizer, bank, task, cfg,
 
     replay = None
     if cfg.replay_weight > 0 and replay_tasks:
-        pairs = []
-        for rt in replay_tasks:
-            pairs.extend(_training_pairs(rt, cfg))
+        pairs = _replay_pairs(replay_tasks, cfg, task.name)
         replay = build_batch(tokenizer, pairs, cfg.device)
 
     prev_dirs = []

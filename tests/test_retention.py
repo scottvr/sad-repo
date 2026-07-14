@@ -1,7 +1,23 @@
 """Tests for composition-aware replay and hard orthogonal projection."""
 import dataclasses
 
-from sequential_adapt.train import fit_task_coefficients
+from sequential_adapt.train import _replay_pairs, fit_task_coefficients
+
+
+def test_replay_fraction_subsamples_deterministically(ctx):
+    cfg = ctx.cfg
+    t0 = ctx.tasks[0]
+    full = _replay_pairs([t0], dataclasses.replace(cfg, replay_fraction=1.0),
+                         "task_B")
+    half_cfg = dataclasses.replace(cfg, replay_fraction=0.5)
+    half = _replay_pairs([t0], half_cfg, "task_B")
+    assert len(half) == max(1, round(len(full) * 0.5))
+    assert set(half) <= set(full)
+    assert _replay_pairs([t0], half_cfg, "task_B") == half  # deterministic
+    # Every earlier task keeps at least one example, even at tiny fractions.
+    tiny = _replay_pairs(list(ctx.tasks), dataclasses.replace(
+        cfg, replay_fraction=0.01), "task_Z")
+    assert len(tiny) == len(ctx.tasks)
 
 
 def test_replay_loss_runs_and_is_finite(ctx):

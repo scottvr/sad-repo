@@ -38,6 +38,9 @@ def main():
     ap.add_argument("--replay", type=float, default=0.0,
                     help="controller replay weight: CE on earlier tasks' "
                          "examples in the composed state (0 = off)")
+    ap.add_argument("--replay-fraction", type=float, default=1.0,
+                    help="fraction of each earlier task's examples used for "
+                         "replay (1.0 = full rehearsal)")
     ap.add_argument("--no-gates", action="store_true",
                     help="disable controller per-site gates")
     ap.add_argument("--device", default="auto",
@@ -61,6 +64,7 @@ def main():
                  overlap_words=args.overlap_words,
                  ortho_penalty=args.ortho, hard_ortho=args.hard_ortho,
                  anchor_weight=args.anchor, replay_weight=args.replay,
+                 replay_fraction=args.replay_fraction,
                  train_gates=not args.no_gates, **label_kw)
     results = run_full_suite(
         cfg,
