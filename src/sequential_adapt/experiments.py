@@ -44,7 +44,8 @@ class ExperimentContext:
         self.sites = attach_adapter_sites(self.model, cfg.site_suffixes)
         self.bank = AdapterBank(self.sites, cfg.rank, cfg.n_components,
                                 cfg.seed, device=cfg.device)
-        self.tasks = make_tasks(cfg.n_tasks, cfg.facts_per_task, cfg.label_space)
+        self.tasks = make_tasks(cfg.n_tasks, cfg.facts_per_task,
+                                cfg.label_space, cfg.overlap_words)
         self.task_by_name = {t.name: t for t in self.tasks}
         self.reset_adapters()
         self.base_neutral = neutral_logits(self.model, self.tokenizer, cfg)

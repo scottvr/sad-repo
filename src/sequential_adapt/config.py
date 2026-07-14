@@ -21,6 +21,7 @@ class Config:
     # Task family
     n_tasks: int = 3
     facts_per_task: int = 4
+    overlap_words: int = 0     # shared nonce words with conflicting labels across domains (adversarial; 0 = disjoint)
     # Templates 0..1 are used for training. Task accuracy/retention is
     # measured on template `eval_template` (a TRAINED phrasing: the question
     # is whether learned behavior survives later adaptation). Template

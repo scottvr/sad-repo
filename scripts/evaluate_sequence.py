@@ -20,6 +20,13 @@ def main():
                     help="number of synthetic task domains")
     ap.add_argument("--facts-per-task", type=int, default=4,
                     help="facts per synthetic task")
+    ap.add_argument("--overlap-words", type=int, default=0,
+                    help="shared nonce words with conflicting labels across "
+                         "domains (adversarial for composed states; 0 = "
+                         "disjoint)")
+    ap.add_argument("--wide-labels", action="store_true",
+                    help="use the 12-color answer set instead of the "
+                         "default 6")
     ap.add_argument("--ortho", type=float, default=0.1,
                     help="controller interference (cosine^2) penalty weight")
     ap.add_argument("--hard-ortho", action="store_true",
@@ -42,16 +49,19 @@ def main():
 
     import _bootstrap  # noqa: F401
     from sequential_adapt.config import Config
+    from sequential_adapt.data import WIDE_LABEL_SPACE
     from sequential_adapt.experiments import (format_table, run_full_suite,
                                               save_results)
 
+    label_kw = {"label_space": WIDE_LABEL_SPACE} if args.wide_labels else {}
     cfg = Config(model_name=args.model, steps=args.steps, seed=args.seed,
                  device=args.device, n_components=args.n_components,
                  rank=args.rank, n_tasks=args.n_tasks,
                  facts_per_task=args.facts_per_task,
+                 overlap_words=args.overlap_words,
                  ortho_penalty=args.ortho, hard_ortho=args.hard_ortho,
                  anchor_weight=args.anchor, replay_weight=args.replay,
-                 train_gates=not args.no_gates)
+                 train_gates=not args.no_gates, **label_kw)
     results = run_full_suite(
         cfg,
         methods=("independent", "naive_stack", "coeff_add", "controller"),
