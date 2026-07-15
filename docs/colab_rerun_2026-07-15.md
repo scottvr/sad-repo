@@ -1,5 +1,10 @@
 # Colab re-run queue — corrected coherence numbers (2026-07-15)
 
+> **COMPLETED 2026-07-15** — all stages ran; results committed in
+> `61f65a0` and interpreted in CURRENT_STATUS verdicts 18–20. The next
+> session's queue lives in the notebook (`src/colab/sad-quickstart.ipynb`,
+> caprank grid). Kept for the setup cells and interpretation notes.
+
 Purpose: regenerate every paraphrase/leakage column with the fixed probe
 (commit `7a87d3d`; all historical coherence numbers measured the frozen
 base — see CURRENT_STATUS "Coherence probe bug"). Retention, routing,

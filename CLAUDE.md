@@ -23,6 +23,7 @@ bash scripts/run_sweeps.sh               # k/ortho/gates/task-count sweeps (GPU 
 bash scripts/run_retention.sh            # replay x hard-ortho retention grid (GPU machine)
 bash scripts/run_pressure.sh             # replay stress tests: fraction/big-vocab/conflict/capacity (GPU machine)
 bash scripts/run_dims.sh                 # dims grid: total coefficient dims vs site/layer allocation (GPU machine)
+bash scripts/run_caprank.sh              # capacity-vs-scale grid: does heldout-template acc rise with k/rank? (GPU machine)
 python scripts/summarize_multiseed.py --stdout
 python scripts/summarize_sweeps.py --stdout
 ```

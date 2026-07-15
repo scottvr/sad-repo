@@ -102,6 +102,54 @@ word→profession) with different template shapes per domain.
 **C8. Single-model idiosyncrasy.** Everything so far is distilgpt2.
 *Diagnostic:* gpt2 runs with zero code changes; it is a free replication.
 
+**C9. Composed retention ≠ context conditioning (added 2026-07-15).**
+The corrected leakage numbers (CURRENT_STATUS verdict 20) show composed
+states answer by nonce word and ignore the domain prompt (leakage
+.42–.97 vs .17 chance; 1.00 in the raw dump). With disjoint words per
+domain, perfect "retention" never required using context at all — the
+composed state is a word→label lookup. Only the conflict arm (shared
+words, leakage .39) demonstrably conditions on context. *Diagnostic:*
+make overlap standard, not adversarial — report leakage next to
+retention in every arm (now measured correctly in every run), and treat
+a retention number with ~1.0 leakage as word-memorization, not
+context-conditioned adaptation. The context-conditioning claim
+currently rests entirely on routing (Model B), which also strengthens
+the case for end-to-end controller training over further composed-state
+work.
+
+## Decision ledger — 2026-07-15 corrected-coherence results
+
+What the re-run changes about the plan (details: CURRENT_STATUS
+verdicts 18–20):
+
+- **ADDED, runs next: caprank grid** (`scripts/run_caprank.sh`, 7 arms
+  x 5 seeds — k up to 64, rank up to 16) plus a multiseed rerun to
+  populate `final_evals_heldout` (the honest transfer metric) for
+  naive_stack vs controller. The naive_stack .88-consistency result
+  makes capacity-vs-scale THE live question, and it is answerable at
+  distilgpt2 prices.
+- **DEPRIORITIZED: Arc 3 (TinyLlama) is no longer the critical path.**
+  Its rationale ("does paraphrase transfer emerge with scale?") is
+  short-circuited if caprank shows transfer emerging with capacity at
+  fixed scale. Run caprank (and C4's template-diversity sweep) first;
+  Arc 3's readiness items stay queued but nothing blocks on them.
+- **RESTATED: the kill-criterion bar.** "Consistency > 0" is trivially
+  passable by chance agreement (~.17) and by agreeing-wrong states.
+  The bar is now held-out-template ACCURACY above the label-chance
+  floor (`heldout acc` column, in every summary since 2026-07-15).
+- **DONE, off the list:** pressure grid, dims grid (dims-per-fact
+  prediction confirmed out of sample by `big_k16`), retention grid,
+  the dims JSON re-collection (Arc 0 item 1).
+- **UNCHANGED:** Arc 0's remaining items (bias-only null C2, joint-fit
+  upper bound C5), pseudo-replay (Arc 4), reversible-composition
+  branch. The C2 null matters MORE now: word-keyed composed states are
+  exactly the regime where label-marginal shortcuts thrive.
+- **RAISED IN PRIORITY: end-to-end controller training** (was "older
+  next steps"): C9 shows routing is the only context-conditioned part
+  of the system, so the distillation bottleneck in Model B is now a
+  bottleneck on the core claim itself. Gradient-free (CMA-ES) fitting
+  stays parked — nothing in these results needs it.
+
 ## Arcs (ordered; each ~1 GPU session unless noted)
 
 **Arc 0 — hygiene (next session).**

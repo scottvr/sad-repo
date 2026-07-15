@@ -351,6 +351,16 @@ arcs are planned in `docs/roadmap_v0.3.md`. Arc 0's first command
 (`bash scripts/run_dims.sh`) ran 2026-07-15: dims JSONs are collected at
 5 seeds and the `big_k16` dims-per-fact prediction is confirmed (above).
 
+**Reprioritized 2026-07-15 after the corrected coherence numbers** (full
+decision ledger: roadmap v0.3): next GPU session runs the **caprank
+grid** (`bash scripts/run_caprank.sh` — does held-out-template accuracy
+rise with k/rank at fixed scale?) plus a multiseed rerun to populate
+`final_evals_heldout` for the naive_stack-vs-controller comparison. The
+Colab notebook (`src/colab/sad-quickstart.ipynb`) is set up for exactly
+this. TinyLlama (Arc 3) is off the critical path until caprank answers;
+end-to-end controller training is promoted (routing is the only
+context-conditioned part of the system, per verdict 20 / confound C9).
+
 ## Older next steps still open
 
 - Gradient-free coefficient fitting (CMA-ES over ~100 dims).

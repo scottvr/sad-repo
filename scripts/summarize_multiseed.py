@@ -45,6 +45,7 @@ METRIC_ORDER = [
     "order_sensitivity",
     "final_drift_kl",
     "paraphrase_consistency",
+    "heldout_acc_avg",
 ]
 
 METRIC_LABELS = {
@@ -56,6 +57,7 @@ METRIC_LABELS = {
     "order_sensitivity": "order sens",
     "final_drift_kl": "drift KL",
     "paraphrase_consistency": "paraphrase",
+    "heldout_acc_avg": "heldout acc",
 }
 
 
@@ -125,6 +127,13 @@ def _composed_method_sample(data, path, method_name, condition):
     metrics["final_drift_kl"] = fwd.get("final_drift_kl")
     coherence = fwd.get("coherence", {})
     metrics["paraphrase_consistency"] = coherence.get("paraphrase_consistency")
+    # Composed-state held-out-template ACCURACY (recorded since 2026-07-15):
+    # the honest generalization metric — consistency only measures t0/t2
+    # agreement, which agreeing-wrong states inflate.
+    heldout = fwd.get("final_evals_heldout")
+    if heldout:
+        metrics["heldout_acc_avg"] = mean(
+            float(v["acc"]) for v in heldout.values())
     rev = fwd.get("reversibility", {})
     metrics["return_to_base_gap"] = rev.get("return_to_base_gap")
     metrics["collateral"] = rev.get("collateral")

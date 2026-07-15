@@ -59,7 +59,7 @@ def _sweep_label(path, data):
         return ";".join(parts)
     if parent == "task_count":
         return f"tasks={cfg.get('n_tasks')};facts={cfg.get('facts_per_task')}"
-    if parent in ("retention", "pressure", "dims"):
+    if parent in ("retention", "pressure", "dims", "caprank"):
         parts = []
         replay = float(cfg.get("replay_weight", 0.0))
         if replay:
@@ -82,6 +82,9 @@ def _sweep_label(path, data):
         k = cfg.get("n_components")
         if k not in (None, 8):
             parts.append(f"k={k}")
+        rank = cfg.get("rank")
+        if rank not in (None, 4):
+            parts.append(f"rank={rank}")
         parts.extend(_sites_tags(cfg))
         return ";".join(parts) if parts else f"{parent}_ctrl"
     return parent
