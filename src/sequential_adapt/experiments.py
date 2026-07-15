@@ -26,7 +26,8 @@ import torch
 from .adapters import AdapterBank, attach_adapter_sites
 from .controllers import LookupController, MLPController, train_mlp_controller
 from .data import context_prompts, make_tasks
-from .eval import (coherence_probe, drift_kl, eval_all_tasks, neutral_logits)
+from .eval import (coherence_probe, drift_kl, eval_all_tasks, evaluate_task,
+                   neutral_logits)
 from .metrics import reversibility, summarize_sequence
 from .model import (assert_frozen, context_embedding, load_frozen_model,
                     params_unchanged, snapshot_params)
@@ -82,6 +83,14 @@ def _finalize(ctx, stages, order_names, extra=None):
     out["final_drift_kl"] = stages[-1]["drift_kl"]
     out["coherence"] = coherence_probe(ctx.model, ctx.tokenizer, ctx.tasks, ctx.cfg)
     out["coherence_base"] = ctx.base_coherence
+    # Held-out-template ACCURACY on the composed state: the honest
+    # kill-criterion metric. paraphrase_consistency only measures t0/t2
+    # agreement, which a badly fit state can score by giving the same
+    # wrong prior under both templates.
+    out["final_evals_heldout"] = {
+        t.name: evaluate_task(ctx.model, ctx.tokenizer, t, ctx.cfg,
+                              template_idx=ctx.cfg.heldout_template)
+        for t in ctx.tasks}
     if extra:
         out.update(extra)
     ctx.reset_adapters()
@@ -234,6 +243,9 @@ def run_controller(ctx, order):
         ctx.bank.apply_flat(mlp.predict(context_emb=emb))
         routed[tname] = eval_all_tasks(ctx.model, ctx.tokenizer, ctx.tasks,
                                        ctx.cfg)[tname]
+        routed[tname]["heldout_template"] = evaluate_task(
+            ctx.model, ctx.tokenizer, ctx.task_by_name[tname], ctx.cfg,
+            template_idx=cfg.heldout_template)
     ctx.bank.apply(list(applied))  # back to the sequential composed state
     extra = {
         "reversibility": rev,

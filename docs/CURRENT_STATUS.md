@@ -292,9 +292,56 @@ Consequences:
 Fix (2026-07-15): callers now restore the composed state before
 `_finalize`, which probes coherence and only then resets; the base floor
 is recorded separately as `coherence_base` in every result. Regression
-tests: `tests/test_coherence_state.py`. **Every grid's coherence column
-needs regenerating** — cheapest first pass: re-run the multiseed suite
-and the pressure big arm and read the corrected columns.
+tests: `tests/test_coherence_state.py`.
+
+## Corrected coherence numbers: RE-RUN 2026-07-15 (Colab; all grids)
+
+All suites re-run under the fixed probe (retention, pressure, dims,
+multiseed + raw-output dump `artifacts/paraphrase_inspection.json`).
+First sanity: every previously reported retention/routing/cramming
+number reproduces exactly (replay 0.36 → 1.00, big 0.69, big_k16 1.00),
+so the fix perturbed nothing else. The corrected coherence columns:
+
+| arm | paraphrase | leakage |
+|---|---|---|
+| multiseed controller (replay=0) | .12 ± .13 | — |
+| multiseed naive_stack (full-rank LoRA) | **.88 ± .08** | — |
+| multiseed coeff_add | .63 ± .19 (artifact: agreeing-wrong) | — |
+| retention replay=1 | .19 ± .11 | .77 ± .15 |
+| retention replay=0 | .23 ± .17 | .46 ± .10 |
+| pressure cap_k16, replay=1 | .25 ± .06 | **.97 ± .04** |
+| pressure big replay=1 (12 labels) | .07 ± .05 | .42 ± .09 |
+| pressure conflict replay=1 | .23 ± .09 | .39 ± .07 |
+| dims big_k16 | .10 ± .06 | .69 ± .17 |
+| base floor (`coherence_base`) | 0.00 | .17 (=1/6) |
+
+Verdicts:
+
+18. **The kill-criterion signal is real, but now honestly measured:
+    coefficient updates show ~chance paraphrase transfer.** Raw dump
+    (replay=1, seed 0): trained templates 12/12 and 12/12, held-out
+    template 1/12. Composed consistency (.07–.25) sits at the label-
+    chance agreement rate (~.17 for 6 labels, ~.08 for 12). Not the
+    fake structural 0.0 anymore — but no transfer either.
+19. **NEW — full-rank LoRA transfers where 96-dim coefficients don't.**
+    naive_stack paraphrase consistency is .88 with good trained-template
+    fit, vs .12 for the coefficient controller in the same runs. Caveat:
+    consistency conflates "agrees" with "correct" (coeff_add scores .63
+    while wrong everywhere — same wrong prior under both templates), so
+    this needs the new `final_evals_heldout` accuracy metric (added
+    2026-07-15, in every future run) to confirm. If it holds, paraphrase
+    transfer is gated by update capacity/rank, not model scale — which
+    would redirect the roadmap: the cheap test is raising k/rank, not
+    TinyLlama.
+20. **NEW — composed states are word-keyed, not context-conditioned.**
+    Off-domain leakage: prompting a domain-A word inside domain-B's
+    template yields A's label 42–97% of the time in composed states
+    (1.00 in the raw dump), scaling with fit quality, vs a .17 chance
+    floor. With disjoint nonce words the domain prompt is simply
+    ignored; only the conflict arm (shared words force context use,
+    leakage .39) behaves context-conditionally. "Context-conditioned
+    adaptation" currently rests entirely on routing — the composed
+    state itself is a word→label lookup smeared across the bases.
 
 ## Next phases
 

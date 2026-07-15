@@ -1,0 +1,2516 @@
+{
+ "config": {
+  "model_name": "distilgpt2",
+  "device": "cuda",
+  "seed": 0,
+  "site_suffixes": [
+   "attn.c_attn",
+   "mlp.c_fc"
+  ],
+  "rank": 4,
+  "n_components": 8,
+  "lora_rank": 4,
+  "lora_alpha": 8.0,
+  "n_tasks": 3,
+  "facts_per_task": 4,
+  "overlap_words": 0,
+  "train_templates": [
+   0,
+   1
+  ],
+  "eval_template": 0,
+  "heldout_template": 2,
+  "steps": 200,
+  "lr": 0.05,
+  "lora_lr": 0.005,
+  "l2": 0.0001,
+  "ortho_penalty": 0.1,
+  "hard_ortho": false,
+  "anchor_weight": 0.0,
+  "replay_weight": 1.0,
+  "replay_fraction": 1.0,
+  "train_gates": false,
+  "controller_hidden": 64,
+  "controller_steps": 500,
+  "controller_lr": 0.01,
+  "label_space": [
+   " red",
+   " blue",
+   " green",
+   " yellow",
+   " purple",
+   " orange"
+  ],
+  "extras": {}
+ },
+ "rows": [
+  {
+   "state": "base",
+   "task": "task_A",
+   "word": "blicket",
+   "gold": " red",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " scheme",
+      " and",
+      " palette",
+      " space"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " of",
+      ".",
+      " for",
+      " that",
+      " and"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " the",
+      " a",
+      " not",
+      " displayed",
+      " also"
+     ],
+     "correct": true
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_A",
+   "word": "dax",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " space",
+      " scheme",
+      " map",
+      " palette"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " of",
+      " to",
+      ".",
+      " scheme",
+      " for"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " the",
+      " not",
+      " used",
+      " also"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_A",
+   "word": "wug",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " map",
+      " palette",
+      " scheme",
+      " table"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " of",
+      ".",
+      " for",
+      " to",
+      " that"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " the",
+      " a",
+      " not",
+      " displayed",
+      " used"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_A",
+   "word": "fep",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " space",
+      " scheme",
+      " map",
+      " palette"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " of",
+      ".",
+      " to",
+      " for",
+      " scheme"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " the",
+      " a",
+      " not",
+      " displayed",
+      " used"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_B",
+   "word": "toma",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " map",
+      " space",
+      " scheme",
+      " palette"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " of",
+      ".",
+      " scheme",
+      " to",
+      ","
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " the",
+      " not",
+      " used",
+      " also"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_B",
+   "word": "gazzer",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " palette",
+      " scheme",
+      " space",
+      " map"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " of",
+      ".",
+      " scheme",
+      " for",
+      " and"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " the",
+      " a",
+      " not",
+      " also",
+      " displayed"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_B",
+   "word": "kiki",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " palette",
+      " scheme",
+      " space",
+      " map"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " of",
+      ".",
+      " for",
+      ",",
+      " and"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " the",
+      " not",
+      " also",
+      " displayed"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_B",
+   "word": "bouba",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " palette",
+      " scheme",
+      " and",
+      " blue"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      ".",
+      ",",
+      " and",
+      " for"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " the",
+      " a",
+      " not",
+      " also",
+      " displayed"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_C",
+   "word": "zorp",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " space",
+      " scheme",
+      " palette",
+      " map"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " of",
+      " scheme",
+      ".",
+      " \"",
+      " to"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " the",
+      " not",
+      " shown",
+      " also"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_C",
+   "word": "mib",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " space",
+      " map",
+      " scheme",
+      " palette"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " of",
+      " scheme",
+      ".",
+      ",",
+      " for"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " the",
+      " not",
+      " used",
+      " displayed"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_C",
+   "word": "lorp",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " scheme",
+      " space",
+      " palette",
+      " map"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " of",
+      " scheme",
+      ".",
+      " and",
+      ","
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " the",
+      " not",
+      " used",
+      " shown"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "base",
+   "task": "task_C",
+   "word": "quen",
+   "gold": " orange",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " of",
+      " scheme",
+      " space",
+      " palette",
+      " map"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " of",
+      ".",
+      " scheme",
+      ",",
+      " to"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " the",
+      " not",
+      " also",
+      " shown"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_A",
+   "word": "blicket",
+   "gold": " red",
+   "templates": {
+    "0": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " blue",
+      " pink",
+      " green",
+      " purple"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " blue",
+      " yellow",
+      " green",
+      " purple"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " road",
+      " white",
+      " Th",
+      " public"
+     ],
+     "correct": true
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_A",
+   "word": "dax",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " red",
+      " purple",
+      " yellow",
+      " green"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " green",
+      " purple",
+      " yellow",
+      " color"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      "<|endoftext|>",
+      " road",
+      "'s",
+      "-"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_A",
+   "word": "wug",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " yellow",
+      " purple",
+      " pink",
+      " orange"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " yellow",
+      " blue",
+      " color",
+      " country"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " full",
+      " into",
+      "'s",
+      " to",
+      " and"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_A",
+   "word": "fep",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " green",
+      " red",
+      " blue",
+      " orange"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " green",
+      " orange",
+      " purple",
+      " red"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " people",
+      " public",
+      " officials",
+      " government"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_B",
+   "word": "toma",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " red",
+      " yellow",
+      " pink",
+      " brown"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " green",
+      " orange",
+      " yellow",
+      " red"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " full",
+      " red",
+      " white",
+      " to",
+      " general"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_B",
+   "word": "gazzer",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " purple",
+      " blue",
+      " orange",
+      " yellow"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " purple",
+      " red",
+      " black",
+      " blue"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " white",
+      " general",
+      " terms",
+      " term"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_B",
+   "word": "kiki",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " red",
+      " blue",
+      " green",
+      " purple"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " purple",
+      " green",
+      " black",
+      " blue"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " white",
+      " general",
+      " road",
+      " people"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_B",
+   "word": "bouba",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " blue",
+      " yellow",
+      " green",
+      " black"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " blue",
+      " red",
+      " orange",
+      " green"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " green",
+     "top5": [
+      " Please",
+      " to",
+      "\n",
+      " green",
+      " stay"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_C",
+   "word": "zorp",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " yellow",
+      " purple",
+      " orange",
+      " blue"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " purple",
+      " yellow",
+      " blue",
+      " orange"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " full",
+      " \"",
+      " white",
+      " hospital"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_C",
+   "word": "mib",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " green",
+      " red",
+      " orange",
+      " pink"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " blue",
+      " purple",
+      " green",
+      " orange"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " road",
+      " bus",
+      " red",
+      " government",
+      " full"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_C",
+   "word": "lorp",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " orange",
+      " blue",
+      " green",
+      " pink"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " green",
+      " yellow",
+      " orange",
+      " blue"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " full",
+      " \"",
+      " red",
+      " Red",
+      "\n"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "composed",
+   "task": "task_C",
+   "word": "quen",
+   "gold": " orange",
+   "templates": {
+    "0": {
+     "restricted_pred": " orange",
+     "top5": [
+      " orange",
+      " purple",
+      " yellow",
+      " green",
+      " blue"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " orange",
+     "top5": [
+      " orange",
+      " blue",
+      " purple",
+      " \ufffd",
+      " yellow"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " to",
+      " hospital",
+      "-",
+      ",",
+      " bus"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_A",
+   "word": "blicket",
+   "gold": " red",
+   "templates": {
+    "0": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " blue",
+      " yellow",
+      " green",
+      " pink"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " yellow",
+      " blue",
+      " green",
+      " brown"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " the",
+      " now",
+      " signed",
+      " today",
+      " in"
+     ],
+     "correct": true
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_A",
+   "word": "dax",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " red",
+      " green",
+      " yellow",
+      " black"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " red",
+      " yellow",
+      " green",
+      " black"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " exact",
+      " some",
+      " back",
+      " in",
+      " now"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_A",
+   "word": "wug",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " blue",
+      " red",
+      " yellow",
+      " greens"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " Green",
+      " red",
+      " yellow",
+      " blue"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " b",
+      " y",
+      " the",
+      " cl",
+      " o"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_A",
+   "word": "fep",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " red",
+      " blue",
+      " pink",
+      " green"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " red",
+      " blue",
+      " pink",
+      " green"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " no",
+      " in",
+      " now",
+      " some",
+      " online"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_B",
+   "word": "toma",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " red",
+      " yellow",
+      " pink",
+      " green"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      ",",
+      " blue",
+      " yellow",
+      " green"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " green",
+     "top5": [
+      " no",
+      " T",
+      " Y",
+      " in",
+      " y"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_B",
+   "word": "gazzer",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " red",
+      " green",
+      " yellow",
+      " pink"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      ",",
+      " blue",
+      " green",
+      " yellow"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " green",
+     "top5": [
+      " very",
+      " green",
+      " T",
+      " t",
+      " day"
+     ],
+     "correct": true
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_B",
+   "word": "kiki",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " red",
+      " green",
+      " k",
+      " pink"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " blue",
+      " green",
+      " yellow",
+      ":"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " green",
+     "top5": [
+      " no",
+      " not",
+      " date",
+      " some",
+      " green"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_B",
+   "word": "bouba",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " red",
+      " green",
+      " pink",
+      " B"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      ",",
+      ":",
+      " of",
+      " :",
+      " blue"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " green",
+     "top5": [
+      " no",
+      " death",
+      " Y",
+      " in",
+      " the"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_C",
+   "word": "zorp",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      ",",
+      " blue",
+      " B",
+      "board",
+      " Barcelona"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      ",",
+      " blue",
+      " red",
+      " yellow",
+      " color"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " in",
+      " some",
+      " no",
+      " very",
+      " on"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_C",
+   "word": "mib",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " red",
+      " in",
+      ",",
+      " yellow"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      ",",
+      " blue",
+      " red",
+      " green",
+      " yellow"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " green",
+     "top5": [
+      " in",
+      " the",
+      " C",
+      " o",
+      " some"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_C",
+   "word": "lorp",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      ",",
+      " red",
+      " color",
+      " yellow"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      ",",
+      " red",
+      " yellow",
+      "red"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " green",
+     "top5": [
+      " in",
+      " now",
+      " some",
+      " very",
+      " more"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_A",
+   "task": "task_C",
+   "word": "quen",
+   "gold": " orange",
+   "templates": {
+    "0": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " blue",
+      " in",
+      " green",
+      " yellow"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      ",",
+      " and",
+      ":",
+      " (",
+      " in"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " in",
+      " the",
+      " signed",
+      " set",
+      " now"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_A",
+   "word": "blicket",
+   "gold": " red",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " yellow",
+      " white",
+      " purple",
+      " black"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " red",
+      " blue",
+      " purple",
+      " Green"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      "-",
+      " left",
+      " like",
+      ",",
+      " and"
+     ],
+     "correct": true
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_A",
+   "word": "dax",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " and",
+      ",",
+      " green",
+      " blue",
+      " red"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " and",
+      " green",
+      " d",
+      " red",
+      " color"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " \"",
+      " the",
+      ",",
+      " our",
+      " and"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_A",
+   "word": "wug",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " red",
+      " purple",
+      " and",
+      " green"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " white",
+      " yellow",
+      " red",
+      " black"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " long",
+      " big",
+      " hard",
+      "-",
+      " photo"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_A",
+   "word": "fep",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " green",
+      " red",
+      " and",
+      " yellow"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " black",
+      " red",
+      " grey",
+      " white"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " long",
+      " black",
+      " like",
+      " red",
+      " blue"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_B",
+   "word": "toma",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " green",
+      " yellow",
+      " purple",
+      " red"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " blue",
+     "top5": [
+      " blue",
+      " yellow",
+      " red",
+      ",",
+      " green"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " long",
+      "-",
+      " and",
+      " hard",
+      " that"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_B",
+   "word": "gazzer",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " black",
+      " red",
+      " blue",
+      " yellow"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " red",
+      " yellow",
+      " blue",
+      " greens"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " our",
+      "-",
+      " the",
+      " and",
+      " long"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_B",
+   "word": "kiki",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " green",
+      " blue",
+      " purple",
+      " red"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " blue",
+      " green",
+      " purple",
+      " red"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      ",",
+      " long",
+      " hard",
+      "-",
+      " off"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_B",
+   "word": "bouba",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " blue",
+      " green",
+      " black",
+      " Purple"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " blue",
+      " yellow",
+      " green",
+      " Purple"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " the",
+      " long",
+      " on",
+      ",",
+      " out"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_C",
+   "word": "zorp",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " and",
+      " green",
+      " blue",
+      " red",
+      " yellow"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " red",
+      " yellow",
+      " purple",
+      " black"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " long",
+      " \"",
+      ",",
+      " and",
+      " real"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_C",
+   "word": "mib",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " red",
+      " and",
+      " blue",
+      " yellow"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " red",
+     "top5": [
+      " red",
+      " green",
+      " black",
+      " yellow",
+      " color"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      ",",
+      " \"",
+      " long",
+      " red",
+      "."
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_C",
+   "word": "lorp",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " blue",
+      " and",
+      " red",
+      ","
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " red",
+      " black",
+      " white",
+      " yellow"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " long",
+      " \"",
+      " ph",
+      " and",
+      " day"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_B",
+   "task": "task_C",
+   "word": "quen",
+   "gold": " orange",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " black",
+      " blue",
+      " and",
+      " yellow"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " green",
+      " purple",
+      " color",
+      " blue"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      "-",
+      " and",
+      ",",
+      " the",
+      " long"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_A",
+   "word": "blicket",
+   "gold": " red",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " orange",
+      " green",
+      " red",
+      " purple"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " purple",
+      " orange",
+      " red",
+      " black"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " 50",
+      " in",
+      " on",
+      " Ch"
+     ],
+     "correct": true
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_A",
+   "word": "dax",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " green",
+      " yellow",
+      " blue",
+      " Brown"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " and",
+      ",",
+      " to",
+      " of",
+      " the"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " 10",
+      " one",
+      " at",
+      " from"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_A",
+   "word": "wug",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " orange",
+      " green",
+      " purple",
+      " red"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " purple",
+      " green",
+      " blue",
+      " orange"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " a",
+      " 50",
+      " one",
+      " 10",
+      " for"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_A",
+   "word": "fep",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " orange",
+      " yellow",
+      " green",
+      " pink"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " purple",
+      " blue",
+      " orange",
+      " red"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " 10",
+      " 50",
+      " 90",
+      " 40",
+      " 60"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_B",
+   "word": "toma",
+   "gold": " blue",
+   "templates": {
+    "0": {
+     "restricted_pred": " orange",
+     "top5": [
+      " orange",
+      " yellow",
+      " green",
+      " purple",
+      " blue"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " yellow",
+      " orange",
+      " white",
+      " green"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " green",
+     "top5": [
+      " H",
+      " She",
+      " Ch",
+      " \"",
+      " Kat"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_B",
+   "word": "gazzer",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " orange",
+     "top5": [
+      " orange",
+      " green",
+      " yellow",
+      " purple",
+      " red"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " green",
+      " orange",
+      " purple",
+      "-"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " All",
+      " Ch",
+      " The",
+      " A",
+      " Media"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_B",
+   "word": "kiki",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " green",
+      " purple",
+      " orange",
+      " blue"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " purple",
+      " blue",
+      " orange",
+      " green"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " Ch",
+      " 50",
+      " a",
+      " one",
+      " the"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_B",
+   "word": "bouba",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " purple",
+      " green",
+      " orange",
+      " red"
+     ],
+     "correct": false
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " purple",
+      " blue",
+      " black",
+      "bird"
+     ],
+     "correct": false
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " the",
+      " a",
+      " one",
+      " to",
+      " having"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_C",
+   "word": "zorp",
+   "gold": " green",
+   "templates": {
+    "0": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " purple",
+      " yellow",
+      " pink",
+      " orange"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " green",
+     "top5": [
+      " green",
+      " purple",
+      " pink",
+      " color",
+      " blue"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      ",",
+      " to",
+      " not",
+      " in",
+      " \""
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_C",
+   "word": "mib",
+   "gold": " yellow",
+   "templates": {
+    "0": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " purple",
+      " orange",
+      " red",
+      " green"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " yellow",
+     "top5": [
+      " yellow",
+      " purple",
+      " blue",
+      " orange",
+      " green"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      ",",
+      " state",
+      " the",
+      " V",
+      " a"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_C",
+   "word": "lorp",
+   "gold": " purple",
+   "templates": {
+    "0": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " orange",
+      " green",
+      " yellow",
+      " pink"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " purple",
+     "top5": [
+      " purple",
+      " yellow",
+      " orange",
+      " green",
+      " blue"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " one",
+      ",",
+      " 50",
+      " all",
+      " 10"
+     ],
+     "correct": false
+    }
+   }
+  },
+  {
+   "state": "routed:task_C",
+   "task": "task_C",
+   "word": "quen",
+   "gold": " orange",
+   "templates": {
+    "0": {
+     "restricted_pred": " orange",
+     "top5": [
+      " orange",
+      " yellow",
+      " purple",
+      " green",
+      " blue"
+     ],
+     "correct": true
+    },
+    "1": {
+     "restricted_pred": " orange",
+     "top5": [
+      " orange",
+      " yellow",
+      " purple",
+      " aqu",
+      " green"
+     ],
+     "correct": true
+    },
+    "2": {
+     "restricted_pred": " red",
+     "top5": [
+      " in",
+      " and",
+      " due",
+      " as",
+      ","
+     ],
+     "correct": false
+    }
+   }
+  }
+ ],
+ "coherence_composed": {
+  "paraphrase_consistency": 0.0833333358168602,
+  "offdomain_leakage": 1.0
+ },
+ "coherence_base": {
+  "paraphrase_consistency": 0.0,
+  "offdomain_leakage": 0.1666666716337204
+ }
+}

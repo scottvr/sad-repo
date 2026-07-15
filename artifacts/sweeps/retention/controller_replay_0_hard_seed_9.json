@@ -13,6 +13,7 @@
     "lora_alpha": 8.0,
     "n_tasks": 3,
     "facts_per_task": 4,
+    "overlap_words": 0,
     "train_templates": [
       0,
       1
@@ -27,6 +28,7 @@
     "hard_ortho": true,
     "anchor_weight": 0.0,
     "replay_weight": 0.0,
+    "replay_fraction": 1.0,
     "train_gates": false,
     "controller_hidden": 64,
     "controller_steps": 500,
@@ -172,6 +174,10 @@
         ],
         "final_drift_kl": 5.0548248291015625,
         "coherence": {
+          "paraphrase_consistency": 0.25,
+          "offdomain_leakage": 0.4583333432674408
+        },
+        "coherence_base": {
           "paraphrase_consistency": 0.0,
           "offdomain_leakage": 0.1666666716337204
         },
@@ -193,6 +199,51 @@
             }
           }
         },
+        "solo_evals": {
+          "task_A": {
+            "task_A": {
+              "acc": 1.0,
+              "loss": 0.0280892476439476
+            },
+            "task_B": {
+              "acc": 0.5,
+              "loss": 2.885718822479248
+            },
+            "task_C": {
+              "acc": 0.0,
+              "loss": 3.852018356323242
+            }
+          },
+          "task_B": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 7.778263092041016
+            },
+            "task_B": {
+              "acc": 0.25,
+              "loss": 7.523831844329834
+            },
+            "task_C": {
+              "acc": 0.25,
+              "loss": 8.21135425567627
+            }
+          },
+          "task_C": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 8.977433204650879
+            },
+            "task_B": {
+              "acc": 0.25,
+              "loss": 9.221951484680176
+            },
+            "task_C": {
+              "acc": 0.25,
+              "loss": 9.590848922729492
+            }
+          }
+        },
+        "newest_alone_on_earlier": 0.25,
         "gates": {
           "task_A": [
             1.0,
@@ -371,6 +422,10 @@
         ],
         "final_drift_kl": 5.533329010009766,
         "coherence": {
+          "paraphrase_consistency": 0.4166666567325592,
+          "offdomain_leakage": 0.2916666567325592
+        },
+        "coherence_base": {
           "paraphrase_consistency": 0.0,
           "offdomain_leakage": 0.1666666716337204
         },
@@ -392,6 +447,51 @@
             }
           }
         },
+        "solo_evals": {
+          "task_C": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 3.3179802894592285
+            },
+            "task_B": {
+              "acc": 0.5,
+              "loss": 2.520754337310791
+            },
+            "task_C": {
+              "acc": 1.0,
+              "loss": 0.060767389833927155
+            }
+          },
+          "task_B": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 7.732648849487305
+            },
+            "task_B": {
+              "acc": 0.25,
+              "loss": 8.476810455322266
+            },
+            "task_C": {
+              "acc": 0.0,
+              "loss": 8.983624458312988
+            }
+          },
+          "task_A": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 9.01322078704834
+            },
+            "task_B": {
+              "acc": 0.0,
+              "loss": 9.405782699584961
+            },
+            "task_C": {
+              "acc": 0.0,
+              "loss": 9.73430061340332
+            }
+          }
+        },
+        "newest_alone_on_earlier": 0.0,
         "gates": {
           "task_C": [
             1.0,
@@ -465,5 +565,5 @@
       }
     }
   },
-  "runtime_sec": 18.1
+  "runtime_sec": 18.0
 }

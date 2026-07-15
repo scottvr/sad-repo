@@ -66,9 +66,13 @@ composed state's conflict pass).
 is 0.0 in every condition ever run; updates memorize surface forms.~~
 **Update 2026-07-15: those numbers measured the frozen base (coherence
 probe ran after `reset_adapters()` — see CURRENT_STATUS "Coherence probe
-bug"). C4's empirical status is unknown until the corrected probe is
-re-run.** It remains the kill-criterion (roadmap v0.2) and the primary
-honest metric.
+bug"). Corrected re-run same day: coefficient updates show ~chance
+paraphrase transfer (the memorization story survives, now honestly
+measured), BUT full-rank naive_stack LoRA scores .88 consistency in the
+same runs — capacity, not scale, may gate transfer. New cheap diagnostic
+to run BEFORE the template-diversity sweep or TinyLlama: k/rank sweep
+reading the new `final_evals_heldout` accuracy column.** It remains the
+kill-criterion (roadmap v0.2) and the primary honest metric.
 *New diagnostic before betting everything on scale:* a train-template
 diversity sweep (2 → 5 → 10 templates per fact at fixed scale). If
 paraphrase transfer emerges with phrasing diversity, it was a data

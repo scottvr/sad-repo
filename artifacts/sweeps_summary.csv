@@ -9,11 +9,12 @@ hard_ortho;controller,final_acc_A,10,0.25,0
 hard_ortho;controller,final_acc_B,10,0.375,0.2124591464
 hard_ortho;controller,final_acc_C,10,1,0
 hard_ortho;controller,average_retention,10,0.3125,0.1062295732
+hard_ortho;controller,newest_alone_on_earlier,10,0.1625,0.0843685697138
 hard_ortho;controller,return_to_base_gap,10,0.025,0.0790569415042
 hard_ortho;controller,collateral,10,0.6375,0.0922330984216
 hard_ortho;controller,order_sensitivity,10,0.616666666667,0.0895806416478
 hard_ortho;controller,final_drift_kl,10,4.92256689072,0.469096035439
-hard_ortho;controller,paraphrase_consistency,10,0,0
+hard_ortho;controller,paraphrase_consistency,10,0.19999999851,0.162920864678
 hard_ortho;controller_routed,final_acc_avg,10,0.983333333333,0.0351364184463
 hard_ortho;controller_routed,final_acc_A,10,0.975,0.0790569415042
 hard_ortho;controller_routed,final_acc_B,10,1,0
@@ -304,7 +305,7 @@ overlap=2;controller,return_to_base_gap,5,0.15,0.136930639376
 overlap=2;controller,collateral,5,0.475,0.136930639376
 overlap=2;controller,order_sensitivity,5,0.666666666667,0.117851130198
 overlap=2;controller,final_drift_kl,5,5.15292320251,0.965836926498
-overlap=2;controller,paraphrase_consistency,5,0,0
+overlap=2;controller,paraphrase_consistency,5,0.166666667163,0.212459146156
 overlap=2;controller_routed,final_acc_avg,5,0.983333333333,0.037267799625
 overlap=2;controller_routed,final_acc_A,5,0.95,0.111803398875
 overlap=2;controller_routed,final_acc_B,5,1,0
@@ -319,11 +320,12 @@ replay=1;controller,final_acc_A,10,1,0
 replay=1;controller,final_acc_B,10,1,0
 replay=1;controller,final_acc_C,10,1,0
 replay=1;controller,average_retention,10,1,0
+replay=1;controller,newest_alone_on_earlier,10,0.1625,0.0603807364425
 replay=1;controller,return_to_base_gap,10,0.05,0.105409255339
 replay=1;controller,collateral,10,0.8875,0.0922330984216
 replay=1;controller,order_sensitivity,10,0,0
 replay=1;controller,final_drift_kl,10,4.54680764675,0.661148219001
-replay=1;controller,paraphrase_consistency,10,0,0
+replay=1;controller,paraphrase_consistency,10,0.183333335817,0.129099443805
 replay=1;controller_routed,final_acc_avg,10,0.983333333333,0.0351364184463
 replay=1;controller_routed,final_acc_A,10,0.975,0.0790569415042
 replay=1;controller_routed,final_acc_B,10,1,0
@@ -343,7 +345,7 @@ replay=1;frac=0.125;controller,return_to_base_gap,5,0.1,0.136930639376
 replay=1;frac=0.125;controller,collateral,5,0.55,0.167705098312
 replay=1;frac=0.125;controller,order_sensitivity,5,0.45,0.0456435464588
 replay=1;frac=0.125;controller,final_drift_kl,5,4.65379428864,0.918310143134
-replay=1;frac=0.125;controller,paraphrase_consistency,5,0,0
+replay=1;frac=0.125;controller,paraphrase_consistency,5,0.216666670144,0.095014620283
 replay=1;frac=0.125;controller_routed,final_acc_avg,5,0.983333333333,0.037267799625
 replay=1;frac=0.125;controller_routed,final_acc_A,5,1,0
 replay=1;frac=0.125;controller_routed,final_acc_B,5,1,0
@@ -363,7 +365,7 @@ replay=1;frac=0.25;controller,return_to_base_gap,5,0.15,0.136930639376
 replay=1;frac=0.25;controller,collateral,5,0.65,0.104582503317
 replay=1;frac=0.25;controller,order_sensitivity,5,0.533333333333,0.0950146187583
 replay=1;frac=0.25;controller,final_drift_kl,5,4.52329483032,0.940478764244
-replay=1;frac=0.25;controller,paraphrase_consistency,5,0,0
+replay=1;frac=0.25;controller,paraphrase_consistency,5,0.316666671634,0.123603307281
 replay=1;frac=0.25;controller_routed,final_acc_avg,5,0.983333333333,0.037267799625
 replay=1;frac=0.25;controller_routed,final_acc_A,5,1,0
 replay=1;frac=0.25;controller_routed,final_acc_B,5,1,0
@@ -383,7 +385,7 @@ replay=1;frac=0.5;controller,return_to_base_gap,5,0,0
 replay=1;frac=0.5;controller,collateral,5,0.675,0.189571886101
 replay=1;frac=0.5;controller,order_sensitivity,5,0.4,0.0697216688778
 replay=1;frac=0.5;controller,final_drift_kl,5,4.92141952515,0.643986977289
-replay=1;frac=0.5;controller,paraphrase_consistency,5,0,0
+replay=1;frac=0.5;controller,paraphrase_consistency,5,0.20000000447,0.0950146206097
 replay=1;frac=0.5;controller_routed,final_acc_avg,5,0.983333333333,0.037267799625
 replay=1;frac=0.5;controller_routed,final_acc_A,5,1,0
 replay=1;frac=0.5;controller_routed,final_acc_B,5,1,0
@@ -398,11 +400,12 @@ replay=1;hard_ortho;controller,final_acc_A,10,0.975,0.0790569415042
 replay=1;hard_ortho;controller,final_acc_B,10,0.975,0.0790569415042
 replay=1;hard_ortho;controller,final_acc_C,10,1,0
 replay=1;hard_ortho;controller,average_retention,10,0.975,0.0790569415042
+replay=1;hard_ortho;controller,newest_alone_on_earlier,10,0.2,0.0645497224368
 replay=1;hard_ortho;controller,return_to_base_gap,10,0.05,0.105409255339
 replay=1;hard_ortho;controller,collateral,10,0.875,0.117851130198
 replay=1;hard_ortho;controller,order_sensitivity,10,0.0166666666667,0.0527046276695
 replay=1;hard_ortho;controller,final_drift_kl,10,4.70539269447,0.629825034784
-replay=1;hard_ortho;controller,paraphrase_consistency,10,0,0
+replay=1;hard_ortho;controller,paraphrase_consistency,10,0.191666669399,0.0882791592321
 replay=1;hard_ortho;controller_routed,final_acc_avg,10,0.983333333333,0.0351364184463
 replay=1;hard_ortho;controller_routed,final_acc_A,10,0.975,0.0790569415042
 replay=1;hard_ortho;controller_routed,final_acc_B,10,1,0
@@ -422,7 +425,7 @@ replay=1;k=16;controller,return_to_base_gap,5,0.1,0.136930639376
 replay=1;k=16;controller,collateral,5,0.85,0.136930639376
 replay=1;k=16;controller,order_sensitivity,5,0,0
 replay=1;k=16;controller,final_drift_kl,5,5.18453817368,0.970344616278
-replay=1;k=16;controller,paraphrase_consistency,5,0,0
+replay=1;k=16;controller,paraphrase_consistency,5,0.25000000298,0.058925566855
 replay=1;k=16;controller_routed,final_acc_avg,5,0.983333333333,0.037267799625
 replay=1;k=16;controller_routed,final_acc_A,5,0.95,0.111803398875
 replay=1;k=16;controller_routed,final_acc_B,5,1,0
@@ -442,7 +445,7 @@ replay=1;k=16;sites=attn;controller,return_to_base_gap,5,0.15,0.136930639376
 replay=1;k=16;sites=attn;controller,collateral,5,0.9,0.104582503317
 replay=1;k=16;sites=attn;controller,order_sensitivity,5,0,0
 replay=1;k=16;sites=attn;controller,final_drift_kl,5,4.5725356102,0.445265703098
-replay=1;k=16;sites=attn;controller,paraphrase_consistency,5,0,0
+replay=1;k=16;sites=attn;controller,paraphrase_consistency,5,0.15000000447,0.108653376658
 replay=1;k=16;sites=attn;controller_routed,final_acc_avg,5,0.966666666667,0.0456435464588
 replay=1;k=16;sites=attn;controller_routed,final_acc_A,5,0.9,0.136930639376
 replay=1;k=16;sites=attn;controller_routed,final_acc_B,5,1,0
@@ -462,7 +465,7 @@ replay=1;k=2;controller,return_to_base_gap,5,0.05,0.111803398875
 replay=1;k=2;controller,collateral,5,0.225,0.22360679775
 replay=1;k=2;controller,order_sensitivity,5,0.2,0.0950146187583
 replay=1;k=2;controller,final_drift_kl,5,3.61073045731,1.13045564162
-replay=1;k=2;controller,paraphrase_consistency,5,0,0
+replay=1;k=2;controller,paraphrase_consistency,5,0.366666668653,0.267446776836
 replay=1;k=2;controller_routed,final_acc_avg,5,0.4,0.10865337342
 replay=1;k=2;controller_routed,final_acc_A,5,0.45,0.209165006634
 replay=1;k=2;controller_routed,final_acc_B,5,0.4,0.136930639376
@@ -482,7 +485,7 @@ replay=1;k=2;sites=attn;controller,return_to_base_gap,5,0,0
 replay=1;k=2;sites=attn;controller,collateral,5,0.05,0.0684653196881
 replay=1;k=2;sites=attn;controller,order_sensitivity,5,0.0166666666667,0.037267799625
 replay=1;k=2;sites=attn;controller,final_drift_kl,5,1.68376889229,0.733951676849
-replay=1;k=2;sites=attn;controller,paraphrase_consistency,5,0,0
+replay=1;k=2;sites=attn;controller,paraphrase_consistency,5,0.416666673124,0.306186223931
 replay=1;k=2;sites=attn;controller_routed,final_acc_avg,5,0.233333333333,0.0697216688778
 replay=1;k=2;sites=attn;controller_routed,final_acc_A,5,0.35,0.136930639376
 replay=1;k=2;sites=attn;controller_routed,final_acc_B,5,0.25,0
@@ -502,7 +505,7 @@ replay=1;k=4;controller,return_to_base_gap,5,0,0
 replay=1;k=4;controller,collateral,5,0.7,0.142521928137
 replay=1;k=4;controller,order_sensitivity,5,0.216666666667,0.139443337756
 replay=1;k=4;controller,final_drift_kl,5,4.4377966404,1.40474982804
-replay=1;k=4;controller,paraphrase_consistency,5,0,0
+replay=1;k=4;controller,paraphrase_consistency,5,0.10000000298,0.0912870956381
 replay=1;k=4;controller_routed,final_acc_avg,5,0.9,0.0697216688778
 replay=1;k=4;controller_routed,final_acc_A,5,1,0
 replay=1;k=4;controller_routed,final_acc_B,5,1,0
@@ -522,7 +525,7 @@ replay=1;k=4;sites=attn;controller,return_to_base_gap,5,0,0
 replay=1;k=4;sites=attn;controller,collateral,5,0.2,0.142521928137
 replay=1;k=4;sites=attn;controller,order_sensitivity,5,0.216666666667,0.0456435464588
 replay=1;k=4;sites=attn;controller,final_drift_kl,5,3.20222444534,1.94270670941
-replay=1;k=4;sites=attn;controller,paraphrase_consistency,5,0,0
+replay=1;k=4;sites=attn;controller,paraphrase_consistency,5,0.116666670144,0.045643547819
 replay=1;k=4;sites=attn;controller_routed,final_acc_avg,5,0.666666666667,0.102062072616
 replay=1;k=4;sites=attn;controller_routed,final_acc_A,5,0.7,0.209165006634
 replay=1;k=4;sites=attn;controller_routed,final_acc_B,5,0.7,0.111803398875
@@ -542,7 +545,7 @@ replay=1;k=4;sites=attn;controller_routed,final_acc_C,5,0.6,0.285043856275
 "replay=1;layers=0,1,2;controller",collateral,5,0.575,0.142521928137
 "replay=1;layers=0,1,2;controller",order_sensitivity,5,0.283333333333,0.0950146187583
 "replay=1;layers=0,1,2;controller",final_drift_kl,5,3.76712970734,0.875039213438
-"replay=1;layers=0,1,2;controller",paraphrase_consistency,5,0,0
+"replay=1;layers=0,1,2;controller",paraphrase_consistency,5,0.283333332837,0.172803674471
 "replay=1;layers=0,1,2;controller_routed",final_acc_avg,5,0.9,0.10865337342
 "replay=1;layers=0,1,2;controller_routed",final_acc_A,5,1,0
 "replay=1;layers=0,1,2;controller_routed",final_acc_B,5,0.95,0.111803398875
@@ -562,7 +565,7 @@ replay=1;k=4;sites=attn;controller_routed,final_acc_C,5,0.6,0.285043856275
 "replay=1;layers=3,4,5;controller",collateral,5,0.725,0.136930639376
 "replay=1;layers=3,4,5;controller",order_sensitivity,5,0.216666666667,0.126381257401
 "replay=1;layers=3,4,5;controller",final_drift_kl,5,4.23792572021,1.2999844912
-"replay=1;layers=3,4,5;controller",paraphrase_consistency,5,0,0
+"replay=1;layers=3,4,5;controller",paraphrase_consistency,5,0.133333335817,0.0950146193028
 "replay=1;layers=3,4,5;controller_routed",final_acc_avg,5,0.983333333333,0.037267799625
 "replay=1;layers=3,4,5;controller_routed",final_acc_A,5,1,0
 "replay=1;layers=3,4,5;controller_routed",final_acc_B,5,1,0
@@ -582,7 +585,7 @@ replay=1;overlap=2;controller,return_to_base_gap,5,0.1,0.136930639376
 replay=1;overlap=2;controller,collateral,5,0.85,0.104582503317
 replay=1;overlap=2;controller,order_sensitivity,5,0.0166666666667,0.037267799625
 replay=1;overlap=2;controller,final_drift_kl,5,4.85375452042,0.513345578502
-replay=1;overlap=2;controller,paraphrase_consistency,5,0,0
+replay=1;overlap=2;controller,paraphrase_consistency,5,0.233333340287,0.0912870956381
 replay=1;overlap=2;controller_routed,final_acc_avg,5,0.983333333333,0.037267799625
 replay=1;overlap=2;controller_routed,final_acc_A,5,0.95,0.111803398875
 replay=1;overlap=2;controller_routed,final_acc_B,5,1,0
@@ -602,7 +605,7 @@ replay=1;sites=attn;controller,return_to_base_gap,5,0.05,0.111803398875
 replay=1;sites=attn;controller,collateral,5,0.625,0.153093108924
 replay=1;sites=attn;controller,order_sensitivity,5,0.216666666667,0.0456435464588
 replay=1;sites=attn;controller,final_drift_kl,5,3.87465176582,1.20190423187
-replay=1;sites=attn;controller,paraphrase_consistency,5,0,0
+replay=1;sites=attn;controller,paraphrase_consistency,5,0.29999999851,0.139443333229
 replay=1;sites=attn;controller_routed,final_acc_avg,5,1,0
 replay=1;sites=attn;controller_routed,final_acc_A,5,1,0
 replay=1;sites=attn;controller_routed,final_acc_B,5,1,0
@@ -622,7 +625,7 @@ replay=1;sites=mlp;controller,return_to_base_gap,5,0,0
 replay=1;sites=mlp;controller,collateral,5,0.475,0.16298006013
 replay=1;sites=mlp;controller,order_sensitivity,5,0.266666666667,0.1490711985
 replay=1;sites=mlp;controller,final_drift_kl,5,4.96538209915,0.440135990295
-replay=1;sites=mlp;controller,paraphrase_consistency,5,0,0
+replay=1;sites=mlp;controller,paraphrase_consistency,5,0.216666670144,0.095014620283
 replay=1;sites=mlp;controller_routed,final_acc_avg,5,0.883333333333,0.0456435464588
 replay=1;sites=mlp;controller_routed,final_acc_A,5,0.95,0.111803398875
 replay=1;sites=mlp;controller_routed,final_acc_B,5,0.95,0.111803398875
@@ -642,7 +645,7 @@ replay=1;tasks=3x8;labels=12;controller,return_to_base_gap,5,0.05,0.068465319688
 replay=1;tasks=3x8;labels=12;controller,collateral,5,0.65,0.0712609640687
 replay=1;tasks=3x8;labels=12;controller,order_sensitivity,5,0.125,0.1062295732
 replay=1;tasks=3x8;labels=12;controller,final_drift_kl,5,5.91159381866,1.55534030957
-replay=1;tasks=3x8;labels=12;controller,paraphrase_consistency,5,0,0
+replay=1;tasks=3x8;labels=12;controller,paraphrase_consistency,5,0.0666666679084,0.0475073096514
 replay=1;tasks=3x8;labels=12;controller_routed,final_acc_avg,5,0.908333333333,0.162446572413
 replay=1;tasks=3x8;labels=12;controller_routed,final_acc_A,5,0.925,0.111803398875
 replay=1;tasks=3x8;labels=12;controller_routed,final_acc_B,5,1,0
@@ -662,7 +665,7 @@ replay=1;tasks=3x8;labels=12;k=16;controller,return_to_base_gap,5,0.025,0.055901
 replay=1;tasks=3x8;labels=12;k=16;controller,collateral,5,0.8625,0.0522912516584
 replay=1;tasks=3x8;labels=12;k=16;controller,order_sensitivity,5,0,0
 replay=1;tasks=3x8;labels=12;k=16;controller,final_drift_kl,5,5.53359203339,1.02248176264
-replay=1;tasks=3x8;labels=12;k=16;controller,paraphrase_consistency,5,0,0
+replay=1;tasks=3x8;labels=12;k=16;controller,paraphrase_consistency,5,0.10000000149,0.0559017002705
 replay=1;tasks=3x8;labels=12;k=16;controller_routed,final_acc_avg,5,0.9,0.127066255683
 replay=1;tasks=3x8;labels=12;k=16;controller_routed,final_acc_A,5,0.8,0.273861278753
 replay=1;tasks=3x8;labels=12;k=16;controller_routed,final_acc_B,5,1,0
@@ -677,11 +680,12 @@ retention_ctrl;controller,final_acc_A,10,0.3,0.197202659437
 retention_ctrl;controller,final_acc_B,10,0.425,0.205818150587
 retention_ctrl;controller,final_acc_C,10,1,0
 retention_ctrl;controller,average_retention,10,0.3625,0.137563116827
+retention_ctrl;controller,newest_alone_on_earlier,10,0.1375,0.0709557765247
 retention_ctrl;controller,return_to_base_gap,10,0.05,0.105409255339
 retention_ctrl;controller,collateral,10,0.675,0.158113883008
 retention_ctrl;controller,order_sensitivity,10,0.575,0.0729662529809
 retention_ctrl;controller,final_drift_kl,10,4.67025396824,0.59504727041
-retention_ctrl;controller,paraphrase_consistency,10,0,0
+retention_ctrl;controller,paraphrase_consistency,10,0.249999999255,0.175682087258
 retention_ctrl;controller_routed,final_acc_avg,10,0.983333333333,0.0351364184463
 retention_ctrl;controller_routed,final_acc_A,10,0.975,0.0790569415042
 retention_ctrl;controller_routed,final_acc_B,10,1,0
@@ -890,7 +894,7 @@ tasks=3x8;labels=12;controller,return_to_base_gap,5,0.025,0.0559016994375
 tasks=3x8;labels=12;controller,collateral,5,0.5375,0.0712609640687
 tasks=3x8;labels=12;controller,order_sensitivity,5,0.625,0.0883883476483
 tasks=3x8;labels=12;controller,final_drift_kl,5,5.93117284775,1.57718248864
-tasks=3x8;labels=12;controller,paraphrase_consistency,5,0,0
+tasks=3x8;labels=12;controller,paraphrase_consistency,5,0.183333334327,0.0475073078544
 tasks=3x8;labels=12;controller_routed,final_acc_avg,5,0.908333333333,0.162446572413
 tasks=3x8;labels=12;controller_routed,final_acc_A,5,0.925,0.111803398875
 tasks=3x8;labels=12;controller_routed,final_acc_B,5,1,0

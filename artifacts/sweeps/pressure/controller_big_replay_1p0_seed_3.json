@@ -180,6 +180,10 @@
         ],
         "final_drift_kl": 7.620269775390625,
         "coherence": {
+          "paraphrase_consistency": 0.0416666679084301,
+          "offdomain_leakage": 0.4375
+        },
+        "coherence_base": {
           "paraphrase_consistency": 0.0,
           "offdomain_leakage": 0.0833333358168602
         },
@@ -424,6 +428,10 @@
         ],
         "final_drift_kl": 4.049972057342529,
         "coherence": {
+          "paraphrase_consistency": 0.0833333358168602,
+          "offdomain_leakage": 0.4583333432674408
+        },
+        "coherence_base": {
           "paraphrase_consistency": 0.0,
           "offdomain_leakage": 0.0833333358168602
         },
@@ -563,5 +571,5 @@
       }
     }
   },
-  "runtime_sec": 24.5
+  "runtime_sec": 24.3
 }
