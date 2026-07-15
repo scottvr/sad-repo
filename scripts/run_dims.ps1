@@ -5,10 +5,10 @@
 #
 # Usage:
 #   $env:PYTHON = ".\.venv\Scripts\python.exe"
-#   .\scripts\run_dims.ps1 -Seeds @(0,1,2)
+#   .\scripts\run_dims.ps1 -Seeds @(0,1,2,3,4)
 
 param(
-    [int[]]$Seeds = @(0, 1, 2),
+    [int[]]$Seeds = @(0, 1, 2, 3, 4),
     [int]$Steps = 200,
     [string]$Model = "distilgpt2",
     [string]$OutRoot = "artifacts/sweeps/dims"
@@ -43,6 +43,8 @@ foreach ($seed in $Seeds) {
     Run-Arm "mlp_k8" $seed @("--sites", "mlp")
     Run-Arm "early_k8" $seed @("--layers", "0-2")
     Run-Arm "late_k8" $seed @("--layers", "3-5")
+    # dims-per-fact prediction: 192 dims x 24 facts should saturate (~1.0)
+    Run-Arm "big_k16" $seed @("--k", "16", "--facts-per-task", "8", "--wide-labels")
 }
 
 Write-Host ""

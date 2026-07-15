@@ -187,13 +187,13 @@ Key comparisons:
 
 Result (2026-07-14, 10 seeds): replay fixed composed retention completely
 (0.36 -> 1.00), hard projection was inert, and replay's cost is surgical
-reversibility. See `CURRENT_STATUS.md` — which is exactly why the next grid
+reversibility. See `docs/CURRENT_STATUS.md` — which is exactly why the next grid
 exists.
 
 ## Pressure Grid
 
 Stress-tests the replay result before trusting it (reasoning in
-`notes/roadmap_v0.2.md`). Controller-only, `--no-gates`, 10 arms x 5 seeds:
+`docs/roadmap_v0.2.md`). Controller-only, `--no-gates`, 10 arms x 5 seeds:
 
 - `frac`: replay=1 with `--replay-fraction` 0.125/0.25/0.5 — does a sliver
   of rehearsal repair composition, or only full joint training?
@@ -238,7 +238,11 @@ retention grid's replay arm). This grid varies the *other* axis — which
 sites get the budget — so the same dim count is realized by different
 allocations. On distilgpt2, 48 dims appears five ways: `attn k=8`,
 `mlp k=8`, `both k=4` (= pressure `cap_k4`), layers 0-2 `k=8`, layers 3-5
-`k=8`. All arms `replay=1 --no-gates`.
+`k=8`. All arms `replay=1 --no-gates`. A `big_k16` arm (k=16 both sites =
+192 dims, 24 facts, 12 labels) tests the dims-per-fact prediction from the
+first run: ~8 dims/fact saturates, so it should restore the retention that
+96 dims lost on the big family (0.69). Default 5 seeds (matches the
+pressure grid so the two join on total dims).
 
 - Retention/fit tracking total dims regardless of allocation → dims is the
   resource; 96 is nothing special.

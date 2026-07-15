@@ -19,8 +19,13 @@
 # and the size/complexity relationship must be sought per-site-type.
 # All arms replay=1 --no-gates (the going-forward default).
 #
+# The big_k16 arm tests the dims-per-fact prediction from the first
+# console-only run (see docs/CURRENT_STATUS.md): ~4 dims/fact gives
+# retention ~0.7 and ~8 dims/fact saturates, so 192 dims on the 24-fact
+# wide-label family should restore retention to ~1.0 where 96 dims got 0.69.
+#
 # Override lists from the shell:
-#   SEEDS="0 1 2" STEPS=200 MODEL=distilgpt2 bash scripts/run_dims.sh
+#   SEEDS="0 1 2 3 4" STEPS=200 MODEL=distilgpt2 bash scripts/run_dims.sh
 
 set -euo pipefail
 
@@ -28,7 +33,7 @@ PYTHON_BIN="${PYTHON:-python3}"
 OUT_ROOT="${OUT_ROOT:-artifacts/sweeps/dims}"
 STEPS="${STEPS:-200}"
 MODEL="${MODEL:-distilgpt2}"
-SEEDS=(${SEEDS:-0 1 2})
+SEEDS=(${SEEDS:-0 1 2 3 4})
 
 mkdir -p "${OUT_ROOT}"
 
@@ -55,6 +60,8 @@ for seed in "${SEEDS[@]}"; do
   run_arm "mlp_k8"   "${seed}" --sites mlp
   run_arm "early_k8" "${seed}" --layers 0-2
   run_arm "late_k8"  "${seed}" --layers 3-5
+  # dims-per-fact prediction: 192 dims x 24 facts should saturate (~1.0)
+  run_arm "big_k16"  "${seed}" --k 16 --facts-per-task 8 --wide-labels
 done
 set -u
 
