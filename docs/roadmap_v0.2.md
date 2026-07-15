@@ -15,6 +15,11 @@ scale artifact (distilgpt2, 12 facts) or it may be fundamental to
 low-dimensional linear updates. Either answer is publishable; pretending
 the question isn't open is not.
 
+*(2026-07-15 note: the "0.0 in every condition" observations above were
+produced by a probe-state bug — they measured the frozen base model. The
+criterion itself stands unchanged, but its clock effectively restarts
+with the corrected probe; see CURRENT_STATUS "Coherence probe bug".)*
+
 ## Why the replay result must be pressure-tested before celebrating
 
 Replay=1.0 gave composed retention 1.00 ± 0.00 (baseline 0.36). Reasons to

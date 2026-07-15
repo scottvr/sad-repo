@@ -55,9 +55,13 @@ Interpretation (toy scale — do not over-read):
 5. **The drift anchor works on drift, not interference**: `--anchor 1.0`
    cuts neutral-probe KL ~10× (4.6 → 0.46) with no loss of current-task fit
    and perfect routing, but composed-sum retention stays poor.
-6. Paraphrase consistency is 0.0 everywhere: 96-dim updates memorize the
+6. ~~Paraphrase consistency is 0.0 everywhere: 96-dim updates memorize the
    trained phrasing and do not transfer to an unseen template. Low-dim
-   updates at this scale are surface-level, not semantic.
+   updates at this scale are surface-level, not semantic.~~ **RETRACTED
+   2026-07-15: measurement bug.** Every historical coherence number was
+   computed after `reset_adapters()`, i.e. on the frozen base model (see
+   "Coherence probe bug" section below). Whether adapted states transfer
+   to unseen templates is UNKNOWN pending re-run.
 
 ## Retention grid: mechanisms + results (implemented 2026-07-13, run
 ## 2026-07-14 on Colab, RTX 6000 Blackwell; artifacts under
@@ -201,8 +205,10 @@ Verdicts (numbering continues the interpretation list above):
     on 24 facts. Same law as the dims grid (below): ~4 dims/fact ≈ 0.7
     retention, ~8 dims/fact ≈ 1.0.
 
-Paraphrase consistency is 0.000 in every arm, again — the kill-criterion
-clock (`docs/roadmap_v0.2.md`) is unchanged by any of this.
+~~Paraphrase consistency is 0.000 in every arm, again — the kill-criterion
+clock (`docs/roadmap_v0.2.md`) is unchanged by any of this.~~ **RETRACTED
+2026-07-15 — see "Coherence probe bug" below; these numbers measured the
+frozen base, not the adapted model.**
 
 ## Dims grid: RE-RUN 2026-07-15 (GPU box; artifacts under
 ## artifacts/sweeps/dims/; supersedes the 2026-07-14 console-only run,
@@ -253,6 +259,42 @@ Verdicts:
 17. Routing saturates earlier than retention (~0.9–1.0 at 48 dims where
     retention is ~0.7) — routing is the easier problem, consistent with
     every earlier grid.
+
+## Coherence probe bug (FOUND 2026-07-15, fixed in code, re-run pending)
+
+**Every paraphrase-consistency and off-domain-leakage number recorded
+before 2026-07-15 is invalid: the probe measured the frozen base model.**
+In `experiments.py`, all three sequence methods called `reset_adapters()`
+(after the reversibility / routed evals) before `_finalize()`, which is
+where `coherence_probe` ran. Proof from the artifacts, no re-run needed:
+at a fixed seed, coherence is byte-identical across every arm — k=2 vs
+k=16, replay on/off, attn/mlp/layer allocations — and off-domain leakage
+is exactly `1/len(label_space)` (0.1667 for 6 labels, 0.0833 for 12),
+the base model's restricted-argmax chance rate. Paraphrase consistency
+0.0 with zero variance was the base model deterministically preferring
+different label priors under template 0 vs template 2 ("...maps to the
+color" vs "...the color associated with {w} is").
+
+Consequences:
+
+- The kill-criterion (roadmap v0.2: "paraphrase consistency > 0 never
+  appears") has never actually been tested. Its status is UNKNOWN, not
+  failing. Verdict 6 above and the pressure-grid paraphrase line are
+  retracted.
+- Retention/routing/cramming/reversibility/drift numbers are unaffected
+  (different code paths, probed in the correct states — the arm-to-arm
+  variance in those metrics is itself the evidence).
+- Note template asymmetry when re-running: templates 0 and 1 are trained,
+  2 is held out; the probe compares 0 vs 2, so consistency conflates
+  "same answer" with "generalizes to an untrained phrasing". Report
+  trained-vs-trained (0 vs 1) alongside 0-vs-2 to separate those.
+
+Fix (2026-07-15): callers now restore the composed state before
+`_finalize`, which probes coherence and only then resets; the base floor
+is recorded separately as `coherence_base` in every result. Regression
+tests: `tests/test_coherence_state.py`. **Every grid's coherence column
+needs regenerating** — cheapest first pass: re-run the multiseed suite
+and the pressure big arm and read the corrected columns.
 
 ## Next phases
 

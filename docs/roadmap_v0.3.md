@@ -62,9 +62,13 @@ contexts (paraphrases that imply the domain without naming it); scale to
 verdict 13 in `CURRENT_STATUS.md` flags the same shallowness for the
 composed state's conflict pass).
 
-**C4. Memorization masquerading as adaptation.** Paraphrase consistency
-is 0.0 in every condition ever run; updates memorize surface forms. This
-is the kill-criterion (roadmap v0.2) and stays the primary honest metric.
+**C4. Memorization masquerading as adaptation.** ~~Paraphrase consistency
+is 0.0 in every condition ever run; updates memorize surface forms.~~
+**Update 2026-07-15: those numbers measured the frozen base (coherence
+probe ran after `reset_adapters()` — see CURRENT_STATUS "Coherence probe
+bug"). C4's empirical status is unknown until the corrected probe is
+re-run.** It remains the kill-criterion (roadmap v0.2) and the primary
+honest metric.
 *New diagnostic before betting everything on scale:* a train-template
 diversity sweep (2 → 5 → 10 templates per fact at fixed scale). If
 paraphrase transfer emerges with phrasing diversity, it was a data

@@ -50,6 +50,8 @@ class ExperimentContext:
         self.reset_adapters()
         self.base_neutral = neutral_logits(self.model, self.tokenizer, cfg)
         self.base_eval = eval_all_tasks(self.model, self.tokenizer, self.tasks, cfg)
+        self.base_coherence = coherence_probe(self.model, self.tokenizer,
+                                              self.tasks, cfg)
 
     def reset_adapters(self):
         """Disable every adapter: model behaves as the frozen base."""
@@ -70,12 +72,20 @@ class ExperimentContext:
 
 
 def _finalize(ctx, stages, order_names, extra=None):
+    """Summarize a sequence run. The caller must leave the model in the
+    final COMPOSED state: the coherence probe measures that state (every
+    result before 2026-07-15 probed after reset_adapters(), i.e. measured
+    the frozen base — those historical coherence numbers are meaningless).
+    Resets adapters and re-verifies frozenness before returning."""
     out = summarize_sequence(stages, order_names, base_eval=ctx.base_eval)
     out["stages"] = stages
     out["final_drift_kl"] = stages[-1]["drift_kl"]
     out["coherence"] = coherence_probe(ctx.model, ctx.tokenizer, ctx.tasks, ctx.cfg)
+    out["coherence_base"] = ctx.base_coherence
     if extra:
         out.update(extra)
+    ctx.reset_adapters()
+    ctx.check_frozen()
     return out
 
 
@@ -117,8 +127,8 @@ def run_naive_stack(ctx, order):
     rev = reversibility(ctx.base_eval, before, after,
                         order_names[0], order_names[1:])
     rev["after_reversal_evals"] = after
-    ctx.reset_adapters()
-    ctx.check_frozen()
+    for site in ctx.sites.values():
+        site.set_enabled(adapter_names[0], True)  # back to composed state
     return _finalize(ctx, stages, order_names, {"reversibility": rev})
 
 
@@ -139,8 +149,7 @@ def run_coeff_addition(ctx, order):
     rev = reversibility(ctx.base_eval, before, after,
                         order_names[0], order_names[1:])
     rev["after_reversal_evals"] = after
-    ctx.reset_adapters()
-    ctx.check_frozen()
+    ctx.bank.apply(list(applied))  # back to composed state
     return _finalize(ctx, stages, order_names, {"reversibility": rev})
 
 
@@ -225,8 +234,7 @@ def run_controller(ctx, order):
         ctx.bank.apply_flat(mlp.predict(context_emb=emb))
         routed[tname] = eval_all_tasks(ctx.model, ctx.tokenizer, ctx.tasks,
                                        ctx.cfg)[tname]
-    ctx.reset_adapters()
-    ctx.check_frozen()
+    ctx.bank.apply(list(applied))  # back to the sequential composed state
     extra = {
         "reversibility": rev,
         "solo_evals": solo,
