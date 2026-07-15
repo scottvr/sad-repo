@@ -1,0 +1,524 @@
+{
+  "config": {
+    "model_name": "distilgpt2",
+    "device": "cuda",
+    "seed": 4,
+    "site_suffixes": [
+      "attn.c_attn"
+    ],
+    "rank": 4,
+    "n_components": 4,
+    "lora_rank": 4,
+    "lora_alpha": 8.0,
+    "n_tasks": 3,
+    "facts_per_task": 4,
+    "overlap_words": 0,
+    "train_templates": [
+      0,
+      1
+    ],
+    "eval_template": 0,
+    "heldout_template": 2,
+    "steps": 200,
+    "lr": 0.05,
+    "lora_lr": 0.005,
+    "l2": 0.0001,
+    "ortho_penalty": 0.1,
+    "hard_ortho": false,
+    "anchor_weight": 0.0,
+    "replay_weight": 1.0,
+    "replay_fraction": 1.0,
+    "train_gates": false,
+    "controller_hidden": 64,
+    "controller_steps": 500,
+    "controller_lr": 0.01,
+    "label_space": [
+      " red",
+      " blue",
+      " green",
+      " yellow",
+      " purple",
+      " orange"
+    ],
+    "extras": {}
+  },
+  "base_evals": {
+    "task_A": {
+      "acc": 0.25,
+      "loss": 6.488344192504883
+    },
+    "task_B": {
+      "acc": 0.25,
+      "loss": 6.277110576629639
+    },
+    "task_C": {
+      "acc": 0.0,
+      "loss": 7.072336196899414
+    }
+  },
+  "methods": {
+    "controller": {
+      "forward": {
+        "task_order": [
+          "task_A",
+          "task_B",
+          "task_C"
+        ],
+        "retention_matrix": [
+          [
+            0.75,
+            0.0,
+            0.25
+          ],
+          [
+            0.5,
+            0.5,
+            0.25
+          ],
+          [
+            0.25,
+            0.25,
+            0.25
+          ]
+        ],
+        "forgetting": {
+          "task_A": 0.5,
+          "task_B": 0.25,
+          "task_C": 0.0
+        },
+        "average_retention": 0.25,
+        "final_evals": {
+          "task_A": {
+            "acc": 0.25,
+            "loss": 1.808376431465149
+          },
+          "task_B": {
+            "acc": 0.25,
+            "loss": 2.0882933139801025
+          },
+          "task_C": {
+            "acc": 0.25,
+            "loss": 2.393033981323242
+          }
+        },
+        "base_evals": {
+          "task_A": {
+            "acc": 0.25,
+            "loss": 6.488344192504883
+          },
+          "task_B": {
+            "acc": 0.25,
+            "loss": 6.277110576629639
+          },
+          "task_C": {
+            "acc": 0.0,
+            "loss": 7.072336196899414
+          }
+        },
+        "stages": [
+          {
+            "stage": "after_task_A",
+            "task_evals": {
+              "task_A": {
+                "acc": 0.75,
+                "loss": 1.2997952699661255
+              },
+              "task_B": {
+                "acc": 0.0,
+                "loss": 3.4109606742858887
+              },
+              "task_C": {
+                "acc": 0.25,
+                "loss": 4.260089874267578
+              }
+            },
+            "drift_kl": 4.130764484405518
+          },
+          {
+            "stage": "after_task_B",
+            "task_evals": {
+              "task_A": {
+                "acc": 0.5,
+                "loss": 1.4651007652282715
+              },
+              "task_B": {
+                "acc": 0.5,
+                "loss": 1.9409830570220947
+              },
+              "task_C": {
+                "acc": 0.25,
+                "loss": 3.3636789321899414
+              }
+            },
+            "drift_kl": 4.2628350257873535
+          },
+          {
+            "stage": "after_task_C",
+            "task_evals": {
+              "task_A": {
+                "acc": 0.25,
+                "loss": 1.808376431465149
+              },
+              "task_B": {
+                "acc": 0.25,
+                "loss": 2.0882933139801025
+              },
+              "task_C": {
+                "acc": 0.25,
+                "loss": 2.393033981323242
+              }
+            },
+            "drift_kl": 3.8764467239379883
+          }
+        ],
+        "final_drift_kl": 3.8764467239379883,
+        "coherence": {
+          "paraphrase_consistency": 0.0,
+          "offdomain_leakage": 0.1666666716337204
+        },
+        "reversibility": {
+          "return_to_base_gap": 0.0,
+          "collateral": 0.125,
+          "after_reversal_evals": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 6.584632873535156
+            },
+            "task_B": {
+              "acc": 0.25,
+              "loss": 6.45397424697876
+            },
+            "task_C": {
+              "acc": 0.0,
+              "loss": 7.457660675048828
+            }
+          }
+        },
+        "solo_evals": {
+          "task_A": {
+            "task_A": {
+              "acc": 0.75,
+              "loss": 1.2997952699661255
+            },
+            "task_B": {
+              "acc": 0.0,
+              "loss": 3.4109606742858887
+            },
+            "task_C": {
+              "acc": 0.25,
+              "loss": 4.260089874267578
+            }
+          },
+          "task_B": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 7.025270938873291
+            },
+            "task_B": {
+              "acc": 0.25,
+              "loss": 6.86820125579834
+            },
+            "task_C": {
+              "acc": 0.0,
+              "loss": 7.848944187164307
+            }
+          },
+          "task_C": {
+            "task_A": {
+              "acc": 0.0,
+              "loss": 6.297369003295898
+            },
+            "task_B": {
+              "acc": 0.0,
+              "loss": 6.1757402420043945
+            },
+            "task_C": {
+              "acc": 0.0,
+              "loss": 6.933572769165039
+            }
+          }
+        },
+        "newest_alone_on_earlier": 0.0,
+        "gates": {
+          "task_A": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "task_B": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "task_C": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "controller": {
+          "final_train_mse": 6.871021923871012e-06,
+          "heldout_context_mse": 0.012300059199333191,
+          "routed_evals": {
+            "task_A": {
+              "acc": 0.75,
+              "loss": 1.5707781314849854
+            },
+            "task_B": {
+              "acc": 0.75,
+              "loss": 1.3281819820404053
+            },
+            "task_C": {
+              "acc": 0.5,
+              "loss": 2.324963092803955
+            }
+          }
+        }
+      },
+      "reversed": {
+        "task_order": [
+          "task_C",
+          "task_B",
+          "task_A"
+        ],
+        "retention_matrix": [
+          [
+            0.5,
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.5,
+            0.25
+          ],
+          [
+            0.5,
+            0.5,
+            0.5
+          ]
+        ],
+        "forgetting": {
+          "task_C": 0.0,
+          "task_B": 0.0,
+          "task_A": 0.0
+        },
+        "average_retention": 0.5,
+        "final_evals": {
+          "task_A": {
+            "acc": 0.5,
+            "loss": 1.5154447555541992
+          },
+          "task_B": {
+            "acc": 0.5,
+            "loss": 2.7732093334198
+          },
+          "task_C": {
+            "acc": 0.5,
+            "loss": 2.5250906944274902
+          }
+        },
+        "base_evals": {
+          "task_A": {
+            "acc": 0.25,
+            "loss": 6.488344192504883
+          },
+          "task_B": {
+            "acc": 0.25,
+            "loss": 6.277110576629639
+          },
+          "task_C": {
+            "acc": 0.0,
+            "loss": 7.072336196899414
+          }
+        },
+        "stages": [
+          {
+            "stage": "after_task_C",
+            "task_evals": {
+              "task_A": {
+                "acc": 0.25,
+                "loss": 2.7152132987976074
+              },
+              "task_B": {
+                "acc": 0.25,
+                "loss": 3.218806743621826
+              },
+              "task_C": {
+                "acc": 0.5,
+                "loss": 2.304490327835083
+              }
+            },
+            "drift_kl": 2.2257041931152344
+          },
+          {
+            "stage": "after_task_B",
+            "task_evals": {
+              "task_A": {
+                "acc": 0.25,
+                "loss": 2.346085548400879
+              },
+              "task_B": {
+                "acc": 0.5,
+                "loss": 2.5266060829162598
+              },
+              "task_C": {
+                "acc": 0.5,
+                "loss": 2.2884435653686523
+              }
+            },
+            "drift_kl": 2.4696011543273926
+          },
+          {
+            "stage": "after_task_A",
+            "task_evals": {
+              "task_A": {
+                "acc": 0.5,
+                "loss": 1.5154447555541992
+              },
+              "task_B": {
+                "acc": 0.5,
+                "loss": 2.7732093334198
+              },
+              "task_C": {
+                "acc": 0.5,
+                "loss": 2.5250906944274902
+              }
+            },
+            "drift_kl": 2.7543463706970215
+          }
+        ],
+        "final_drift_kl": 2.7543463706970215,
+        "coherence": {
+          "paraphrase_consistency": 0.0,
+          "offdomain_leakage": 0.1666666716337204
+        },
+        "reversibility": {
+          "return_to_base_gap": 0.0,
+          "collateral": 0.25,
+          "after_reversal_evals": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 6.631275177001953
+            },
+            "task_B": {
+              "acc": 0.25,
+              "loss": 6.556549549102783
+            },
+            "task_C": {
+              "acc": 0.0,
+              "loss": 7.234277725219727
+            }
+          }
+        },
+        "solo_evals": {
+          "task_C": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 2.7152132987976074
+            },
+            "task_B": {
+              "acc": 0.25,
+              "loss": 3.218806743621826
+            },
+            "task_C": {
+              "acc": 0.5,
+              "loss": 2.304490327835083
+            }
+          },
+          "task_B": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 6.824397087097168
+            },
+            "task_B": {
+              "acc": 0.25,
+              "loss": 6.648176670074463
+            },
+            "task_C": {
+              "acc": 0.0,
+              "loss": 7.3859405517578125
+            }
+          },
+          "task_A": {
+            "task_A": {
+              "acc": 0.25,
+              "loss": 6.393843650817871
+            },
+            "task_B": {
+              "acc": 0.25,
+              "loss": 6.225359916687012
+            },
+            "task_C": {
+              "acc": 0.0,
+              "loss": 7.010655403137207
+            }
+          }
+        },
+        "newest_alone_on_earlier": 0.125,
+        "gates": {
+          "task_C": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "task_B": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "task_A": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "controller": {
+          "final_train_mse": 1.7062347978935577e-05,
+          "heldout_context_mse": 0.016283344477415085,
+          "routed_evals": {
+            "task_C": {
+              "acc": 0.5,
+              "loss": 2.424154281616211
+            },
+            "task_B": {
+              "acc": 0.75,
+              "loss": 1.3278851509094238
+            },
+            "task_A": {
+              "acc": 0.75,
+              "loss": 1.5919184684753418
+            }
+          }
+        }
+      },
+      "order_sensitivity": {
+        "mean_abs_acc_diff": 0.25,
+        "per_task": {
+          "task_A": -0.25,
+          "task_B": -0.25,
+          "task_C": -0.25
+        }
+      }
+    }
+  },
+  "runtime_sec": 18.1
+}

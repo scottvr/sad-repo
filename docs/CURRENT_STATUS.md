@@ -204,43 +204,52 @@ Verdicts (numbering continues the interpretation list above):
 Paraphrase consistency is 0.000 in every arm, again — the kill-criterion
 clock (`docs/roadmap_v0.2.md`) is unchanged by any of this.
 
-## Dims grid: RUN 2026-07-14 — console output only (JSONs not collected;
-## parsed per-run table in artifacts/sweeps/dims_console_summary.csv;
-## re-run queued: 5 seeds + big_k16 prediction arm)
+## Dims grid: RE-RUN 2026-07-15 (GPU box; artifacts under
+## artifacts/sweeps/dims/; supersedes the 2026-07-14 console-only run,
+## whose parsed table remains in artifacts/sweeps/dims_console_summary.csv)
 
 Is 96 a magic number, or just `n_sites * k`? `--sites {both,attn,mlp}` and
 `--layers 0-2` vary total coefficient dims via site selection,
 independently of `--k` (`resolve_site_suffixes` in `config.py`).
-7 arms x 3 seeds, all replay=1 --no-gates; joined below with the
-pressure/retention both-sites arms at matching total dims:
+8 arms x 5 seeds, all replay=1 --no-gates (7 allocation arms at 12 facts,
+plus the `big_k16` prediction arm: 24 facts, 12 labels, both sites k=16);
+joined below with the pressure/retention both-sites arms at matching
+total dims:
 
-| allocation | dims | retention | composed fit | routed |
-|---|---|---|---|---|
-| attn k=2 | 12 | .25 ± .00 | .22 | .25 |
-| attn k=4 | 24 | .29 ± .08 | .25 | .64 |
-| both k=2 (pressure) | 24 | .35 ± .10 | .33 | .40 |
-| attn k=8 | 48 | .71 ± .19 | .72 | 1.00 |
-| mlp k=8 | 48 | .58 ± .14 | .56 | .89 |
-| layers 0-2 k=8 | 48 | .79 ± .15 | .72 | .97 |
-| layers 3-5 k=8 | 48 | .79 ± .08 | .83 | .97 |
-| both k=4 (pressure) | 48 | .70 ± .11 | .72 | .90 |
-| attn k=16 | 96 | 1.00 ± .00 | 1.00 | .97 |
-| both k=8 (retention) | 96 | 1.00 ± .00 | 1.00 | .98 |
-| both k=16 (pressure) | 192 | 1.00 ± .00 | 1.00 | .98 |
+| allocation | dims | facts | retention | composed fit | routed |
+|---|---|---|---|---|---|
+| attn k=2 | 12 | 12 | .30 ± .11 | .23 | .23 |
+| attn k=4 | 24 | 12 | .30 ± .07 | .28 | .67 |
+| both k=2 (pressure) | 24 | 12 | .35 ± .10 | .33 | .40 |
+| attn k=8 | 48 | 12 | .72 ± .14 | .75 | 1.00 |
+| mlp k=8 | 48 | 12 | .60 ± .10 | .58 | .88 |
+| layers 0-2 k=8 | 48 | 12 | .70 ± .21 | .68 | .90 |
+| layers 3-5 k=8 | 48 | 12 | .72 ± .10 | .77 | .98 |
+| both k=4 (pressure) | 48 | 12 | .70 ± .11 | .72 | .90 |
+| attn k=16 | 96 | 12 | 1.00 ± .00 | 1.00 | .97 |
+| both k=8 (retention) | 96 | 12 | 1.00 ± .00 | 1.00 | .98 |
+| both k=16 (pressure) | 192 | 12 | 1.00 ± .00 | 1.00 | .98 |
+| big_k16: both k=16 | 192 | 24 | 1.00 ± .00 | 1.00 | .90 |
+
+Cram (`newest_alone_on_earlier`) is at or below the base floor in every
+arm (big_k16: .09 vs. a .125 floor), so none of this is the newest vector
+re-learning earlier tasks.
 
 Verdicts:
 
 15. **Total dims is the resource; 96 is nothing special.** The attn-only
     curve overlays the both-sites curve at matched dims; attention-only at
     96 dims is as perfect as both-sites. The five 48-dim allocations sit
-    in one band (.58–.79, within a std of each other at n=3); MLP-only
+    in one band (.60–.72, within a std of each other at n=5); MLP-only
     trails slightly if anything. No "where capacity sits" story survives.
-16. **Dims-per-fact, tentatively:** ~4 dims/fact ≈ 0.7 retention,
-    ~8 dims/fact saturates — consistent across this grid (48/96 dims,
-    12 facts) and the pressure big arm (96 dims, 24 facts → 0.69).
-    Prediction the re-run's `big_k16` arm tests: 192 dims x 24 facts
-    should restore retention to ~1.0. Two data points and small seeds —
-    treat as a hypothesis, not a law.
+16. **Dims-per-fact prediction CONFIRMED (out of sample).** ~4 dims/fact
+    ≈ 0.7 retention, ~8 dims/fact saturates — consistent across this grid
+    (48/96 dims, 12 facts) and the pressure big arm (96 dims, 24 facts →
+    0.69). The pre-registered test: `big_k16` doubles dims to 192 on the
+    same 24-fact family and should restore retention to ~1.0. Result:
+    1.00 ± .00 retention and 1.00 composed fit over 5 seeds, cram at the
+    floor. Still two family sizes and one model — a robust local law,
+    not yet a scaling law.
 17. Routing saturates earlier than retention (~0.9–1.0 at 48 dims where
     retention is ~0.7) — routing is the easier problem, consistent with
     every earlier grid.
@@ -249,9 +258,9 @@ Verdicts:
 
 Confound ledger (label-bias null, foil probes, routing-shortcut and
 memorization diagnostics) and the distilgpt2 → gpt2 → TinyLlama scaling
-arcs are planned in `docs/roadmap_v0.3.md`. First command of Arc 0:
-`bash scripts/run_dims.sh` (re-collects the lost dims JSONs at 5 seeds and
-tests the dims-per-fact prediction via its new `big_k16` arm).
+arcs are planned in `docs/roadmap_v0.3.md`. Arc 0's first command
+(`bash scripts/run_dims.sh`) ran 2026-07-15: dims JSONs are collected at
+5 seeds and the `big_k16` dims-per-fact prediction is confirmed (above).
 
 ## Older next steps still open
 
