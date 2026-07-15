@@ -35,7 +35,7 @@ LoRA on the same sites). Consequences:
 
 ## What counts as success
 
-On the synthetic fact-domain tasks (see `notes/experiment_plan.md`), with the
+On the synthetic fact-domain tasks (see `docs/experiment_plan.md`), with the
 frozen base and the proposed controller:
 
 1. **Retention:** after adapting to tasks A→B→C, accuracy on A and B stays
@@ -89,7 +89,7 @@ arithmetic (Ilharco et al.), LoRAHub / AdapterFusion (learned combination of
 pretrained adapters), intrinsic-dimension fine-tuning (Aghajanyan et al.,
 random subspace training), hypernetwork-generated adapters, and the continual
 learning literature (EWC, orthogonal gradient methods). See
-`notes/literature_map_stub.md`. The under-explored intersection this repo
+`docs/literature_map_stub.md`. The under-explored intersection this repo
 targets: **sequential** adaptation in a **shared frozen random basis** with
 **exact-arithmetic reversibility accounting** and a **frozen-base-driven
 router**, measured with retention/forgetting/order/reversibility/drift/

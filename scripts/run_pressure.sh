@@ -5,7 +5,7 @@
 # tasks). Artifacts land under artifacts/sweeps/pressure/ so
 # summarize_sweeps.py labels them from config fields.
 #
-# Arms (see notes/roadmap_v0.2.md for the reasoning):
+# Arms (see docs/roadmap_v0.2.md for the reasoning):
 #   frac    replay=1 with 1/8, 1/4, 1/2 of earlier examples — does a sliver
 #           of rehearsal repair composition, or only full joint training?
 #   big     3 tasks x 8 facts, 12-label answer set, replay on/off — removes

@@ -97,8 +97,8 @@ Definitions: `src/sequential_adapt/metrics.py`, probes in `eval.py`.
   neutral-probe drift ~12× (5.31 → 0.45) without hurting task fit, and makes
   routed accuracy perfect — but does not fix composed-sum interference.
 
-Numbers: `artifacts/*.json` (`notes/experiment_plan.md` for the protocol,
-`CURRENT_STATUS.md` for exact state and next commands).
+Numbers: `artifacts/*.json` (`docs/experiment_plan.md` for the protocol,
+`docs/CURRENT_STATUS.md` for exact state and next commands).
 
 ## Layout
 
@@ -110,6 +110,8 @@ src/sequential_adapt/   config, data (synthetic fact domains), model (frozen
 scripts/                smoke_test, run_baselines, run_controller, evaluate_sequence
 tests/                  frozen-base guarantees, adapter mechanics, metric math,
                         sequence-eval contract
-notes/                  problem_statement, experiment_plan, literature_map_stub
+docs/                   CURRENT_STATUS, roadmaps, problem_statement,
+                        experiment_plan, literature_map_stub,
+                        tinyllama_readiness, original brief (INSTRUCTIONS)
 artifacts/              JSON results (gitkeep'd)
 ```

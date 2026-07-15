@@ -2,7 +2,7 @@
 
 Decisions and criteria agreed in conversation but not previously captured
 in the repo. The retention-grid results this builds on are in
-`CURRENT_STATUS.md`; the original protocol is `notes/experiment_plan.md`.
+`docs/CURRENT_STATUS.md`; the original protocol is `docs/experiment_plan.md`.
 
 ## Kill-criterion (written down deliberately)
 

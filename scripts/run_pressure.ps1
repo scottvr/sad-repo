@@ -1,6 +1,6 @@
 # Pressure grid: stress-test the replay retention result before trusting it.
 # PowerShell twin of run_pressure.sh — see that file (or
-# notes/roadmap_v0.2.md) for what each arm is for.
+# docs/roadmap_v0.2.md) for what each arm is for.
 #
 # Usage:
 #   $env:PYTHON = ".\.venv\Scripts\python.exe"
