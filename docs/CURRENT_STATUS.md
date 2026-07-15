@@ -133,11 +133,11 @@ Touched: `config.py`, `train.py` (`fit_task_coefficients`), `experiments.py`
   and bookkeeping stays exact. (That is the `reversible-composition`
   branch's question; this branch is `replay-scaling`.)
 
-## Pressure grid: implemented, NOT yet run (2026-07-15, replay-scaling
-## branch, written on the no-torch dev machine — syntax-checked only)
+## Pressure grid: RUN 2026-07-14 (GPU box; artifacts under
+## artifacts/sweeps/pressure/, single probe in artifacts/pressure_probe.json)
 
 Everything needed to stress-test the replay result (rationale and
-kill-criterion: `notes/roadmap_v0.2.md`):
+kill-criterion: `docs/roadmap_v0.2.md`):
 
 1. **Cramming diagnostic** (automatic in every controller run): each
    sequentially fitted vector is also evaluated ALONE; JSON field
@@ -158,46 +158,100 @@ kill-criterion: `notes/roadmap_v0.2.md`):
    labels) with replay on/off, conflict (overlap=2) with replay on/off,
    capacity k=2/4/16 with replay. Artifacts: `artifacts/sweeps/pressure/`.
 
-### First commands on Colab / GPU box
+### Results (composed controller, 5 seeds/arm, all --no-gates)
 
-```
-python -m pytest tests -q                 # includes new data + diagnostic tests
-python scripts/run_controller.py --steps 200 --replay 1.0 --no-gates \
-    --out artifacts/pressure_probe.json   # single probe: check the cram column
-bash scripts/run_pressure.sh              # full pressure grid
-python scripts/summarize_sweeps.py --stdout
-```
+| arm | retention | cram (newest alone) | current fit | routed |
+|---|---|---|---|---|
+| frac=0.125 | .35 ± .10 | .18 | 1.00 | .98 |
+| frac=0.25 | .45 ± .17 | .13 | 1.00 | .98 |
+| frac=0.5 | .55 ± .14 | .10 | 1.00 | .98 |
+| frac=1 (retention grid, 10 seeds) | 1.00 ± .00 | – | 1.00 | .98 |
+| big (24 facts, 12 labels), no replay | .11 ± .08 | .13 | 1.00 | .91 |
+| big, replay=1 | .69 ± .09 | .05 | .88 | .91 |
+| conflict (overlap=2), no replay | .20 ± .07 | .23 | 1.00 | .98 |
+| conflict, replay=1 | .98 ± .06 | .13 | 1.00 | .98 |
+| cap k=2 (24 dims), replay=1 | .35 ± .10 | .28 | .30 | .40 |
+| cap k=4 (48 dims), replay=1 | .70 ± .11 | .23 | .75 | .90 |
+| cap k=16 (192 dims), replay=1 | 1.00 ± .00 | .25 | 1.00 | .98 |
 
-### How to read the outcome
+Verdicts (numbering continues the interpretation list above):
 
-- `cram (newest alone)` HIGH (≈ earlier-task accuracy) in `replay=1` arms →
-  replay is cramming, not repair; the 1.00 retention headline deflates.
-- `frac=0.125` retention ≈ 1.0 → tiny rehearsal suffices (interesting);
-  only `frac=1` works → joint-training-in-disguise (expected/dull).
-- `big` arms: retention off ceiling; the replay-vs-baseline *gap* is the
-  real effect size.
-- `conflict` arms: composed accuracy on overlapped facts is capped by
-  construction (~(1 - overlap/facts) ceiling on the composed state);
-  routed accuracy should stay high. If composed retention still reads
-  ~1.0 here, be suspicious of the eval, not pleased.
-- `cap` arms: retention 1.0 at k=2 (24 dims) → repair is cheap, capacity
-  story weak; retention degrading with k → capacity relationship exists
-  (then find the scaling law before TinyLlama).
+10. **Cramming refuted.** `newest_alone_on_earlier` is at or below the
+    base-model floor (.05–.28) in every arm — the newest vector does not
+    re-learn earlier tasks; replay genuinely repairs the composition.
+11. **Rehearsal fraction: the textbook result.** Retention rises roughly
+    linearly with fraction and saturates only at full rehearsal —
+    mechanically this is joint training with earlier vectors frozen. The
+    non-trivial residue is *where* the repair lives (~96 dims of a frozen
+    random basis, per verdict 10). Pseudo-replay (rehearsal text generated
+    by the composed model itself) is now the important escape hatch.
+12. **The ceiling was real.** On the big family replay lifts retention
+    0.11 → 0.69, not to 1.0, and current-task fit slips to 0.88. Headline
+    correction: replay repairs composition *completely at 12 facts,
+    partially at 24*.
+13. **Conflict is a genuine pass.** Retention probes include the
+    conflicting facts (verified in `data.py`), the prompt template names
+    the domain, and the composed replay-fitted state disambiguates:
+    0.20 → 0.98. This is the context-conditioning the original hypothesis
+    wanted — but note the domain is named *explicitly* in the prompt, so
+    it is a shallow version of the ability (see roadmap v0.3 confounds).
+14. **There is a capacity floor and it scales with facts.** k=2 (24 dims)
+    breaks single-task fit (.30) and even routing (.40); k=4 (48 dims) is
+    partial everywhere; 96 dims saturates 12 facts but only reaches 0.69
+    on 24 facts. Same law as the dims grid (below): ~4 dims/fact ≈ 0.7
+    retention, ~8 dims/fact ≈ 1.0.
 
-## Dims grid: implemented, NOT yet run (same session, syntax-checked only)
+Paraphrase consistency is 0.000 in every arm, again — the kill-criterion
+clock (`docs/roadmap_v0.2.md`) is unchanged by any of this.
 
-Is 96 a magic number, or just `n_sites * k`? New `--sites {both,attn,mlp}`
-and `--layers 0-2` flags on `run_controller.py` / `evaluate_sequence.py`
-vary total coefficient dims via site selection, independently of `--k`
-(`resolve_site_suffixes` in `config.py`; torch-free tests in
-`tests/test_sites.py`). `scripts/run_dims.sh/.ps1` (7 arms x 3 seeds,
-all replay=1 --no-gates): an attention-only dims curve (12/24/48/96) plus
-five different realizations of a 48-dim budget (attn k=8, mlp k=8, both
-k=4 via pressure `cap_k4`, layers 0-2, layers 3-5). If performance tracks
-total dims regardless of allocation, dims is the resource; if allocation
-matters, the size/complexity relationship is per-site-type. Artifacts:
-`artifacts/sweeps/dims/`. Run this after the pressure grid — priority is
-deflating/confirming the replay headline first.
+## Dims grid: RUN 2026-07-14 — console output only (JSONs not collected;
+## parsed per-run table in artifacts/sweeps/dims_console_summary.csv;
+## re-run queued: 5 seeds + big_k16 prediction arm)
+
+Is 96 a magic number, or just `n_sites * k`? `--sites {both,attn,mlp}` and
+`--layers 0-2` vary total coefficient dims via site selection,
+independently of `--k` (`resolve_site_suffixes` in `config.py`).
+7 arms x 3 seeds, all replay=1 --no-gates; joined below with the
+pressure/retention both-sites arms at matching total dims:
+
+| allocation | dims | retention | composed fit | routed |
+|---|---|---|---|---|
+| attn k=2 | 12 | .25 ± .00 | .22 | .25 |
+| attn k=4 | 24 | .29 ± .08 | .25 | .64 |
+| both k=2 (pressure) | 24 | .35 ± .10 | .33 | .40 |
+| attn k=8 | 48 | .71 ± .19 | .72 | 1.00 |
+| mlp k=8 | 48 | .58 ± .14 | .56 | .89 |
+| layers 0-2 k=8 | 48 | .79 ± .15 | .72 | .97 |
+| layers 3-5 k=8 | 48 | .79 ± .08 | .83 | .97 |
+| both k=4 (pressure) | 48 | .70 ± .11 | .72 | .90 |
+| attn k=16 | 96 | 1.00 ± .00 | 1.00 | .97 |
+| both k=8 (retention) | 96 | 1.00 ± .00 | 1.00 | .98 |
+| both k=16 (pressure) | 192 | 1.00 ± .00 | 1.00 | .98 |
+
+Verdicts:
+
+15. **Total dims is the resource; 96 is nothing special.** The attn-only
+    curve overlays the both-sites curve at matched dims; attention-only at
+    96 dims is as perfect as both-sites. The five 48-dim allocations sit
+    in one band (.58–.79, within a std of each other at n=3); MLP-only
+    trails slightly if anything. No "where capacity sits" story survives.
+16. **Dims-per-fact, tentatively:** ~4 dims/fact ≈ 0.7 retention,
+    ~8 dims/fact saturates — consistent across this grid (48/96 dims,
+    12 facts) and the pressure big arm (96 dims, 24 facts → 0.69).
+    Prediction the re-run's `big_k16` arm tests: 192 dims x 24 facts
+    should restore retention to ~1.0. Two data points and small seeds —
+    treat as a hypothesis, not a law.
+17. Routing saturates earlier than retention (~0.9–1.0 at 48 dims where
+    retention is ~0.7) — routing is the easier problem, consistent with
+    every earlier grid.
+
+## Next phases
+
+Confound ledger (label-bias null, foil probes, routing-shortcut and
+memorization diagnostics) and the distilgpt2 → gpt2 → TinyLlama scaling
+arcs are planned in `docs/roadmap_v0.3.md`. First command of Arc 0:
+`bash scripts/run_dims.sh` (re-collects the lost dims JSONs at 5 seeds and
+tests the dims-per-fact prediction via its new `big_k16` arm).
 
 ## Older next steps still open
 
@@ -208,6 +262,6 @@ deflating/confirming the replay headline first.
 - Scale model (gpt2 → TinyLlama) and task count — retention grid is done;
   scaling is now unblocked, with replay=1 (no hard-ortho) as the default
   retention mechanism. gpt2 needs zero code changes; the Llama-family
-  blockers are cataloged in `notes/tinyllama_readiness.md` (the silent
+  blockers are cataloged in `docs/tinyllama_readiness.md` (the silent
   BOS-as-gold-label bug is already fixed; site-suffix/layer-prefix
   mapping and a tokenizer label audit remain).

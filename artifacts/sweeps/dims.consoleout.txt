@@ -1,0 +1,260 @@
+[ ]
+1
+!SEEDS="0 1 2" bash scripts/run_dims.sh
+Writing dims-grid artifacts under artifacts/sweeps/dims
+Python: python3  Model: distilgpt2  Steps: 200
+Seeds: 0 1 2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 16488.24it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.25 0.25 0.25            0.25     0.00    1.439   0.00     0.12    0.08    
+  (routed)    0.25 0.25 0.25            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k2_seed_0.json  (runtime 18.5s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 17170.33it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.25 0.25 0.00            0.25     0.17    1.869   0.00     0.00    0.17    
+  (routed)    0.75 0.75 0.75            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k4_seed_0.json  (runtime 18.5s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 15205.45it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    1.00 0.75 0.75            0.88     0.00    4.970   0.00     0.50    0.17    
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k8_seed_0.json  (runtime 19.1s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 16337.81it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    1.00 1.00 1.00            1.00     0.00    5.299   0.00     1.00    0.00    
+  (routed)    0.75 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k16_seed_0.json  (runtime 18.4s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 15542.79it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    1.00 0.50 0.75            0.75     0.17    4.611   0.00     0.62    0.25    
+  (routed)    1.00 0.75 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_mlp_k8_seed_0.json  (runtime 18.6s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 19202.84it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    1.00 0.75 0.50            0.88     -0.08   3.862   0.00     0.62    0.17    
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_early_k8_seed_0.json  (runtime 17.8s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 16724.40it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.50 1.00 0.75            0.75     0.08    4.702   0.25     0.88    0.17    
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_late_k8_seed_0.json  (runtime 16.1s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 15699.72it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.25 0.25 0.25            0.25     0.08    2.843   0.00     0.12    0.00    
+  (routed)    0.50 0.25 0.25            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k2_seed_1.json  (runtime 18.2s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 19827.52it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.50 0.25 0.25            0.38     0.08    6.333   0.00     0.25    0.25    
+  (routed)    0.50 0.75 0.25            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k4_seed_1.json  (runtime 18.3s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 14683.64it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.25 0.75 0.75            0.50     0.33    4.252   0.00     0.50    0.25    
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k8_seed_1.json  (runtime 18.2s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 15564.80it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    1.00 1.00 1.00            1.00     0.00    4.686   0.00     0.75    0.00    
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k16_seed_1.json  (runtime 18.2s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 16003.17it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.50 0.50 0.50            0.50     0.25    5.281   0.00     0.38    0.25    
+  (routed)    0.75 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_mlp_k8_seed_1.json  (runtime 18.4s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 15844.87it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    1.00 0.75 0.75            0.88     0.00    3.258   0.00     0.75    0.25    
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_early_k8_seed_1.json  (runtime 18.0s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 16204.93it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.75 1.00 1.00            0.88     0.00    4.004   0.00     0.88    0.42    
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_late_k8_seed_1.json  (runtime 16.2s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 15130.39it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.25 0.25 0.00            0.25     -0.08   0.891   0.00     0.00    0.00    
+  (routed)    0.25 0.25 0.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k2_seed_2.json  (runtime 18.1s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 15914.48it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.25 0.25 0.25            0.25     0.08    1.919   0.00     0.25    0.17    
+  (routed)    0.50 0.50 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k4_seed_2.json  (runtime 18.5s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 18903.34it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.75 0.75 0.75            0.75     0.17    2.366   0.00     0.62    0.25    
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k8_seed_2.json  (runtime 18.7s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 17459.99it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    1.00 1.00 1.00            1.00     0.00    4.242   0.25     0.88    0.00    
+  (routed)    1.00 1.00 1.00            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_attn_k16_seed_2.json  (runtime 18.1s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 15330.50it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.50 0.50 0.25            0.50     0.17    4.881   0.00     0.25    0.25    
+  (routed)    1.00 1.00 0.50            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_mlp_k8_seed_2.json  (runtime 17.7s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 15449.38it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.75 0.50 0.50            0.62     0.17    5.201   0.00     0.50    0.33    
+  (routed)    1.00 1.00 0.75            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_early_k8_seed_2.json  (runtime 17.8s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100% 76/76 [00:00<00:00, 14019.75it/s]
+== controller ==
+== controller (reversed order) ==
+
+method        final acc (per task)      avg ret  forget  drift   rev gap  collat  ordsens 
+------------------------------------------------------------------------------------------
+base          0.25 0.25 0.00            -        -       0.000   -        -       -       
+controller    0.75 0.75 1.00            0.75     0.17    2.752   0.00     0.62    0.17    
+  (routed)    1.00 1.00 0.75            (controller-predicted coeffs, held-out contexts)
+
+Saved: artifacts/sweeps/dims/controller_late_k8_seed_2.json  (runtime 16.0s)
+
+Done. Aggregate with: python scripts/summarize_sweeps.py --stdout
