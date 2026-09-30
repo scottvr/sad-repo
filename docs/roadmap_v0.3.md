@@ -117,6 +117,16 @@ currently rests entirely on routing (Model B), which also strengthens
 the case for end-to-end controller training over further composed-state
 work.
 
+## Decision ledger — 2026-09-30: final session
+
+After a long pause, an honest review: every result so far reproduces a
+known finding, and the project never faced the obvious competitor
+(prompting the frozen model with the facts). Declared the next session
+the last unless it shows something clearly worth pursuing. The caprank
+grid, a template-diversity sweep and a prompting baseline are folded
+into one pre-registered test: `docs/final_session.md`. Arcs 0, 3 and 4
+below are frozen pending its verdict.
+
 ## Decision ledger — 2026-07-15 corrected-coherence results
 
 What the re-run changes about the plan (details: CURRENT_STATUS

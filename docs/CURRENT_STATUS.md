@@ -343,7 +343,20 @@ Verdicts:
     adaptation" currently rests entirely on routing — the composed
     state itself is a word→label lookup smeared across the bases.
 
-## Next phases
+## FINAL SESSION: pre-registered 2026-09-30, not yet run
+
+The project faces its obvious competitor for the first time: **prompting
+the frozen model with the facts** (no adapters). One Colab session
+decides CONTINUE (narrowed) or STOP by a rule fixed in advance:
+`docs/final_session.md`. Arms: prompting on distilgpt2/gpt2/gpt2-medium;
+coefficient adapters at 2/4/8 training phrasings x capacity (k up to 64,
+rank up to 16); LoRA reference. Everything is scored on a fixed pool of
+4 never-trained phrasings (`final_evals_heldout_pool`).
+`bash scripts/run_final.sh` then `python scripts/summarize_final.py`
+(prints the verdict). This supersedes the caprank-only plan below: its
+capacity arms are included.
+
+## Next phases (superseded by the final session above)
 
 Confound ledger (label-bias null, foil probes, routing-shortcut and
 memorization diagnostics) and the distilgpt2 → gpt2 → TinyLlama scaling

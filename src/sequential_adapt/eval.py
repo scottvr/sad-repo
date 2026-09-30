@@ -31,6 +31,16 @@ def evaluate_task(model, tokenizer, task, cfg, template_idx=None):
 
 
 @torch.no_grad()
+def evaluate_template_pool(model, tokenizer, task, cfg, templates=None):
+    """Accuracy averaged over several phrasings (default: cfg.heldout_pool).
+    Returns {"acc": mean, "per_template": {idx: acc}}."""
+    templates = cfg.heldout_pool if templates is None else templates
+    per = {int(t): evaluate_task(model, tokenizer, task, cfg,
+                                 template_idx=t)["acc"] for t in templates}
+    return {"acc": sum(per.values()) / len(per), "per_template": per}
+
+
+@torch.no_grad()
 def neutral_logits(model, tokenizer, cfg):
     return batch_forward_logits(model, tokenizer, NEUTRAL_PROBES, cfg.device)
 

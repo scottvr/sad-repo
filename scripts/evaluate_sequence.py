@@ -49,18 +49,26 @@ def main():
     ap.add_argument("--layers", default=None,
                     help="restrict adapters to these transformer layers, "
                          "e.g. '0-2' or '0,3,5' (default: all layers)")
+    ap.add_argument("--n-train-templates", type=int, default=2,
+                    help="number of training phrasings (prefix of "
+                         "data.TRAIN_TEMPLATE_ORDER; 2 = historical (0,1), "
+                         "max 8). Held-out accuracy is always measured on "
+                         "the fixed never-trained pool (2, 9, 10, 11)")
     ap.add_argument("--no-gates", action="store_true",
                     help="disable controller per-site gates")
     ap.add_argument("--device", default="auto",
                     choices=["auto", "cpu", "cuda"],
                     help="compute device (default: auto)")
+    ap.add_argument("--methods", default="independent,naive_stack,coeff_add,"
+                    "controller",
+                    help="comma-separated subset of methods to run")
     ap.add_argument("--out", default="artifacts/sequence_eval.json")
     ap.add_argument("--no-order-check", action="store_true")
     args = ap.parse_args()
 
     import _bootstrap  # noqa: F401
     from sequential_adapt.config import Config, resolve_site_suffixes
-    from sequential_adapt.data import WIDE_LABEL_SPACE
+    from sequential_adapt.data import WIDE_LABEL_SPACE, train_templates
     from sequential_adapt.experiments import (format_table, run_full_suite,
                                               save_results)
 
@@ -74,10 +82,11 @@ def main():
                  anchor_weight=args.anchor, replay_weight=args.replay,
                  replay_fraction=args.replay_fraction,
                  site_suffixes=resolve_site_suffixes(args.sites, args.layers),
+                 train_templates=train_templates(args.n_train_templates),
                  train_gates=not args.no_gates, **label_kw)
     results = run_full_suite(
         cfg,
-        methods=("independent", "naive_stack", "coeff_add", "controller"),
+        methods=tuple(m.strip() for m in args.methods.split(",") if m.strip()),
         order_sensitivity_check=not args.no_order_check)
     path = save_results(results, args.out)
     print()

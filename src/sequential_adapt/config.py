@@ -67,6 +67,10 @@ class Config:
     train_templates: tuple = (0, 1)
     eval_template: int = 0
     heldout_template: int = 2
+    # Fixed pool of never-trained phrasings (data.HELDOUT_TEMPLATE_POOL);
+    # held-out accuracy averaged over all of them is the final-session
+    # transfer metric (docs/final_session.md).
+    heldout_pool: tuple = (2, 9, 10, 11)
 
     # Fitting
     steps: int = 200
@@ -91,6 +95,10 @@ class Config:
     extras: dict = field(default_factory=dict)
 
     def __post_init__(self):
+        overlap = set(self.train_templates) & set(self.heldout_pool)
+        if overlap:
+            raise ValueError(f"templates {sorted(overlap)} are both trained "
+                             "and in the held-out pool")
         if self.device == "auto":
             import torch
             self.device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -99,6 +107,7 @@ class Config:
         d = asdict(self)
         d["site_suffixes"] = list(self.site_suffixes)
         d["train_templates"] = list(self.train_templates)
+        d["heldout_pool"] = list(self.heldout_pool)
         d["label_space"] = list(self.label_space)
         return d
 

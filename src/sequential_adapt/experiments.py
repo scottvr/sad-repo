@@ -27,7 +27,7 @@ from .adapters import AdapterBank, attach_adapter_sites
 from .controllers import LookupController, MLPController, train_mlp_controller
 from .data import context_prompts, make_tasks
 from .eval import (coherence_probe, drift_kl, eval_all_tasks, evaluate_task,
-                   neutral_logits)
+                   evaluate_template_pool, neutral_logits)
 from .metrics import reversibility, summarize_sequence
 from .model import (assert_frozen, context_embedding, load_frozen_model,
                     params_unchanged, snapshot_params)
@@ -90,6 +90,10 @@ def _finalize(ctx, stages, order_names, extra=None):
     out["final_evals_heldout"] = {
         t.name: evaluate_task(ctx.model, ctx.tokenizer, t, ctx.cfg,
                               template_idx=ctx.cfg.heldout_template)
+        for t in ctx.tasks}
+    # Same, averaged over the whole never-trained pool (final session).
+    out["final_evals_heldout_pool"] = {
+        t.name: evaluate_template_pool(ctx.model, ctx.tokenizer, t, ctx.cfg)
         for t in ctx.tasks}
     if extra:
         out.update(extra)
@@ -246,6 +250,8 @@ def run_controller(ctx, order):
         routed[tname]["heldout_template"] = evaluate_task(
             ctx.model, ctx.tokenizer, ctx.task_by_name[tname], ctx.cfg,
             template_idx=cfg.heldout_template)
+        routed[tname]["heldout_pool"] = evaluate_template_pool(
+            ctx.model, ctx.tokenizer, ctx.task_by_name[tname], ctx.cfg)
     ctx.bank.apply(list(applied))  # back to the sequential composed state
     extra = {
         "reversibility": rev,

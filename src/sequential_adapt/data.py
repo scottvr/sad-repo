@@ -70,11 +70,43 @@ def nonce_pool(n: int) -> list:
     raise ValueError(f"nonce pool exhausted at {len(pool)} < {n}")
 
 # Prompt templates. {d}=domain, {w}=word. The answer is a leading-space color token.
+# Indices 0-2 are the originals (0,1 trained, 2 held out) and must not move:
+# every historical artifact refers to them by index. 3-11 were added for the
+# final-session template-diversity test (docs/final_session.md).
 TEMPLATES = [
     "In domain {d}, the word {w} maps to the color",
     "Domain {d} rule: {w} is assigned the color",
     "Within domain {d}, the color associated with {w} is",
+    # --- extra TRAINING phrasings (used only with --n-train-templates > 2)
+    "For domain {d}, {w} corresponds to the color",
+    "Domain {d}: the color of {w} is",
+    "In the {d} domain, {w} is linked to the color",
+    "Under domain {d}, {w} goes with the color",
+    "Domain {d} says {w} has the color",
+    "When in domain {d}, the color for {w} is",
+    # --- extra HELD-OUT phrasings (never trained in any arm)
+    "In domain {d}, what color is {w}? The color is",
+    "Domain {d} lookup. Word: {w}. Color:",
+    "Using domain {d}'s mapping, {w} is shown as the color",
 ]
+
+# Training templates are always a prefix of this order, so n=2 reproduces the
+# historical (0, 1) exactly and every larger n is a superset.
+TRAIN_TEMPLATE_ORDER = (0, 1, 3, 4, 5, 6, 7, 8)
+# Fixed held-out pool, disjoint from TRAIN_TEMPLATE_ORDER: 4 phrasings x
+# every fact, so held-out accuracy is no longer a single-template estimate.
+HELDOUT_TEMPLATE_POOL = (2, 9, 10, 11)
+
+# How facts are STATED for the in-context (prompting) baseline. Deliberately
+# not one of TEMPLATES, so no query phrasing is privileged by the context.
+ICL_FACT_STATEMENT = "In domain {d}, {w} is{label}."
+
+
+def train_templates(n: int) -> tuple:
+    """First n training templates (n in 1..len(TRAIN_TEMPLATE_ORDER))."""
+    if not 1 <= n <= len(TRAIN_TEMPLATE_ORDER):
+        raise ValueError(f"n_train_templates must be in 1..{len(TRAIN_TEMPLATE_ORDER)}")
+    return TRAIN_TEMPLATE_ORDER[:n]
 
 # Context prompts describing a domain (used for controller context embeddings).
 CONTEXT_TEMPLATES = [
@@ -156,6 +188,16 @@ def fact_prompt(fact: Fact, template_idx: int) -> str:
 def task_prompts(task: Task, template_idx: int):
     """(prompt, answer) pairs for one template."""
     return [(fact_prompt(f, template_idx), f.label) for f in task.facts]
+
+
+def icl_context(facts, seed: int = 0) -> str:
+    """Facts stated in-context (prompting baseline), in a seed-shuffled order
+    so results do not hinge on one fact ordering."""
+    import random
+    order = list(facts)
+    random.Random(seed).shuffle(order)
+    return " ".join(ICL_FACT_STATEMENT.format(d=f.domain, w=f.word, label=f.label)
+                    for f in order)
 
 
 def context_prompts(task: Task):

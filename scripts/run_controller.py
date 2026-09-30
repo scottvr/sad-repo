@@ -56,6 +56,11 @@ def main():
     ap.add_argument("--layers", default=None,
                     help="restrict adapters to these transformer layers, "
                          "e.g. '0-2' or '0,3,5' (default: all layers)")
+    ap.add_argument("--n-train-templates", type=int, default=2,
+                    help="number of training phrasings (prefix of "
+                         "data.TRAIN_TEMPLATE_ORDER; 2 = historical (0,1), "
+                         "max 8). Held-out accuracy is always measured on "
+                         "the fixed never-trained pool (2, 9, 10, 11)")
     ap.add_argument("--no-gates", action="store_true",
                     help="disable Model C per-site gating")
     ap.add_argument("--out", default="artifacts/controller.json")
@@ -64,7 +69,7 @@ def main():
 
     import _bootstrap  # noqa: F401
     from sequential_adapt.config import Config, resolve_site_suffixes
-    from sequential_adapt.data import WIDE_LABEL_SPACE
+    from sequential_adapt.data import WIDE_LABEL_SPACE, train_templates
     from sequential_adapt.experiments import (format_table, run_full_suite,
                                               save_results)
 
@@ -78,6 +83,7 @@ def main():
                  anchor_weight=args.anchor, replay_weight=args.replay,
                  replay_fraction=args.replay_fraction,
                  site_suffixes=resolve_site_suffixes(args.sites, args.layers),
+                 train_templates=train_templates(args.n_train_templates),
                  train_gates=not args.no_gates, **label_kw)
     results = run_full_suite(
         cfg, methods=("controller",),
