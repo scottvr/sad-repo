@@ -137,3 +137,50 @@ python scripts/summarize_final.py  # tables + mechanical verdict
 
 Artifacts: `artifacts/final/`; summary: `artifacts/final_summary.md` and
 `artifacts/final_summary.json`.
+
+## Open thread: reversible composition (pure + repair)
+
+Not part of the decision rule; it doesn't affect the verdict. Written
+so it reads as a closing note if the verdict is STOP, or as the pickup
+point if the project continues.
+
+**The property.** Each task's update is linear in its coefficient
+vector, so adding a task and removing it are exact in parameter space.
+Linearity itself is not new (random-basis adapters and task-vector
+arithmetic are linear too). The unusual part here is using it as a
+measuring instrument. Because the parameter side of a removal is exact
+by construction, any damage seen after removing a task is purely
+behavioral, and it can be measured cleanly. Most unlearning methods
+can't separate the two.
+
+**What was measured.** Removing one task by negating its vector damages
+the remaining tasks. Collateral is .68 without replay and .89 with
+replay (10 seeds, retention grid). Replay makes vectors co-adapted:
+task N's vector encodes "task N plus repairs for the composed state".
+Every controller arm in this session records collateral again, so its
+cost is reported next to the transfer numbers.
+
+**The idea, untested.** Split each task into a *pure* vector (fit
+alone) plus explicit *interaction-repair* vectors (fit with replay, one
+per pair of tasks). To remove a task, delete its pure vector and every
+repair term that involves it. The bookkeeping stays exact, and every
+term is still a tiny coefficient vector.
+
+**What would make it worth a project of its own:**
+
+1. **A real need for one merged state.** Keeping adapters separate and
+   routing between them already gives perfect removal: stop applying
+   the one you want gone. Pure + repair only matters when everything
+   must live in a single summed state, for example folded into the
+   weights for serving.
+2. **Collateral near zero after removal**, with retention still ≥ .9
+   before removal. This is the first experiment: 3 tasks, remove each
+   in turn, compare against plain negation (.89) and routing (0).
+3. **Tolerable growth.** Repair terms grow with the number of task
+   pairs (quadratically), so a task-count sweep has to show storage
+   staying small or repairs staying sparse.
+
+**Related work to position against:** negating task vectors to make a
+model forget (task arithmetic), and exact unlearning by retraining on
+data shards (SISA). The angle neither covers: provable removal from a
+merged adapter state.
